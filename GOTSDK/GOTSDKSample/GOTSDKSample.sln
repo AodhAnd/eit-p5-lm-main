@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOTSDKSample", "GOTSDKSample.csproj", "{EEE50B44-F08F-4912-8FC8-AAC67EA1BF6C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EEE50B44-F08F-4912-8FC8-AAC67EA1BF6C}.Debug|x86.ActiveCfg = Debug|x86
+		{EEE50B44-F08F-4912-8FC8-AAC67EA1BF6C}.Debug|x86.Build.0 = Debug|x86
+		{EEE50B44-F08F-4912-8FC8-AAC67EA1BF6C}.Release|x86.ActiveCfg = Release|x86
+		{EEE50B44-F08F-4912-8FC8-AAC67EA1BF6C}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
