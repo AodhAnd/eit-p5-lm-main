@@ -38,3 +38,6 @@ C:\Users\proces\Desktop\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.Propertie
 C:\Users\proces\Desktop\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.csproj.GenerateResource.Cache
 C:\Users\proces\Desktop\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.exe
 C:\Users\proces\Desktop\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.pdb
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\bin\Debug\GOTSDKSample.exe.config
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.exe
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.pdb

@@ -372,6 +372,9 @@ namespace GOTSDKSample
                                 Py = (int)pos.Position.Y;
                                 Pz = (int)pos.Position.Z;
                                 T = 1;
+
+                                /* It is here that we have to exact the data */
+
                                 /*try
                                 {
                                     byte[] bytePos = Encoding.ASCII.GetBytes(Px + "\n");
