@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9) (preloaded format=pdflatex 2015.3.15)  14 SEP 2015 08:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9) (preloaded format=pdflatex 2015.3.15)  14 SEP 2015 10:24
 entering extended mode
 **main.tex
 (main.tex
@@ -1722,27 +1722,27 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \c__siunitx_mathtt_int=\count445
 
 (contents/aFigureSample.tex
-LaTeX Font Info:    Try loading font information for T1+cmss on input line 4.
+<figures/filename.png, id=31, 682.04813pt x 551.81157pt>
+File: figures/filename.png Graphic file (type png)
+
+<use figures/filename.png>
+Package pdftex.def Info: figures/filename.png used on input line 5.
+(pdftex.def)             Requested size: 409.23204pt x 331.0895pt.
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 6.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\t1cmss.fd"
 File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 Package hyperref Info: bookmark level for unknown fixme defaults to 0 on input 
-line 4.
+line 6.
+)
+(contents/bTableSample.tex [1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.ma
+p}
 
-<figures/filename.png, id=32, 682.04813pt x 551.81157pt>
-File: figures/filename.png Graphic file (type png)
+ <./figures/filename.png>]) [2] (contents/cEquationSample.tex) [3] [4
 
-<use figures/filename.png>
-Package pdftex.def Info: figures/filename.png used on input line 7.
-(pdftex.def)             Requested size: 409.23204pt x 331.0895pt.
-) (contents/bTableSample.tex [1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.
-map}
-
- <./figures/filename.png>]) [2]
-(contents/cEquationSample.tex) [3] [4
-
-] (contents/DesignConsiderations.tex
+]
+(contents/DesignConsiderations.tex
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\t1pbk.fd")
 <figures/P5UseCase.pdf, id=137, 462.22687pt x 399.74344pt>
 File: figures/P5UseCase.pdf Graphic file (type pdf)
@@ -1750,10 +1750,24 @@ File: figures/P5UseCase.pdf Graphic file (type pdf)
 <use figures/P5UseCase.pdf>
 Package pdftex.def Info: figures/P5UseCase.pdf used on input line 9.
 (pdftex.def)             Requested size: 416.00034pt x 359.76576pt.
- [5
 
- <./figures/P5UseCase.pdf>]) [6] (main.lox)
-[7
+Underfull \hbox (badness 10000) in paragraph at lines 15--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 15--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 15--20
+
+ []
+
+[5
+
+ <./figures/P5UseCase.pdf>]) [6] (main.lox) [7
 
 ]
 \tf@lox=\write6
@@ -1773,7 +1787,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 26.
  ) 
 Here is how much of TeX's memory you used:
  29090 strings out of 493698
- 517608 string characters out of 3141991
+ 517609 string characters out of 3141991
  970969 words of memory out of 3000000
  32033 multiletter control sequences out of 15000+200000
  24567 words of font info for 68 fonts, out of 3000000 for 9000
@@ -1795,9 +1809,9 @@ les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program File
 s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files (
 x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x8
 6)/MiKTeX 2.9/fonts/type1/urw/bookman/ubkd8a.pfb>
-Output written on main.pdf (7 pages, 251919 bytes).
+Output written on main.pdf (7 pages, 253343 bytes).
 PDF statistics:
- 393 PDF objects out of 1000 (max. 8388607)
+ 396 PDF objects out of 1000 (max. 8388607)
  30 named destinations out of 1000 (max. 500000)
  67 words of extra memory for PDF output out of 10000 (max. 10000000)
 
