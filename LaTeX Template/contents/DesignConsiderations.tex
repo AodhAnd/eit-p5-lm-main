@@ -13,14 +13,16 @@ To give an overall view of what the system should be able to do, a UML use-case 
 \end{figure}
 
 \noindent
-The main purpose of the system is to automatically navigate in a specific area. In which area to navigate is decided by the \textit{Edge initialization} functionality, which uses the \textit{Store map} functionality to store the information in storage.\\\\
-The route to navigate, in the specific area, is provided by the functionality \textit{Route planning}. \textit{Route planning} uses the information, about the specific area, provided by \textit{Edge initialization} to plan the most optimal route in which to follow. Furthermore the \textit{Route planning} needs information about the systems power level to insure the \textit{Route planning} takes into consideration if the system needs charging.\\\\
+The main purpose of the system is to automatically navigate in a specific area. In which area to navigate is set up by the \textit{Edge initialization} functionality, where the area is setup, by marking the edge of the area.\textit{Edge initialization} uses the \textit{Store map} functionality to store the information about the area, in storage. \\\\ 
+The route to navigate after, in the specific area, is provided by the functionality \textit{Route planning}. \textit{Route planning} uses the information, about the specific area, that it gets from the storage, to plan the most optimal route in which to follow. Furthermore the \textit{Route planning} needs information about the systems power level to insure the \textit{Route planning} takes into consideration if the system needs charging and have to return to the charging station.\\\\
 To insure the system is moving with a constant speed or a speed which is fitted to the height of the grass, detected with the \textit{Grass length detector}, a \textit{Speed control} functionality is necessary in the system.\\\\
-The last functionality, \textit{Course correction},  
-include rain sensor
-the course correction is the brain speed control is the muscles. 
+The last functionality, \textit{Course correction} makes correction for the route, if something is standing in the way, which is detected by the \textit{Obstacle detector}, return the car to the charging station, if it starts to rain, which is detected by the \textit{Rain detector}, or if the system gets of the course, that is made by the \textit{Route planning} functionality.
+The \textit{Course correction} sends the regulations about turns to the \textit{Speed control}, which will make the motors start to turn.\\\\
+The course correction is the brain speed control is the muscles. 
+Remember to put in the rain detector in the picture.
+The GoT system input from the computer.
+The slipping/not flat lawns and the angular sensor part.
 
- 
 
 
  
