@@ -38,6 +38,11 @@ C:\Users\proces\Desktop\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.Propertie
 C:\Users\proces\Desktop\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.csproj.GenerateResource.Cache
 C:\Users\proces\Desktop\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.exe
 C:\Users\proces\Desktop\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.pdb
-C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\bin\Debug\GOTSDKSample.exe.config
-C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.exe
-C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.pdb
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\obj\x86\Debug\CalibrationWindow.baml
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\obj\x86\Debug\MergeWindow.baml
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\obj\x86\Debug\CalibrationWindow.g.cs
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\obj\x86\Debug\MergeWindow.g.cs
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\obj\x86\Debug\App.g.cs
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample_MarkupCompile.cache
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample_MarkupCompile.lref
