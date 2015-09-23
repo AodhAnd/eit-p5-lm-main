@@ -1,0 +1,18 @@
+The Games on Track GT-Position system
+
+The Games on Track GT-Position system (GoT system) is a indoor GPS system, that use radio waves and ultra sound to locate its target. The system is build up by 3 hardware components and a software code to calculate the position with.
+
+The hardware components is the Transmitter, Receiver and Master
+
+(Punkt) Transmitter
+The transmitter is sending out ultra sound waves, to tell where it is. This component is placed on the object, which position the system is searching for. It runs on batteries and have around 100 hours lifetime on 2 AA batteries.
+
+(Punkt) Receiver
+The receiver is the component that is searching for the ultra sound waves, that the transmitter is transmitting. From the ultra waves, the receiver can calculate the distance to the transmitter and the object. To calculate the exact position of the transmitter and the object, there is a minimum need of tree receivers. More receivers can be add to the system for more reliability and to cover a bigger area. The receivers works best when they are placed around 1-2 meters apart, but can be placed up to a distance of 5 meters. The receivers use 14-20 V DC to run, so it can be powered through a old computer charger.
+
+(Punkt) Master
+The master is the central for the system, that gets the data about the distance between the receivers and the transmitter, which is send by the receivers through radio waves. The master collects all this data and send it over to the computer, which have the software code to calculate on the data. The master is powered through the USB cable, that is the connection between the master and the computer.
+
+The software code use these data about distance between the receivers and the transmitter and the location of all the receivers to calculate the position of the transmitter. This is done through a method call Trilateration. This is about how to calculate a position in a three-dimensional space out from three distance from three knowns location, with the help of spheres, circles and triangles. This is the reason that the system need a minimum of three receivers to these calculation. With the additions of more receivers, there can be made check up calculations, to make sure that the position is correct.
+
+Before the system can be used the first time, it needs to be calibrated. These is done with the help of a calibration triangle. One of the points on this calibration triangle is made the origin (0,0,0) of the coordinate system. Another point on the triangle will then be call (X,0,0), in which the line between the first point and the second point will become the X-axis. The last point will be call (X,Y,0) and will determine in which way the positive Y-axis will go. The surface that the calibration triangle is making, will be the zero surface for the Z-axis, so this one should be horizontal. After this the distance between the three points is measured and put into the software. Out from this data, the software can calculate the position of each receiver, with the help of trilateration. 
