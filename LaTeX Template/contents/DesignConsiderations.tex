@@ -13,19 +13,20 @@ To give an overall view of what the system should be able to do, a UML use-case 
 \end{figure}
 
 \noindent
-The main purpose of the system is to automatically navigate in a specific area. In which area to navigate is set up by the \textit{edge initialization} functionality. This functionality handles the marking of the areas edges. It only has to be used in the initialization process of the system. The concept is to only use the functionality after the GoT system has been positioned in the area. The consumer then takes the system around the edges of the area, while the GoT system tracks its positions. It is therefore only necessary to used this functionality, and for the consumer to walk with the system around the areas edges, if the GoT system has been moved. While the edge is being tracked, the \textit{edge initialization} uses the \textit{store map} functionality to store the information collected, in storage. \\\\ 
+The main purpose of the system is to automatically navigate in a specific area. In which area to navigate is set up by the \textit{edge initialization} functionality. This functionality handles the marking of the areas edges. This functionality only has to be used in the initialization process of the system. The concept is to only use the functionality after the GoT system has been positioned in the area. The consumer then takes the system around the edges of the area, while the GoT system tracks its positions. It is therefore only necessary to used this functionality, and for the consumer to walk with the system around the areas edges, if the GoT system has been moved. While the edge is being tracked, the \textit{edge initialization} uses the \textit{store map} functionality to store the information collected, in storage. \\\\ 
+\noindent
+The route to navigate after, in the specific area, is provided by the functionality \textit{route planning}. \textit{Route planning} uses the information, about the specific area, which is collected from the storage, to plan the most optimal route in which to follow. Furthermore the \textit{route planning} needs information about the systems power level to insure the functionality is considering if the system needs charging and therefore have to return to the charging station at some point on the route.\\\\
+\noindent
+The \textit{store map} functionality as described earlier, handles the communication with storage. Hence it stores information, received from the \textit{edge initialization} and collects information from storage when the functionality \textit{route planning} needs it. \\\\
+\noindent
+To insure the system is moving with a desired speed (in a straight line and in a turn) or a speed which is fitted to the height of the grass, detected with the \textit{grass length detector}, a \textit{speed control} functionality is necessary in the system. To insure the \textit{speed control} can deliver the desired speed an \textit{angular sensor} is utilized. \\\\
+\noindent
+The last functionality, \textit{course correction} is used when the system strays of the path calculated by \textit{route planning} or if the path gets blocked.
+The obstacle which is blocking the route is detected by the sensor \textit{obstacle detector}. Furthermore the GoT system and the \textit{angular detector} will detect if the system is not on the desired path, or is the system starts to slip. Also, if it starts to rain, which is detected by the \textit{rain detector}, the system has to return to the charging station.
+The \textit{course correction} sends the calculated data to the functionality \textit{speed control}. Hence the \textit{course correction} is the brain and the \textit{speed control} is the muscles.\\\\
 
-The route to navigate after, in the specific area, is provided by the functionality \textit{route planning}. \textit{Route planning} uses the information, about the specific area, which is collected from the storage, to plan the most optimal route in which to follow. Furthermore the \textit{route planning} needs information about the systems power level to insure the route is considering if the system needs charging and therefore have to return to the charging station at some point.\\\\
 
-To insure the system is moving with a constant speed or a speed which is fitted to the height of the grass, detected with the \textit{grass length detector}, a \textit{speed control} functionality is necessary in the system.\\\\
 
-The last functionality, \textit{course correction} makes correction for the route, if something is standing in the way, which is detected by the \textit{obstacle detector}, return the car to the charging station, if it starts to rain, which is detected by the \textit{rain detector}, or if the system gets of the course, that is made by the \textit{route planning} functionality.
-The \textit{course correction} sends the regulations about turns to the \textit{speed control}, which will make the motors start to turn.\\\\
-
-The course correction is the brain speed control is the muscles. 
-Remember to put in the rain detector in the picture.
-The GoT system input from the computer.
-The slipping/not flat lawns and the angular sensor part.
 
 
 
