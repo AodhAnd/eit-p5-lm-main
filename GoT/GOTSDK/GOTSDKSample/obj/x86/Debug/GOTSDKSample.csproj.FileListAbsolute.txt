@@ -60,3 +60,6 @@ C:\Users\proces\Desktop\15gr510\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.P
 C:\Users\proces\Desktop\15gr510\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.csproj.GenerateResource.Cache
 C:\Users\proces\Desktop\15gr510\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.exe
 C:\Users\proces\Desktop\15gr510\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.pdb
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GoT\GOTSDK\GOTSDKSample\bin\Debug\GOTSDKSample.exe.config
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GoT\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.exe
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GoT\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.pdb

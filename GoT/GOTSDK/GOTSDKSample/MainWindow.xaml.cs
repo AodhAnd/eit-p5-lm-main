@@ -43,40 +43,22 @@ namespace GOTSDKSample
 
 
 
-        public class SerialPortProgram
+    public class SerialPortProgram
         {
             // Create the serial port with basic settings
             public SerialPort port = new SerialPort("COM3",
-              9600, Parity.None, 8, StopBits.One);
-
-            //[STAThread]
-            //static void Main(string[] args)
-            //{
-            //    // Instatiate this class
-            //    new SerialPortProgram();
-            //}
+              9600, Parity.None, 8, StopBits.One);  
 
             public SerialPortProgram()
-            {
-                //Console.WriteLine("Incoming Data:");
-
-                // Attach a method to be called when there
-                // is data waiting in the port's buffer
+            {                
                 port.DataReceived += new
-                  SerialDataReceivedEventHandler(port_DataReceived);
-
-                // Begin communications
+                SerialDataReceivedEventHandler(port_DataReceived);
                 port.Open();
-
-                // Enter an application loop to keep this thread alive
-                //Application.Run();
             }
 
             private void port_DataReceived(object sender,
               SerialDataReceivedEventArgs e)
             {
-                // Show all the incoming data in the port's buffer
-                //Console.WriteLine(port.ReadExisting());
             }
         }
  
@@ -94,13 +76,6 @@ namespace GOTSDKSample
         private const int portNum = 4242;
         private const string hostName = "localhost";
         public int T = 1; public int TL = 0;
-        public int Px = 0;
-        public int Py = 0;
-        public int Pz = 0;
-
-        //public SerialPortProgram SPP;
-
-
 
 
 		public bool IsMerging 
@@ -179,55 +154,11 @@ namespace GOTSDKSample
             this.logFilePath = Path.Combine(LogFolder, DateTime.Now.ToString().Replace(':', '_') + ".txt");
 
             if (!Directory.Exists(LogFolder))
-                Directory.CreateDirectory(LogFolder);
-
-            //tcpup();
-            //[STAThread]
-            //SPP = new SerialPortProgram();
-
+                Directory.CreateDirectory(LogFolder);          
            
-           
-
             TryOpenLastCalibration();
 		}
         
-        /*public void tcpup()
-        {
-
-             try
-                {
-                    
-                        TcpListener listener = new TcpListener(portNum);
-
-                        listener.Start();
-                        client = listener.AcceptTcpClient();
-                        ns = client.GetStream();
-                        
-                        Console.WriteLine("...");
-
-                            //Px = 10; Py = 12; Pz = 1231;
-                            byte[] bytePos = Encoding.ASCII.GetBytes(Px + Py + Pz + "\n");
-
-                            ns.Write(bytePos, 0, bytePos.Length);
-                            Console.WriteLine(bytePos.Length);
-                            using (var writer = File.AppendText(this.logFilePath))
-                            {
-                                writer.WriteLine("TCP send , 0 ,0 ,0");
-                            }
-                            this.master.BeginConnect();
-
-
-                }
-                catch (Exception e)
-                {
-                    using (var writer = File.AppendText(this.logFilePath))
-                    {
-                        writer.WriteLine("TCP error, 0, 0, 0");
-                    }
-                }
-            
-        } */
-
         
         // Try to open the last calibration we did in this sample application.
 		private void TryOpenLastCalibration()
@@ -246,17 +177,12 @@ namespace GOTSDKSample
 
 		private void MainWindow_Closed(object sender, EventArgs e)
 		{
-            //ns.Close();
-            //client.Close();
-			// Close the Master USB connection
 			if (this.master != null)
 				this.master.Close();
 		}
 
 		private void Button_ConnectToMaster(object sender, RoutedEventArgs e)
 		{
-			// Try to connect. This will return false immediately if it fails to find the proper USB port.
-			// Otherwise, it will begin connecting (async) and the "Master2X.OnMasterStatusChanged" event will be fired soon. 
 			if (!this.master.BeginConnect())
 			{
 				MessageBox.Show("A Master could not be detected. Make sure it is connected and the Silabs USB driver has been installed.", "Failed to detect Master",
@@ -331,49 +257,56 @@ namespace GOTSDKSample
 				master.SetTransmitterState(tx.GOTAddress, GetTransmitterState(tx.GOTAddress), Transmitter.UltraSonicLevel.High);
 		}
 
-        private string PosToString(int i)
+
+        // Gr510 function start
+
+        private string PosToString(int i) //New function, that takes a int and makes it to a 4 digit signed number ({+/-}{4 digit number})
         {
             string s = "";
-            if (i < 0)
+            if (i < 0) // if the number is smaller than zero, the sign bit is '-'
             {
-                if (i < -999)
+                if (i < -999) 
                 {
-                    return i.ToString();
+                    return i.ToString(); // if the number is smaller than -999, the number will already have the right setup and is returned
                 }
-                s += "-0";
-                if (i < -99)
+                s += "-0"; // if not smaller than -999, there is added '-0' to the string
+                if (i < -99) 
                 {
-                    return s + (i * (-1)).ToString();
+                    return s + (i * (-1)).ToString(); // if the number is smaller than -99 and not return yet, the number is multiplied by -1 and added to the string and returned
                 }
-                s += "0";
+                s += "0"; // if not smaller than -99, there is added '0' to the string
                 if (i < -9)
                 {
-                    return s + (i * (-1)).ToString();
+                    return s + (i * (-1)).ToString(); // if the number is smaller than -9 and not return yet, the number is multiplied by -1 and added to the string and returned
                 }
-                s += "0";
-                return s + (i * (-1)).ToString();
+                s += "0"; // if not smaller than -9, there is added '0' to the string
+                return s + (i * (-1)).ToString(); // the number is mutiplied by -1 and added to the string and returned
             }
-            s = "+";
-            if (i > 999)
+
+            s = "+"; // there is added a '+' to the string, becaurse the rest of the numbers are positiv.
+            if (i > 999) 
             {
-                return s + i.ToString();
+                return s + i.ToString(); // if the number is bigger than 999, the number is added to the string and returned
             }
-            s += "0";
+            s += "0"; // if not bigger than 999, there is added '0' to the string
             if (i > 99)
             {
-                return s + i.ToString();
+                return s + i.ToString(); // if the number is bigger than 99, the number is added to the string and returned
             }
-            s += "0";
+            s += "0"; // if not bigger than 999, there is added '0' to the string
             if (i > 9)
             {
-                return s + i.ToString();
+                return s + i.ToString(); // if the number is bigger than 9, the number is added to the string and returned
             }
-            s += "0";
-            return s + i.ToString();
+            s += "0"; // if not bigger than 999, there is added '0' to the string
+            return s + i.ToString(); // the number is added to the string and returned
         }
 
-		// Called when a measurement is received from the master. In this stage a "measurement" contains distances. We need a scenario for converting the distances into a (X,Y,Z) position.
-		private void master_OnMeasurementReceived(Measurement measurement)
+        // Gr510 function end
+
+
+        // Called when a measurement is received from the master. In this stage a "measurement" contains distances. We need a scenario for converting the distances into a (X,Y,Z) position.
+        private void master_OnMeasurementReceived(Measurement measurement)
 		{
 			// Are we currently calibrating?
 			if (this.calibrationDialog != null)
@@ -417,53 +350,31 @@ namespace GOTSDKSample
                                     dist[i] = measArray.ElementAt(i).Distance;
                                 }
 
-                                /*SerialPort portout = new SerialPort("COM4");
-                                portout.Open();
-                                portout.WriteLine("Hallo");
-                                portout.Close(); */
-                              //  writer.WriteLine(string.Format("{0}: {1},{2},{3} -- {4},{5},{6},{7},{8},{9}", timeStamp, (int)pos.Position.X, (int)pos.Position.Y, (int)pos.Position.Z, dist[0], dist[1], dist[2], dist[3], dist[4], dist[5]));
-                                Px = (int)pos.Position.X;
-                                Py = (int)pos.Position.Y;
-                                Pz = (int)pos.Position.Z;
-
-                                string sX = PosToString(Px);
-                                string sY = PosToString(Py);
-                                string sZ = PosToString(Pz);
                                 writer.WriteLine(string.Format("{0}: {1},{2},{3} -- {4},{5},{6},{7},{8},{9}", timeStamp, sX, sY, sZ, dist[0], dist[1], dist[2], dist[3], dist[4], dist[5]));
+
+
+                                // Group510 code start
+
+                                string sX = PosToString((int)pos.Position.X); // takes the coordinates and put into our PosToString function,
+                                string sY = PosToString((int)pos.Position.Y); // that converts the position coordinates too a signed 4 digit number                        
+                                string sZ = PosToString((int)pos.Position.Z);                                
 
                                 try
                                 {
-                                    SerialPort serOut = new SerialPort("COM9");
-                                    serOut.Open();
-                                    serOut.WriteLine(sX + sY + sZ);
-                                    //serOut.WriteLine(sY);
-                                    //serOut.WriteLine(sZ);
-                                    serOut.Close();
+                                    SerialPort serOut = new SerialPort("COM9"); // setup a new serial port
+                                    serOut.Open();                              // open up the communication to the serial port
+                                    serOut.WriteLine(sX + sY + sZ);             // write the three coordinates out, with a stop bit at the end ('/n')
+                                    serOut.Close();                             // close up the communication to the serial port
                                 }
                                 catch
                                 {
-                                    MessageBox.Show("Fuck");
+                                    MessageBox.Show("Message not sendt");       // called if the communication with the serial port don't work
                                 } 
 
+                                // Group510 code end
                                 
-                                T = 1;
-                                /*try
-                                {
-                                    byte[] bytePos = Encoding.ASCII.GetBytes(Px + "\n");
-                                    ns.Write(bytePos, 0, bytePos.Length);
-                                    bytePos = Encoding.ASCII.GetBytes(Py + "\n");
-                                    ns.Write(bytePos, 0, bytePos.Length);
-                                    bytePos = Encoding.ASCII.GetBytes(Pz + "\n");
-                                    ns.Write(bytePos, 0, bytePos.Length);
-                                    Console.WriteLine("Sent");
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine("Can not send");
-                                } */
-                                //bytesSent = Encoding.ASCII.GetBytes(string.Format("{0}: {1},{2},{3}", timeStamp, (int)pos.Position.X, (int)pos.Position.Y, (int)pos.Position.Z));
-                                //STREAM.Write(bytesSent, 0, bytesSent.Length);
-                                //writer.WriteLine(SPP.port.ReadExisting());
+
+                                T = 1;                              
 
                             }
                             using (var writer = File.AppendText("acc_log.txt"))
