@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO.Ports;
+
+namespace SerialCom
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {            
+            string[] Ports = null;
+            Ports = SerialPort.GetPortNames();
+            try
+            {
+                for(int i = 0; i < 10; i++)
+                {
+                    Console.WriteLine(Ports[i]);
+                }
+            }
+            catch
+            {
+
+            }
+            SerialPort Out = new SerialPort(Ports[0]);
+            while (true)
+            {
+                int ii = 0;
+                while (ii < 5)
+                {
+                    ii++;
+                    Out.Open();
+                    Out.WriteLine(ii.ToString() + ii.ToString());
+                    Out.Close();
+                    //Console.ReadLine();
+                }
+                Console.WriteLine("H");
+                Console.ReadLine();
+            }
+        }
+    }
+}
