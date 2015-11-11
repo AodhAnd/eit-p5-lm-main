@@ -14,30 +14,24 @@ char byte1;
 char byte2;
 int batReading;
 
-void int DutyCycle(int dutyCycle)
+void dutyCycle(int iDutyCycle)   //servo area of opperation: 2500-450 = 2050
 {
-  int pulseWidth = dutyCycle * 300;
+  int pulsewidth = (int)( iDutyCycle*( ( 2500 - 450 )/100 ) + 450 );
+  setServo(pulsewidth);
 }
 
 void printSpeed()
 {
-  int pulsewidth = 880;
-  int count = 0;
+  int iDutyCycle = 55;
+  dutyCycle(iDutyCycle);  //55% = 55* ( ( 2500 - 450 )/100 ) + 450 ) = 1578 ms ~ vehicle going straight
+  
   while(1)
   {
-    count++;
-    
-    if (count > 100){
-      pulsewidth+=10;
-      count = 0;
-    }
-    
-    if( pulsewidth >= 1500)
+    if( timestamp%2000 <= 50 )  //every 2 sec (50 ms security margin)
     {
-      setServo(1450);
-      speed(0);
+      iDutyCycle =+2;            //add 2% to angle
+      dutyCycle(iDutyCycle);
     }
-    else setServo(pulsewidth);
     
     batReading = analogRead(8); //reading battery voltage
     speed0 = getSpeed(0);       //reading speed of first belt
@@ -53,7 +47,7 @@ void printSpeed()
     Serial.print(",");
     Serial.print(timestamp);
     Serial.print(",");
-    Serial.print(pulsewidth);
+    Serial.print(iDutyCycle);
     Serial.print("\n");
     
     Serial.print("\r");       //carrige return to return the curser for each new line
