@@ -1,0 +1,28 @@
+2.4 m/s is the max velocity(steady state)
+point to read the time constant:
+
+(topSpeed - firstStepSpeed)*.632              
+(   2.9   -       1.1     )*.632  = 1.1376 - now we a percented of the topspeed (see graph where)
+=>
+Adding the offset of the first step to find the point to read the time constant:
+1.1376 + 1.1 = 2.2376 [m/s] - To find it in the data, we need to move it up again?
+- before the percented of the topspeed was found by making a new zero, but we need to look at the data to get the
+- the actual time constant.
+
+The value in time here is:
+5312 [ms]
+
+the value in time where the rising edge starts is:
+5054 [ms]
+
+So the time constant is: 5312 - 5054 = 258 [ms]
+tau = 0.258 [s]
+
+Using this formula to calculate J:
+J = tau*(Ra*B+Kt*Ke)*(Ra^-1)
+
+
+Where did we find it? Good question!:D
+Thomas found it in an other student report containing a tracked vehicle.
+Where do you find this student repport you ask?
+Good question! Don't know!:)
