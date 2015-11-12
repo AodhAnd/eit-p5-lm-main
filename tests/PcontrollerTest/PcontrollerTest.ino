@@ -16,7 +16,7 @@ int batReading;
 
 void P_controller(){
 
-  const float Wantedspeed = 1.0;
+  const float Wantedspeed = 2.0;
   const float Speedtoduty = 1.0/(7.2*0.42);//to get from speed to duty cycle
 
   float Actualspeed;
@@ -65,6 +65,9 @@ void P_controller(){
 
 void setup() {
     k_init(2,1,0);
+
+  pinMode(5,OUTPUT);
+  initServo();
   
   pinMode(dPinMove1, OUTPUT); 
   pinMode(dPinMove2, OUTPUT);
@@ -78,10 +81,10 @@ void setup() {
   pinMode(35,INPUT);
 
   initHallTimers();
-  initServo();
+
   delay(2000);
-  speed(20);
-  delay(1000);
+  speed(10);
+  delay(2500);
   pTaskInfo=k_crt_task(tSpeed,10,stack,300);
   task2=k_crt_task(P_controller,11,stack2,300);
 
