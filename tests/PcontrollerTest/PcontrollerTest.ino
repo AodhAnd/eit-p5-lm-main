@@ -31,6 +31,7 @@ void P_controller(){
     speed1 = getSpeed(1);       //reading speed of the other belt
     timestamp = millis();       //getting time at which data was recorded
 
+  If(timestamp > 4500){
     Actualspeed = (speed0 + speed1)/2; // average speed of the vehicle
 
     Error = Wantedspeed - Actualspeed;
@@ -39,7 +40,7 @@ void P_controller(){
     duty = test;
     if(duty > 100) duty = 100;
     if(duty < 0) duty = 0;
-    
+  }
     //number between 0 and a 100%
 
     if(timestamp < 10000) speed(duty);
@@ -84,7 +85,6 @@ void setup() {
 
   delay(2000);
   speed(10);
-  delay(2500);
   pTaskInfo=k_crt_task(tSpeed,10,stack,300);
   task2=k_crt_task(P_controller,11,stack2,300);
 
