@@ -22,7 +22,7 @@ void P_controller(){
   float Actualspeed;
   float Error;
   const float PGain = 1.0;
-  int duty;
+  int duty = 20;
   float test;
   while(1){
     
@@ -31,12 +31,12 @@ void P_controller(){
     speed1 = getSpeed(1);       //reading speed of the other belt
     timestamp = millis();       //getting time at which data was recorded
 
-  If(timestamp > 4500){
+  if(timestamp > 4500){
     Actualspeed = (speed0 + speed1)/2; // average speed of the vehicle
 
     Error = Wantedspeed - Actualspeed;
-
-    test = ((Error*PGain+Wantedspeed)*Speedtoduty)*100; 
+    //duty = Wantedspeed*Speedtoduty*100;
+    test = ((Error*PGain)*Speedtoduty)*100; 
     duty = test;
     if(duty > 100) duty = 100;
     if(duty < 0) duty = 0;
