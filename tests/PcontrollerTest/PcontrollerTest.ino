@@ -17,7 +17,7 @@ int batReading;
 void P_controller(){
 
   const float Wantedspeed = 2.0;
-  const float Speedtoduty = 1.0/(7.2*0.42);//to get from speed to duty cycle
+  const float Speedtoduty = 1.0/(8*0.42);//to get from speed to duty cycle
 
   float Actualspeed;
   float Error;
@@ -36,7 +36,7 @@ void P_controller(){
 
     Error = Wantedspeed - Actualspeed;
     //duty = Wantedspeed*Speedtoduty*100;
-    test = ((Error*PGain)*Speedtoduty)*100; 
+    test = ((Error*PGain+Wantedspeed)*Speedtoduty)*100; 
     duty = test;
     if(duty > 100) duty = 100;
     if(duty < 0) duty = 0;
