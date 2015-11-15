@@ -16,13 +16,13 @@ int batReading;
 
 void P_controller(){
 
-  const float Wantedspeed = 1.0;
-  const float Speedtoduty = 1.0/(7.2*0.42);//to get from speed to duty cycle
+  const float Wantedspeed = 2.0;
+  const float Speedtoduty = 1.0/(8*0.42);//to get from speed to duty cycle
 
   float Actualspeed;
   float Error;
   const float PGain = 1.0;
-  int duty;
+  int duty = 20;
   float test;
   while(1){
     
@@ -31,15 +31,16 @@ void P_controller(){
     speed1 = getSpeed(1);       //reading speed of the other belt
     timestamp = millis();       //getting time at which data was recorded
 
+  if(timestamp > 4500){
     Actualspeed = (speed0 + speed1)/2; // average speed of the vehicle
 
     Error = Wantedspeed - Actualspeed;
-
+    //duty = Wantedspeed*Speedtoduty*100;
     test = ((Error*PGain+Wantedspeed)*Speedtoduty)*100; 
     duty = test;
     if(duty > 100) duty = 100;
     if(duty < 0) duty = 0;
-    
+  }
     //number between 0 and a 100%
 
     if(timestamp < 10000) speed(duty);
@@ -65,6 +66,9 @@ void P_controller(){
 
 void setup() {
     k_init(2,1,0);
+
+  pinMode(5,OUTPUT);
+  initServo();
   
   pinMode(dPinMove1, OUTPUT); 
   pinMode(dPinMove2, OUTPUT);
@@ -78,10 +82,9 @@ void setup() {
   pinMode(35,INPUT);
 
   initHallTimers();
-  initServo();
+
   delay(2000);
-  speed(20);
-  delay(1000);
+  speed(10);
   pTaskInfo=k_crt_task(tSpeed,10,stack,300);
   task2=k_crt_task(P_controller,11,stack2,300);
 
