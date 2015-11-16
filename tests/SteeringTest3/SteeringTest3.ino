@@ -27,9 +27,9 @@ void printSpeed()
   
   while(1)
   {
-    if( timestamp%2500 <= 50 && iDutyCycle <= 56 )     //every 2 sec (50 ms security margin)
+    if( timestamp >= 1000 && timestamp >= 1050 )     //after 1 sec (50 ms security margin)
     {
-      iDutyCycle = iDutyCycle + 1; //add 2% to angle
+      iDutyCycle = iDutyCycle + 2; //add 2% to angle
       dutyCycle(iDutyCycle);
     }
     
