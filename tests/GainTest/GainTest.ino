@@ -22,28 +22,37 @@ void GainTest(){
     speed0 = getSpeed(0);       //reading speed of first belt
     speed1 = getSpeed(1);       //reading speed of the other belt
     timestamp = millis();       //getting time at which data was recorded
+    int a, b, c, d;
+    a = 0;
+    b = 0;
+    c = 0;
+    d = 0;
 
-  if(timestamp > 4000){
+  if(timestamp%4000 < 50 && a == 0){
 
      speed(40);
+     a++;
       
   }
 
-    if(timestamp > 6000){
+    if(timestamp%6000 < 50 && b == 0){
 
      speed(60);
+     b++;
       
   }
 
-      if(timestamp > 8000){
+      if(timestamp%8000 < 50 && c == 0){
 
      speed(80);
+     c++;
       
   }
 
-      if(timestamp > 10000){
+      if((timestamp%10000 < 50) && d == 0){
 
      speed(100);
+     d++;
       
   }
 
@@ -82,7 +91,7 @@ void setup() {
   delay(2000);
   speed(20);
   pTaskInfo=k_crt_task(tSpeed,10,stack,300);
-  task2=k_crt_task(GainTest,11,stack2,300);
+  //task2=k_crt_task(GainTest,11,stack2,300);
 
   k_start(1); // krnl runs with 1 msec heartbeat
   /* NOTE: legal time values:
