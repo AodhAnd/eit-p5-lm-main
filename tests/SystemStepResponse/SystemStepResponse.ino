@@ -15,7 +15,7 @@ char byte2;
 int batReading;
 
 void StepOmatic(){
-  int duty = 10;
+  int duty = 0;
   long int startTime = millis();
   while(1){
     
@@ -23,9 +23,9 @@ void StepOmatic(){
     speed0 = getSpeed(0);       //reading speed of first belt
     speed1 = getSpeed(1);       //reading speed of the other belt
     timestamp = millis()-startTime;       //getting time at which data was recorded
-//    duty=(timestamp/1000);
+    duty=(timestamp/3000)*20+20;
     
-    if(duty > 99) duty = 99;
+    if(duty > 100) duty = 100;
     if(duty < 0) duty = 0;
   
     //number between 0 and a 100%
