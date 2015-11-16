@@ -1,0 +1,17 @@
+Removed Pin From Net: NetName=3V3 Pin=C3-2
+Removed Pin From Net: NetName=3V3 Pin=U2-4
+Removed Pin From Net: NetName=NetU2_5 Pin=U3-2
+Removed Pin From Net: NetName=IO52 Pin=U3-3
+Removed Pin From Net: NetName=NetU2_3 Pin=U3-4
+Removed Pin From Net: NetName=IO51 Pin=U3-5
+Removed Pin From Net: NetName=IO53 Pin=U3-7
+Added Pin To Net: NetName=3V3 Pin=U2-2
+Added Pin To Net: NetName=IO52 Pin=U3-9
+Added Pin To Net: NetName=NetU2_5 Pin=U3-10
+Added Pin To Net: NetName=IO51 Pin=U3-11
+Added Pin To Net: NetName=NetU2_3 Pin=U3-12
+Added Pin To Net: NetName=IO53 Pin=U3-14
+Added Pin To Net: NetName=3V3 Pin=U3-15
+Added Pin To Net: NetName=NetC3_2 Pin=C3-2
+Added Pin To Net: NetName=NetC3_2 Pin=U2-4
+Added Net: Name=NetC3_2

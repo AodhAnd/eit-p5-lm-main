@@ -6,38 +6,42 @@
 \renewcommand\figurename{Figur}
 \renewcommand\tablename{Tabel}
 
-\section*{Supervisor meeting\\ \small 10th of September 2015}
-\subsection{Study Regulations/Expectations}
+\section*{Supervisor meeting\\ \small 13th of November 2015}
+\subsection{Vehicle running free (without controller)}
 \begin{itemize}
-\item[-] We do not need to concentrate equally on all subjects.
-\item[-] Not all topics in the study regulations needs to be included.
+\item[-] There is a lot of Coulomb friction in this system (stiction at the beginning)
+\item[-] Adapt the voltage at the beginning to get rid of this dry friction (put an offset) \\
+$\rightarrow$ Then the first step might have the same gain and time constant as the second step, in which case the system would look closer to a first order system
+\item[-] The comparison of step-responses between real and approximated systems seems really nice : they match very well
 \end{itemize}
 
-\subsection{Main Content in Project}
+\subsection{Controllers}
 \begin{itemize}
-\item[-] Experts in dynamics! (Differential equations, Laplace transform etc.)
-\item[-] Modeling containing deferential equations.
-\item[-] Control and communication is not as important as modeling in this project.
+\item[-] both need to be re-done with the right gain which has to be re-measured with the right PWM frequency
 \end{itemize}
 
-\subsection{First Things to Do}
+\subsection{Steering model and tests}
 \begin{itemize}
-\item[-] One of the first things to do is to figure out how the GoT (Games on Track) positioning system works.
-\item[-] We need to describe how the GoT positioning system works.
-\item[-] Get hardware working.
+\item[-] The time must appear in the test
+\item[-] We need to consider `small signals' : try a step-response by driving at a constant speed and then steer (use angle output)
+\item[-] See how fast it integrates the angular velocity
+\item[-] Do only the new test (just described)
+\item[-] Maybe the modeling of the differential is not that complicated (2 equations) :
+\begin{itemize}
+  \item $\omega_m = (\omega_1 + \omega_2) \cdot K$
+  \item $\tau_m \cdot \omega_m = (\tau_1 \cdot \omega_1 + \tau_2 \cdot \omega_2) + K^2$, where $K$ is gear ratio
+\end{itemize}
+\item[-] See how the measured data fits the modeling of the steering
+
 \end{itemize}
 
-\subsection{Further Remarks}
+\subsection{Inertia formula}
 \begin{itemize}
-\item[-] Position control needs to be included on the controller.
-\item[-] Delimitation should happen fairly early.
-\item[-] Do not make too many requirements - you will not be able to test them.
-\item[-] Do not write the requirements before we know enough to put down something specific enough that it is testable (no pseudo requirements!)
-\item[-] Make some clear agreements in the group, so everyone is clear on work-flow and methodology.
+\item[-] We need to look at it a bit more before Tom wil help us
 \end{itemize}
 
 \subsection{Next Supervisor meeting}
-Schedule by mail.
+Next Friday (20th of November) at 12.30
 
 \end{document}
 
