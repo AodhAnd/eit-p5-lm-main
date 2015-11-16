@@ -14,13 +14,13 @@ PwithFF2 = csvread('PwithFF2.csv');
 
 Stepdata = [0.38 1.13 1.84 2.45 3 ; 7.89*0.2 7.75*0.4 7.52*0.6 7.29*0.8 6.97];
 
-p = scatter(Stepdata(2,:),Stepdata(1,:));
-x = Stepdata(:,1);
-y = Stepdata(:,2);
+p = scatter(Stepdata(2,:),Stepdata(1,:), 15, 'b', '*');
+x = Stepdata(1,:)'
+y = Stepdata(2,:)'
 hold
 %Creating least square solution
 h = lsline
-%set( h, 'color', 'r', 'LineWidth', 1 );
+set( h, 'color', 'r', 'LineWidth', 1 );
 %hold;
 %scatter(Step1(:,5)/1000,Step1(:,4));
 %hold
@@ -34,10 +34,10 @@ h = lsline
 title('The Gain of each Speed Step')
 xlabel('Voltage [V]')
 ylabel('Velocity [m \cdot s^{-1}]')
-p = polyfit( x, y, 1 );
+p = polyfit( y, x, 1 );
 a = p(:,1)
 b = p(:,2)
 
-legend('Data points', sprintf( 'y = %0.49fx - %0.38f', a, b ),'Location', 'southeast' )
+legend('Data points', sprintf( 'y = %0.3fx %0.3f', a, b ),'Location', 'southeast' )
 grid on
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
