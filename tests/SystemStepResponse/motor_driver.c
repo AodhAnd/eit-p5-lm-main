@@ -20,7 +20,7 @@ int initMotor(){
 
 int speed (int iSpeed){
   if (iSpeed<0) iSpeed = 0;
-  if (iSpeed>99) iSpeed = 99;
+  if (iSpeed>100) iSpeed = 100;
   //int iAnalogSpeed = (iSpeed * 255) / 100;  //convert in analog scale
   OCR2B = iSpeed;
   return 0;
