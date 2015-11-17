@@ -1,0 +1,74 @@
+***Sending part***
+
+// Group510 code start
+
+string sX = PosToString((int)pos.Position.X); // takes the coordinates and put into our PosToString function,
+string sY = PosToString((int)pos.Position.Y); // that converts the position coordinates too a signed 4 digit number                        
+string sZ = PosToString((int)pos.Position.Z);                                
+
+try
+{
+	SerialPort serOut = new SerialPort("COM9"); // setup a new serial port
+	serOut.Open();                              // open up the communication to the serial port
+	serOut.WriteLine(sX + sY + sZ);             // write the three coordinates out, with a stop bit at the end ('/n')
+	serOut.Close();                             // close up the communication to the serial port
+}
+catch
+{
+	MessageBox.Show("Message not sendt");       // called if the communication with the serial port don't work
+} 
+
+// Group510 code end
+
+
+
+
+
+
+***Convertion part***
+
+// Gr510 function start
+
+private string PosToString(int i) //New function, that takes a int and makes it to a 4 digit signed number ({+/-}{4 digit number})
+{
+	string s = "";
+	if (i < 0) // if the number is smaller than zero, the sign bit is '-'
+	{
+		if (i < -999) 
+                {
+                   	return i.ToString(); // if the number is smaller than -999, the number will already have the right setup and is returned
+                }
+		s += "-0"; // if not smaller than -999, there is added '-0' to the string
+		if (i < -99) 
+		{
+			return s + (i * (-1)).ToString(); // if the number is smaller than -99 and not return yet, the number is multiplied by -1 and added to the string and returned
+		}
+		s += "0"; // if not smaller than -99, there is added '0' to the string
+		if (i < -9)
+		{
+			return s + (i * (-1)).ToString(); // if the number is smaller than -9 and not return yet, the number is multiplied by -1 and added to the string and returned
+		}
+		s += "0"; // if not smaller than -9, there is added '0' to the string
+		return s + (i * (-1)).ToString(); // the number is mutiplied by -1 and added to the string and returned
+	}
+
+	s = "+"; // there is added a '+' to the string, becaurse the rest of the numbers are positiv.
+	if (i > 999) 
+	{
+		return s + i.ToString(); // if the number is bigger than 999, the number is added to the string and returned
+	}
+	s += "0"; // if not bigger than 999, there is added '0' to the string
+	if (i > 99)
+	{
+		return s + i.ToString(); // if the number is bigger than 99, the number is added to the string and returned
+        }
+        s += "0"; // if not bigger than 999, there is added '0' to the string
+        if (i > 9)
+        {
+		return s + i.ToString(); // if the number is bigger than 9, the number is added to the string and returned
+        }
+        s += "0"; // if not bigger than 999, there is added '0' to the string
+	return s + i.ToString(); // the number is added to the string and returned
+}
+
+// Gr510 function end
