@@ -4,7 +4,8 @@ AAU Electronics and IT students' 5th semester project (2015)
 ## Repository hierarchy
 In this repository stands:
 * A LaTeX template for supervisor meetings (under meetings/)
-* Tests and simulation code and pictures (under tests/)
+* Tests : plotting and testing code and pictures (under tests/)
+* Simulations and values sheet (under simulation/)
 * Third party code used in our project (under GoT/ for the Games on Track SDK)
 * The project code itself (to be added under drivers/)
 * Circuits schematics (under schematics/)
