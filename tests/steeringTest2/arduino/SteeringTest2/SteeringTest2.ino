@@ -22,14 +22,14 @@ void dutyCycle(int iDutyCycle)   //servo area of opperation: 2500-450 = 2050
 
 void printSpeed()
 {
-  int iDutyCycle = 55;
+  int iDutyCycle = 56;
   dutyCycle(iDutyCycle);  //55% = 55* ( ( 2500 - 450 )/100 ) + 450 ) = 1578 ms ~ vehicle going straight
   
   while(1)
   {
-    if( timestamp%2000 <= 50 )  //every 2 sec (50 ms security margin)
+    if( timestamp%2500 <= 50 && iDutyCycle <= 56 )     //every 2 sec (50 ms security margin)
     {
-      iDutyCycle =+2;            //add 2% to angle
+      iDutyCycle = iDutyCycle + 1; //add 2% to angle
       dutyCycle(iDutyCycle);
     }
     
@@ -49,7 +49,6 @@ void printSpeed()
     Serial.print(",");
     Serial.print(iDutyCycle);
     Serial.print("\n");
-    
     Serial.print("\r");       //carrige return to return the curser for each new line
     
     delay(20);
@@ -73,7 +72,7 @@ void setup() {
 
   initHallTimers();
   delay(2000);
-  speed(20);
+  speed(30);
   delay(1000);
 
   pTaskInfo=k_crt_task(tSpeed,10,stack,300);

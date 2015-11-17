@@ -14,69 +14,55 @@ char byte1;
 char byte2;
 int batReading;
 
-void P_controller(){
+void dutyCycle(int iDutyCycle)   //servo area of opperation: 2500-450 = 2050
+{
+  int pulsewidth = (int)( iDutyCycle*( ( 2500 - 450 )/100 ) + 450 );
+  setServo(pulsewidth);
+}
 
-  const float Wantedspeed = 2;
-  float Speedtoduty;
-
-  float Actualspeed;
-  float Error;
-  const float PGain = 1.0;
-  const float SysGain = 0.49;
-  int duty = 20;
-  float test;
-  float feedFwd = Wantedspeed;
-  while(1){
+void printSpeed()
+{
+  int iDutyCycle = 56;
+  dutyCycle(iDutyCycle);  //55% = 55* ( ( 2500 - 450 )/100 ) + 450 ) = 1578 ms ~ vehicle going straight
+  
+  while(1)
+  {
+    if( timestamp >= 1000 && timestamp >= 1050 )     //after 1 sec (50 ms security margin)
+    {
+      iDutyCycle = iDutyCycle + 2; //add 2% to angle
+      dutyCycle(iDutyCycle);
+    }
     
     batReading = analogRead(8); //reading battery voltage
     speed0 = getSpeed(0);       //reading speed of first belt
     speed1 = getSpeed(1);       //reading speed of the other belt
     timestamp = millis();       //getting time at which data was recorded
 
-
-    Actualspeed = (speed0 + speed1)/2; // average speed of the vehicle
-    if(timestamp>4000){
-    Error = Wantedspeed - Actualspeed;
-    //duty = Wantedspeed*Speedtoduty*100;
-    Speedtoduty = 1.0/(((float)batReading/102.4)*SysGain);// Battery reading: 1024 = 10V, so 1V = 102.4. multiply that with the system gain to calculate the duty cycle.
-    test = (((Error)*PGain+feedFwd+0.38)*Speedtoduty)*100.0; 
-    duty = test;
-    if(duty > 100) duty = 100;
-    if(duty < 0) duty = 0;
-    }
-    //number between 0 and a 100%
-
-    if(timestamp < 10000) speed(duty);
-    else speed(0);
-    
     //printing out the data whith commas for easy export as .scv-file:
-    Serial.print((float)batReading/102.4);
-    Serial.print(",");
-    Serial.print(duty);
-    Serial.print(",");
-    Serial.print(Error);
+    Serial.print(batReading);
     Serial.print(",");
     Serial.print(speed0);
     Serial.print(",");
     Serial.print(speed1);
     Serial.print(",");
     Serial.print(timestamp);
+    Serial.print(",");
+    Serial.print(iDutyCycle);
     Serial.print("\n");
     Serial.print("\r");       //carrige return to return the curser for each new line
-    delay(30);
+    
+    delay(20);
     }
   }
 
 void setup() {
     k_init(2,1,0);
-
   pinMode(5,OUTPUT);
   initServo();
-  initMotor();
   pinMode(dPinMove1, OUTPUT); 
   pinMode(dPinMove2, OUTPUT);
   pinMode(dPinOnOff, OUTPUT);
-
+  pinMode(dPinSpeed, OUTPUT);
   enableMotor(1);
   direction(1);
 
@@ -85,10 +71,12 @@ void setup() {
   pinMode(35,INPUT);
 
   initHallTimers();
-
   delay(2000);
+  speed(30);
+  delay(1000);
+
   pTaskInfo=k_crt_task(tSpeed,10,stack,300);
-  task2=k_crt_task(P_controller,11,stack2,300);
+  task2=k_crt_task(printSpeed,11,stack2,300);
 
   k_start(1); // krnl runs with 1 msec heartbeat
   /* NOTE: legal time values:

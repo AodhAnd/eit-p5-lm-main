@@ -14,48 +14,50 @@ char byte1;
 char byte2;
 int batReading;
 
-void P_controller(){
+void GainTest(){
 
-  const float Wantedspeed = 2;
-  float Speedtoduty;
-
-  float Actualspeed;
-  float Error;
-  const float PGain = 1.0;
-  const float SysGain = 0.49;
-  int duty = 20;
-  float test;
-  float feedFwd = Wantedspeed;
   while(1){
     
     batReading = analogRead(8); //reading battery voltage
     speed0 = getSpeed(0);       //reading speed of first belt
     speed1 = getSpeed(1);       //reading speed of the other belt
     timestamp = millis();       //getting time at which data was recorded
+    int a, b, c, d;
+    a = 0;
+    b = 0;
+    c = 0;
+    d = 0;
 
+  if(timestamp%4000 < 50 && a == 0){
 
-    Actualspeed = (speed0 + speed1)/2; // average speed of the vehicle
-    if(timestamp>4000){
-    Error = Wantedspeed - Actualspeed;
-    //duty = Wantedspeed*Speedtoduty*100;
-    Speedtoduty = 1.0/(((float)batReading/102.4)*SysGain);// Battery reading: 1024 = 10V, so 1V = 102.4. multiply that with the system gain to calculate the duty cycle.
-    test = (((Error)*PGain+feedFwd+0.38)*Speedtoduty)*100.0; 
-    duty = test;
-    if(duty > 100) duty = 100;
-    if(duty < 0) duty = 0;
-    }
-    //number between 0 and a 100%
+     speed(40);
+     a++;
+      
+  }
 
-    if(timestamp < 10000) speed(duty);
-    else speed(0);
+    if(timestamp%6000 < 50 && b == 0){
+
+     speed(60);
+     b++;
+      
+  }
+
+      if(timestamp%8000 < 50 && c == 0){
+
+     speed(80);
+     c++;
+      
+  }
+
+      if((timestamp%10000 < 50) && d == 0){
+
+     speed(100);
+     d++;
+      
+  }
+
     
     //printing out the data whith commas for easy export as .scv-file:
-    Serial.print((float)batReading/102.4);
-    Serial.print(",");
-    Serial.print(duty);
-    Serial.print(",");
-    Serial.print(Error);
-    Serial.print(",");
     Serial.print(speed0);
     Serial.print(",");
     Serial.print(speed1);
@@ -63,7 +65,7 @@ void P_controller(){
     Serial.print(timestamp);
     Serial.print("\n");
     Serial.print("\r");       //carrige return to return the curser for each new line
-    delay(30);
+    delay(20);
     }
   }
 
@@ -72,11 +74,11 @@ void setup() {
 
   pinMode(5,OUTPUT);
   initServo();
-  initMotor();
+  
   pinMode(dPinMove1, OUTPUT); 
   pinMode(dPinMove2, OUTPUT);
   pinMode(dPinOnOff, OUTPUT);
-
+  pinMode(dPinSpeed, OUTPUT);
   enableMotor(1);
   direction(1);
 
@@ -87,8 +89,9 @@ void setup() {
   initHallTimers();
 
   delay(2000);
+  speed(20);
   pTaskInfo=k_crt_task(tSpeed,10,stack,300);
-  task2=k_crt_task(P_controller,11,stack2,300);
+  //task2=k_crt_task(GainTest,11,stack2,300);
 
   k_start(1); // krnl runs with 1 msec heartbeat
   /* NOTE: legal time values:
