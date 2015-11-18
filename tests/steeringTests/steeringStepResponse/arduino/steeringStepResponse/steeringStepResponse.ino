@@ -2,6 +2,8 @@
 #include <krnl.h>
 #include "motor_driver.h"
 #include "myservo.h"
+#include <Wire.h>
+#include "Magnetometer.h"
 
 // This is the value to change to change the steering angle
 // (servo pulse-width)
@@ -21,8 +23,12 @@ int batReading;
 void steeringStepResponse(){
 
   const float Wantedspeed = 2;
+  const float SysGain = 0.49;
   float Speedtoduty;
   int servoPulseWidth = SERVO_MIDDLE_PW; // 1578s pulse width makes the vehicle go straight(-ish)
+  float Actualspeed;
+  float duty;
+
 
   while(1){
     
@@ -34,12 +40,12 @@ void steeringStepResponse(){
     Actualspeed = (speed0 + speed1)/2; // average speed of the vehicle
 
     // The servo is set whatever happens
-    setServo(pulsewidth);
+    setServo(servoPulseWidth);
 
     // Vehicle starts after 4 seconds
     if(timestamp>4000){
     // Battery reading: 1024 = 10V, so 1V = 102.4. multiply that with the system gain to calculate the speed-to-duty-cycle ratio.
-    Speedtoduty = 1.0/(((float)batReadSpeeing/102.4)*SysGain) * 100.0;
+    Speedtoduty = 1.0/(((float)batReading/102.4)*SysGain) * 100.0;
     duty = Wantedspeed*Speedtoduty;
     // The motor duty cycle should stay in the range of 0-100%
     if(duty > 100) duty = 100;
@@ -52,7 +58,7 @@ void steeringStepResponse(){
     else speed(0);
     
     //printing out the data whith commas for easy export as .csv-file:
-    CompassGet();
+    Serial.print(CompassGet());
     Serial.print(",");
     Serial.print((float)batReading/102.4);
     Serial.print(",");
