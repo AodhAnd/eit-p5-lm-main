@@ -42,8 +42,8 @@ void steeringStepResponse(){
     // The servo is set whatever happens
     setServo(servoPulseWidth);
 
-    // Vehicle starts after 4 seconds
-    if(timestamp>4000){
+    // Vehicle starts after 2 seconds
+    if(timestamp>2000){
     // Battery reading: 1024 = 10V, so 1V = 102.4. multiply that with the system gain to calculate the speed-to-duty-cycle ratio.
     Speedtoduty = 1.0/(((float)batReading/102.4)*SysGain) * 100.0;
     duty = Wantedspeed*Speedtoduty + 0.38;
@@ -51,8 +51,8 @@ void steeringStepResponse(){
     if(duty > 100) duty = 100;
     if(duty < 0) duty = 0;
     }
-    // Steering is triggered 3s later (at t=7s)
-    if(timestamp>7000) servoPulseWidth = SERVO_PW;
+    // Steering is triggered 3s later (at t=5s)
+    if(timestamp>5000) servoPulseWidth = SERVO_PW;
 
     if(timestamp < 10000) speed(duty);
     else speed(0);
@@ -60,7 +60,7 @@ void steeringStepResponse(){
     //printing out the data whith commas for easy export as .csv-file:
     Serial.print(CompassGet());
     Serial.print(",");
-    Serial.print((float)batReading/102.4);
+    Serial.print((float)batReading/102.4);    //voltage
     Serial.print(",");
     Serial.print(Actualspeed);
     Serial.print(",");
@@ -70,6 +70,8 @@ void steeringStepResponse(){
     delay(30);
     }
   }
+
+
 
 void setup() {
   k_init(2,1,0);
@@ -84,7 +86,7 @@ void setup() {
   // Set up the motor
   initMotor();
   enableMotor(1);
-  direction(1);
+  direction(1);    //move forward
   
   // Set up the compass/gyro/accelerometer sensors
   CompassSetup();
@@ -97,8 +99,8 @@ void setup() {
   Serial.println("REBOOT");
 
   delay(2000);
-  pTaskInfo=k_crt_task(tSpeed,10,stack,300);
-  task2=k_crt_task(steeringStepResponse,11,stack2,300);
+  pTaskInfo=k_crt_task(tSpeed,10,stack,300);              //hall sensors
+  task2=k_crt_task(steeringStepResponse,11,stack2,300);   //main code for the test
 
   k_start(1); // krnl runs with 1 msec heartbeat
   /* NOTE: legal time values:
