@@ -1,5 +1,5 @@
 #include "motor_driver.h"
-#include <arduino.h>
+#include <Arduino.h>
 
 int initMotor(){
   pinMode(9, OUTPUT);

@@ -46,7 +46,7 @@ void steeringStepResponse(){
     if(timestamp>4000){
     // Battery reading: 1024 = 10V, so 1V = 102.4. multiply that with the system gain to calculate the speed-to-duty-cycle ratio.
     Speedtoduty = 1.0/(((float)batReading/102.4)*SysGain) * 100.0;
-    duty = Wantedspeed*Speedtoduty;
+    duty = Wantedspeed*Speedtoduty + 0.38;
     // The motor duty cycle should stay in the range of 0-100%
     if(duty > 100) duty = 100;
     if(duty < 0) duty = 0;
