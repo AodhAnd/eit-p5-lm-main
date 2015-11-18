@@ -1,5 +1,5 @@
 #include "myservo.h"
-#include <arduino.h>
+#include <Arduino.h>
 int initServo(void){							// Sets up pins and timers. Returns 0 if successful
 
 	TCCR3A = 0;
