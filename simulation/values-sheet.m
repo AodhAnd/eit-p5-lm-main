@@ -25,4 +25,4 @@ M = 2.932;    % Total mass of the vehicle [kg]
 tau = 0.207; % Time constant of the whole system measured from step-response (old value : 0.258s) [s]
 
 Btot = 4.7088e-06; % Total friction of the system [N.m.s]
-Jtot = 4.4914e-06; % Old value : 5.5980e-06 [kg.m^2]
+Jtot = 4.5782e-06; % Old value : 5.5980e-06 [kg.m^2]
