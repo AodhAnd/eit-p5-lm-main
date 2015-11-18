@@ -357,15 +357,18 @@ namespace GOTSDKSample
 
                                 string sX = PosToString((int)pos.Position.X); // takes the coordinates and put into our PosToString function,
                                 string sY = PosToString((int)pos.Position.Y); // that converts the position coordinates too a signed 4 digit number                        
-                                string sZ = PosToString((int)pos.Position.Z);                                
+                                string sZ = PosToString((int)pos.Position.Z);
+                                
+                                    serOut.Open();                              // open up the communication to the serial port
 
                                 try
                                 {
                                     SerialPort serOut = new SerialPort("COM9"); // setup a new serial port
-                                    serOut.Open();                              // open up the communication to the serial port
+                                    
                                     serOut.WriteLine(sX + sY + sZ);             // write the three coordinates out, with a stop bit at the end ('/n')
-                                    serOut.Close();                             // close up the communication to the serial port
+                                    
                                 }
+                                    serOut.Close();                             // close up the communication to the serial port
                                 catch
                                 {
                                     MessageBox.Show("Message not sendt");       // called if the communication with the serial port don't work

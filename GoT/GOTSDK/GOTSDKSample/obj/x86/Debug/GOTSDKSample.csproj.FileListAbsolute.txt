@@ -63,3 +63,6 @@ C:\Users\proces\Desktop\15gr510\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.p
 C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GoT\GOTSDK\GOTSDKSample\bin\Debug\GOTSDKSample.exe.config
 C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GoT\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.exe
 C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\GoT\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.pdb
+C:\Users\Amalie\Documents\GIT\eit-p5-lm-main\GoT\GOTSDK\GOTSDKSample\bin\Debug\GOTSDKSample.exe.config
+C:\Users\Amalie\Documents\GIT\eit-p5-lm-main\GoT\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.exe
+C:\Users\Amalie\Documents\GIT\eit-p5-lm-main\GoT\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.pdb
