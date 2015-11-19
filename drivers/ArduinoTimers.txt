@@ -1,0 +1,8 @@
+Timers in the arduino:
+
+Timer 0: Reserved arduino stuff
+Timer 1: JDN's Krnl
+Timer 2: Motor 
+Timer 3: Servo
+Timer 4: Hall sensor
+Timer 5: Hall sensor
