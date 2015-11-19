@@ -7,7 +7,7 @@
 
 // This is the value to change to change the steering angle
 // (servo pulse-width)
-#define SERVO_PW 1650
+//#define SERVO_PW 1650
 
 struct k_t *pTaskInfo, *task2;
 
@@ -52,7 +52,7 @@ void steeringStepResponse(){
     if(duty < 0) duty = 0;
     }
     // Steering is triggered 3s later (at t=5s)
-    if(timestamp>5000) servoPulseWidth = 1550;
+    if(timestamp>5000) servoPulseWidth = 1670;
 
     if(timestamp < 10000) speed(duty);
     else speed(0);
