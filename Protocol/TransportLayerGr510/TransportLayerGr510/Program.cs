@@ -21,7 +21,7 @@ namespace TransportLayerGr510
             int LengthOfCoordinate = 15;
             int FinalBitCount = 80;
 
-            BitArray bData = new BitArray(FinalBitCount, false); //creating the necessary quantity of bits for the source
+            BitArray bPacket = new BitArray(FinalBitCount, false); //creating the necessary quantity of bits for the source
 
             BitArray ZData = new BitArray(new int[] { Z });
 
@@ -37,35 +37,35 @@ namespace TransportLayerGr510
                 {
                     if(i == Source)
                     {
-                        bData[i] = true; //Source is set
+                        bPacket[i] = true; //Source is set
                     }
                     i++;
                 }
                  for(j = 0; j < LengthOfCoordinate; j++)
                 {
-                    bData[i] = XData[j]; //X data is set
+                    bPacket[i] = XData[j]; //X data is set
                     i++;
                 }
                  for(j = 0; j < LengthOfCoordinate; j++)
                 {
-                    bData[i] = YData[j]; //Y data is set
+                    bPacket[i] = YData[j]; //Y data is set
                     i++;
                 }
                  for (j = 0; j < LengthOfCoordinate; j++)
                 {
-                    bData[i] = ZData[j]; //Z data is set
+                    bPacket[i] = ZData[j]; //Z data is set
                     i++;
                 }
                 for (j = 0; j < 7; j++)
                 {
-                    bData[i] = ProtocolLength[j]; //Protocol Length is set
+                    bPacket[i] = ProtocolLength[j]; //Protocol Length is set
                     i++;
                 }
             }
 
             for (j = 0; j < 63; j++)
             {
-                Console.WriteLine(bData[j] + j.ToString());
+                Console.WriteLine(bPacket[j] + j.ToString());
             }
             Console.ReadLine();
 
@@ -85,7 +85,7 @@ namespace TransportLayerGr510
         }
 
 
-       /* static BitArray ChecksumGenerator(BitArray protocolData)
+        static BitArray ChecksumGenerator(BitArray protocolData)
         {
             int i = 0;
             int j = 0;
@@ -113,10 +113,10 @@ namespace TransportLayerGr510
             return Checksum;
         }
 
-        static BitArray SumOfbitArrays(BitArray ba1, BitArray ba2, int lengthba1)
+        static BitArray SumOfbitArrays(BitArray BitArray1, BitArray BitArray2, int lengthba1)
         {
             int i = 0;
-
+            int diff, totalsub;
 
             BitArray ba1andba2 = new BitArray(22, false);
 
@@ -126,7 +126,7 @@ namespace TransportLayerGr510
             }
 
             return ba1andba2;
-        }*/
+        }
 
 
         static int NegToPos(int Number)
