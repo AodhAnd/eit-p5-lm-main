@@ -11,7 +11,7 @@ namespace TransportLayerGr510
     class Program
     {
 
-        static int Protocol(int X, int Y, int Z)
+        static byte[] Protocol(int X, int Y, int Z)
         {
 
             int i = 0;
@@ -89,19 +89,13 @@ namespace TransportLayerGr510
             }
             Console.ReadLine();
 
+            //Transform bit array to byte array
 
-            //Transform Data to a bit array
+            byte[] Transmitpacket = new byte[10];
 
+            bPacket.CopyTo(Transmitpacket, 0);
 
-
-            //int LengthTemperary = Data.Length + ComSource.Length + Checksum.Length; //The length of the data which is send
-
-            //string Length = LengthTemperary.ToString(); //makes the int LengthTemperary a string
-
-            //string Transmit = (ComSource + Data + Length + Checksum); //Which needs to be transmitted
-
-            return 0;
-
+            return Transmitpacket;
         }
 
 
@@ -303,6 +297,7 @@ namespace TransportLayerGr510
 
         static void Main(string[] args)
         {
+            byte[] Transmitpacket = new byte[10];
             int X = -16383;
             int Y = -16383;
             int Z = -16383;
@@ -314,7 +309,7 @@ namespace TransportLayerGr510
             Z = NegToPos(Z);
 
 
-            Protocol(X, Y, Z);
+            Transmitpacket = Protocol(X, Y, Z);
 
         }
     }
