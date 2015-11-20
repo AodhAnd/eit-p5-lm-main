@@ -22,7 +22,7 @@ int batReading;
 
 void steeringStepResponse(){
 
-  const float Wantedspeed = 1.5;
+  const float Wantedspeed = 2;
   const float SysGain = 0.49;
   float Speedtoduty;
   int servoPulseWidth = SERVO_MIDDLE_PW; // 1578s pulse width makes the vehicle go straight(-ish)
@@ -52,7 +52,7 @@ void steeringStepResponse(){
     if(duty < 0) duty = 0;
     }
     // Steering is triggered 3s later (at t=5s)
-    if(timestamp>5000) servoPulseWidth = 1670;
+    if(timestamp>5000) servoPulseWidth = 1600;
 
     if(timestamp < 10000) speed(duty);
     else speed(0);
