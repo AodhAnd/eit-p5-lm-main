@@ -11,77 +11,90 @@ namespace TransportLayerGr510
     class Program
     {
 
-        static int Protocol(int X, int Y, int Z)
+        static byte[] Protocol(int X, int Y, int Z)
         {
 
             int i = 0;
             int j = 0;
 
-            int Source = 7;
+            int LengthSource = 7;
             int LengthOfCoordinate = 15;
             int FinalBitCount = 80;
 
-            BitArray bPacket = new BitArray(FinalBitCount, false); //creating the necessary quantity of bits for the source
+                BitArray bPacket = new BitArray(FinalBitCount, false); //creating the necessary quantity of bits for the source
 
-            BitArray ZData = new BitArray(new int[] { Z });
+                BitArray TemperaryPacket = new BitArray(60, false);
 
-            BitArray XData = new BitArray(new int[] { X });
+                BitArray ZData = new BitArray(new int[] { Z });
 
-            BitArray YData = new BitArray(new int[] { Y });
+                BitArray XData = new BitArray(new int[] { X });
 
-            BitArray ProtocolLength = IntToBitA(80, 7);
+                BitArray YData = new BitArray(new int[] { Y });
+
+                BitArray Checksum = new BitArray(20, false);
+
+                BitArray ProtocolLength = IntToBitA(80, 7);
+   
 
             while (i != 60)
             {
                  for(j = 0; j < 8; j++)
                 {
-                    if(i == Source)
+                    if(i == LengthSource)
                     {
-                        bPacket[i] = true; //Source is set
+                        TemperaryPacket[i] = true; //Source is set
                     }
                     i++;
                 }
                  for(j = 0; j < LengthOfCoordinate; j++)
                 {
-                    bPacket[i] = XData[j]; //X data is set
+                    TemperaryPacket[i] = XData[j]; //X data is set
                     i++;
                 }
                  for(j = 0; j < LengthOfCoordinate; j++)
                 {
-                    bPacket[i] = YData[j]; //Y data is set
+                    TemperaryPacket[i] = YData[j]; //Y data is set
                     i++;
                 }
                  for (j = 0; j < LengthOfCoordinate; j++)
                 {
-                    bPacket[i] = ZData[j]; //Z data is set
+                    TemperaryPacket[i] = ZData[j]; //Z data is set
                     i++;
                 }
                 for (j = 0; j < 7; j++)
                 {
-                    bPacket[i] = ProtocolLength[j]; //Protocol Length is set
+                    TemperaryPacket[i] = ProtocolLength[j]; //Protocol Length is set
                     i++;
                 }
             }
 
-            for (j = 0; j < 63; j++)
+            Checksum = ChecksumGenerator(TemperaryPacket);
+
+            for(i = 0; i < 80; i++)
+            {
+                if (i < 60)
+                {
+                    bPacket[i] = TemperaryPacket[i];
+                }
+                else
+                {
+                    bPacket[i] = Checksum[i - 60];
+                }
+            }
+
+            for(j = 0; j < 80; j++)
             {
                 Console.WriteLine(bPacket[j] + j.ToString());
             }
             Console.ReadLine();
 
+            //Transform bit array to byte array
 
-            //Transform Data to a bit array
+            byte[] Transmitpacket = new byte[10];
 
+            bPacket.CopyTo(Transmitpacket, 0);
 
-
-            //int LengthTemperary = Data.Length + ComSource.Length + Checksum.Length; //The length of the data which is send
-
-            //string Length = LengthTemperary.ToString(); //makes the int LengthTemperary a string
-
-            //string Transmit = (ComSource + Data + Length + Checksum); //Which needs to be transmitted
-
-            return 0;
-
+            return Transmitpacket;
         }
 
 
@@ -90,13 +103,13 @@ namespace TransportLayerGr510
             int i = 0;
             int j = 0;
 
-            BitArray Checksum = new BitArray(20, false);
+                BitArray Checksum = new BitArray(20, false);
 
-            BitArray Temp = new BitArray(22, false);
+                BitArray Temp = new BitArray(22, false);
 
-            BitArray Temp2 = new BitArray(22, false);
+                BitArray Temp2 = new BitArray(22, false);
 
-            BitArray[] ProtocolDataSplit = new BitArray[3];
+                BitArray[] ProtocolDataSplit = new BitArray[3];
 
             for (i = 0; i < 3; i++)
             {
@@ -104,26 +117,148 @@ namespace TransportLayerGr510
 
                 for (j = 0; j < 20; j++)
                 {
-                    ProtocolDataSplit[i][j] = protocolData[j + ((i - 1) * 20)];
+                    ProtocolDataSplit[i][j] = protocolData[j + (i * 20)];
                 }
             }
 
-            Temp = SumOfbitArrays(ProtocolDataSplit[1], ProtocolDataSplit[2], 20);
+            Temp = SumOfbitArrays(ProtocolDataSplit[0], ProtocolDataSplit[1], ProtocolDataSplit[2]); //the 3 20 bitarray is summed together
+
+            if(Temp[20] || Temp[21])
+            {
+               Checksum = CarryAdd(Temp);
+            }
+            else
+            {
+                for(i = 0; i < 20; i++)
+                {
+                    Checksum[i] = Temp[i];
+                }
+            }
+
+            for(i = 0; i < 20; i++)
+            {
+                Checksum[i] = !Checksum[i]; 
+            }
 
             return Checksum;
         }
 
-        static BitArray SumOfbitArrays(BitArray BitArray1, BitArray BitArray2, int lengthba1)
+        static BitArray CarryAdd(BitArray temp)
         {
             int i = 0;
-            int diff, totalsub;
+            bool Carry = false;
+
+                BitArray Final = new BitArray(20, false);
+                BitArray Carries = new BitArray(22, false);
+
+            while (temp[20] || temp[21])
+            {
+                Carries[0] = temp[20];
+                Carries[1] = temp[21];
+                temp[20] = false;
+                temp[21] = false;
+
+                for (i = 0; i < 22; i++)
+                {
+                    if (Carry && Carries[i] && temp[i])
+                    {
+                        Carry = true;
+                        temp[i] = true;
+                    }
+                    else if ((Carries[i] && temp[i]) || (Carries[i] && Carry) || (temp[i] && Carry))
+                    {
+                        Carry = true;
+                        temp[i] = false;
+                    }
+                    else if (Carries[i] || temp[i] || Carry)
+                    {
+                        temp[i] = true;
+                        Carry = false;
+                    }
+                    else
+                    {
+                        Carry = false;
+                        temp[i] = false;
+                    }
+                }
+            }
+
+            for(i = 0; i < 20; i++)
+            {
+                Final[i] = temp[i];
+            }
+
+            return Final;
+        }
+
+        static BitArray SumOfbitArrays(BitArray BitArray1, BitArray BitArray2, BitArray BitArray3)
+        {
+            int i = 0;
+            bool Carry = false;
 
             BitArray ba1andba2 = new BitArray(22, false);
 
-            for(i = 0; i < lengthba1; i++)
+            for (i = 0; i < 20; i++)
             {
-
+                if (Carry && BitArray1[i] && BitArray2[i])
+                {
+                    Carry = true;
+                    ba1andba2[i] = true;
+                }
+                else if ((BitArray1[i] && BitArray2[i])||(BitArray1[i] && Carry)||(BitArray2[i] && Carry))
+                {
+                    Carry = true;
+                    ba1andba2[i] = false;
+                }
+                else if (BitArray1[i] || BitArray2[i]||Carry)
+                {
+                    ba1andba2[i] = true;
+                    Carry = false;
+                }
+                else
+                {
+                    Carry = false;
+                    ba1andba2[i] = false;
+                }
             }
+
+            ba1andba2[20] = Carry;
+
+            Carry = false;
+
+            for (i = 0; i < 20; i++)
+            {
+                if (Carry && BitArray3[i] && ba1andba2[i])
+                {
+                    Carry = true;
+                    ba1andba2[i] = true;
+                }
+                else if ((BitArray3[i] && ba1andba2[i]) || (BitArray3[i] && Carry) || (ba1andba2[i] && Carry))
+                {
+                    Carry = true;
+                    ba1andba2[i] = false;
+                }
+                else if (BitArray3[i] || ba1andba2[i] || Carry)
+                {
+                    ba1andba2[i] = true;
+                    Carry = false;
+                }
+                else
+                {
+                    Carry = false;
+                    ba1andba2[i] = false;
+                }
+            }
+
+            if (Carry && ba1andba2[20])
+                {
+                    ba1andba2[21] = true;
+                    ba1andba2[20] = false;
+                }
+                else if (Carry || ba1andba2[20])
+                {
+                    ba1andba2[20] = true;
+                }
 
             return ba1andba2;
         }
@@ -151,6 +286,7 @@ namespace TransportLayerGr510
                 }
 
             BitArray Temp = new BitArray(new int[] { Number }); //number is put in a temp bitarray
+
                 for (int i = 0; i < Lenght; i++) //length is now 7
                     {
                      Out[i] = Temp[i];  //number is put into our output = 10000001
@@ -161,9 +297,11 @@ namespace TransportLayerGr510
 
         static void Main(string[] args)
         {
-            int X = -1;
-            int Y = -1;
-            int Z = -1;
+            byte[] Transmitpacket = new byte[10];
+
+            int X = -16383;
+            int Y = -16383;
+            int Z = -16383;
 
             X = NegToPos(X);
 
@@ -171,8 +309,7 @@ namespace TransportLayerGr510
 
             Z = NegToPos(Z);
 
-
-            Protocol(X, Y, Z);
+            Transmitpacket = Protocol(X, Y, Z);
 
         }
     }
