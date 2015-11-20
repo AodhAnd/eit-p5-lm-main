@@ -6,42 +6,53 @@
 \renewcommand\figurename{Figur}
 \renewcommand\tablename{Tabel}
 
-\section*{Supervisor meeting\\ \small 13th of November 2015}
-\subsection{Vehicle running free (without controller)}
+\section*{Supervisor meeting\\ \small 20th of November 2015}
+
+\subsection{Comparison of Step-responses with controllers}
 \begin{itemize}
-\item[-] There is a lot of Coulomb friction in this system (stiction at the beginning)
-\item[-] Adapt the voltage at the beginning to get rid of this dry friction (put an offset) \\
-$\rightarrow$ Then the first step might have the same gain and time constant as the second step, in which case the system would look closer to a first order system
-\item[-] The comparison of step-responses between real and approximated systems seems really nice : they match very well
+\item[-] Done again with new gain and stiction offset
+\item[-] P-controller with feed-forward is fine for straight runs of the vehicle
+\item[-] It might be necessary to add an integrator when adding the steering
 \end{itemize}
 
-\subsection{Controllers}
+\subsection{Comparison of first and second order system simulations}
 \begin{itemize}
-\item[-] both need to be re-done with the right gain which has to be re-measured with the right PWM frequency
+\item[-] Done again with new gain and time constant $\rightarrow$ fine
 \end{itemize}
 
-\subsection{Steering model and tests}
+\subsection{Inertia Formula}
 \begin{itemize}
-\item[-] The time must appear in the test
-\item[-] We need to consider `small signals' : try a step-response by driving at a constant speed and then steer (use angle output)
-\item[-] See how fast it integrates the angular velocity
-\item[-] Do only the new test (just described)
-\item[-] Maybe the modeling of the differential is not that complicated (2 equations) :
-\begin{itemize}
-  \item $\omega_m = (\omega_1 + \omega_2) \cdot K$
-  \item $\tau_m \cdot \omega_m = (\tau_1 \cdot \omega_1 + \tau_2 \cdot \omega_2) + K^2$, where $K$ is gear ratio
-\end{itemize}
-\item[-] See how the measured data fits the modeling of the steering
-
+\item[-] Inertia formula fixed
 \end{itemize}
 
-\subsection{Inertia formula}
+\subsection{Steering Model And Test}
 \begin{itemize}
-\item[-] We need to look at it a bit more before Tom wil help us
+\item[-] Magnetometer data: have to do a plot of the vehicle turning without motor, to see if it's the magnet wich is not good or if we juste have to do a filtering on the data because of the magnetic field from the motor.
 \end{itemize}
+
+
+\subsection{Hall Sensor Section}
+\begin{itemize}
+\item[-] Try to do a plot comparison between the  wanted and the real velocity, to have a statistic error.
+\item[-] Algorithm flowchart should be in appendix
+\item[-] Add in the report that the frequency sampling has to be constant.
+\end{itemize}
+
+\subsection{Requirements}
+\begin{itemize}
+\item[-] Velocity: the vehicle should be able to keep the velocity for different disturbance and inputs.
+\item[-] Controller: should control the disturbances more than the input error, and in a certain time. It should ensure the stability of the system, even on steep terrain, for example.
+\end{itemize}
+
+
+\subsection{Route planning}
+\begin{itemize}
+\item[-] Shoud be simple, like a spiral, smooth
+\end{itemize}
+
 
 \subsection{Next Supervisor meeting}
-Next Friday (20th of November) at 12.30
+Next Friday (27th of November) at 12.30
 
 \end{document}
 
