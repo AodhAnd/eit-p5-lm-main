@@ -71,9 +71,21 @@ namespace TransportLayerGr510
 
             Checksum = ChecksumGenerator(TemperaryPacket);
 
-            for(j = 0; j < 20; j++)
+            for(i = 0; i < 80; i++)
             {
-                Console.WriteLine(Checksum[j] + j.ToString());
+                if (i < 60)
+                {
+                    bPacket[i] = TemperaryPacket[i];
+                }
+                else
+                {
+                    bPacket[i] = Checksum[i - 60];
+                }
+            }
+
+            for(j = 0; j < 80; j++)
+            {
+                Console.WriteLine(bPacket[j] + j.ToString());
             }
             Console.ReadLine();
 
@@ -291,9 +303,9 @@ namespace TransportLayerGr510
 
         static void Main(string[] args)
         {
-            int X = -2047;
-            int Y = -2047;
-            int Z = -2047;
+            int X = -16383;
+            int Y = -16383;
+            int Z = -16383;
 
             X = NegToPos(X);
 
