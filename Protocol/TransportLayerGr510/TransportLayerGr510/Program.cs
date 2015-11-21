@@ -46,7 +46,12 @@ namespace TransportLayerGr510
                     }
                     i++;
                 }
-                 for(j = 0; j < LengthOfCoordinate; j++)
+                for (j = 0; j < 7; j++)
+                {
+                    TemperaryPacket[i] = ProtocolLength[j]; //Protocol Length is set
+                    i++;
+                }
+                for (j = 0; j < LengthOfCoordinate; j++)
                 {
                     TemperaryPacket[i] = XData[j]; //X data is set
                     i++;
@@ -59,11 +64,6 @@ namespace TransportLayerGr510
                  for (j = 0; j < LengthOfCoordinate; j++)
                 {
                     TemperaryPacket[i] = ZData[j]; //Z data is set
-                    i++;
-                }
-                for (j = 0; j < 7; j++)
-                {
-                    TemperaryPacket[i] = ProtocolLength[j]; //Protocol Length is set
                     i++;
                 }
             }
