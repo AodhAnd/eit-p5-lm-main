@@ -11,21 +11,21 @@
 
 struct k_t *pTaskInfo, *task2;
 
-char stack[300];
-char stack2[300];
-float speed0;
-float speed1;
+char stack[300];  // Stack of task1
+char stack2[300]; // Stack of task2
+float speed0;     // Speed of belt 1
+float speed1;     // Speed of belt 1
 long int timestamp;
 char byte1;
 char byte2;
-int batReading;
+int batReading;   // Battery voltage reading
 
 void steeringStepResponse(){
 
   const float Wantedspeed = 2;
   const float SysGain = 0.49;
   float Speedtoduty;
-  int servoPulseWidth = SERVO_MIDDLE_PW; // 1578s pulse width makes the vehicle go straight(-ish)
+  int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
   float Actualspeed;
   float duty;
 
