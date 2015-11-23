@@ -299,9 +299,9 @@ namespace TransportLayerGr510
         {
             byte[] Transmitpacket = new byte[10];
 
-            int X = -16383;
-            int Y = -16383;
-            int Z = -16383;
+            int X = 1;
+            int Y = 1;
+            int Z = 1;
 
             X = NegToPos(X);
 
