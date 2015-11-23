@@ -21,19 +21,19 @@ namespace TransportLayerGr510
             int LengthOfCoordinate = 15;
             int FinalBitCount = 88;
 
-                BitArray bPacket = new BitArray(FinalBitCount, false); //creating the necessary quantity of bits for the source
+                BitArray bPacket = new BitArray(FinalBitCount, false);  //creating the necessary quantity of bits for the source
 
-                BitArray TemperaryPacket = new BitArray(60, false);
+                BitArray TemperaryPacket = new BitArray(60, false);     //To contain the source, length and the z, x, y coordinate temperary
 
-                BitArray ZData = new BitArray(new int[] { Z });
+                BitArray ZData = new BitArray(new int[] { Z });         //a bitarray for the Z-coordinate
 
-                BitArray XData = new BitArray(new int[] { X });
+                BitArray XData = new BitArray(new int[] { X });         //a bitarray for the X-coordinate
 
-                BitArray YData = new BitArray(new int[] { Y });
+                BitArray YData = new BitArray(new int[] { Y });         //a bitarray for the Y-coordinate
 
-                BitArray Checksum = new BitArray(20, false);
+                BitArray Checksum = new BitArray(20, false);            //a bitarray for the checksum
 
-                BitArray ProtocolLength = IntToBitA(80, 7);
+                BitArray ProtocolLength = IntToBitA(88, 7);             //The length of the protocol
    
 
             while (i != 60)
@@ -42,28 +42,28 @@ namespace TransportLayerGr510
                 {
                     if(i == LengthSource)
                     {
-                        TemperaryPacket[i] = true; //Source is set
+                        TemperaryPacket[i] = true;                      //Source is set
                     }
                     i++;
                 }
                 for (j = 0; j < 7; j++)
                 {
-                    TemperaryPacket[i] = ProtocolLength[j]; //Protocol Length is set
+                    TemperaryPacket[i] = ProtocolLength[j];             //Protocol Length is set
                     i++;
                 }
                 for (j = 0; j < LengthOfCoordinate; j++)
                 {
-                    TemperaryPacket[i] = XData[j]; //X data is set
+                    TemperaryPacket[i] = XData[j];                      //X data is set
                     i++;
                 }
                  for(j = 0; j < LengthOfCoordinate; j++)
                 {
-                    TemperaryPacket[i] = YData[j]; //Y data is set
+                    TemperaryPacket[i] = YData[j];                      //Y data is set
                     i++;
                 }
                  for (j = 0; j < LengthOfCoordinate; j++)
                 {
-                    TemperaryPacket[i] = ZData[j]; //Z data is set
+                    TemperaryPacket[i] = ZData[j];                      //Z data is set
                     i++;
                 }
             }
@@ -74,20 +74,20 @@ namespace TransportLayerGr510
             {
                 if(i < 7)
                 {
-                    bPacket[i] = false;
+                    bPacket[i] = false;                                 //first seven bit of start character (first of the two sources) is set to zero and is placed into the transmit packet.
                 }
                 else
                 {
-                    bPacket[i] = true;
+                    bPacket[i] = true;                                  //last bit of the first bytes is set to a one is placed into the transmit packet
                 }
 
                 if (i < 68 && i > 7)
                 {
-                    bPacket[i] = TemperaryPacket[i-8];
+                    bPacket[i] = TemperaryPacket[i-8];                  //the length and the coordinates is placed into the transmit packet
                 }
                 else if(i > 67)
                 {
-                    bPacket[i] = Checksum[i - 68];
+                    bPacket[i] = Checksum[i - 68];                      //The checksum is set into the transmit packet
                 }
             }
 
@@ -97,17 +97,15 @@ namespace TransportLayerGr510
             }
             //Console.ReadLine();
 
-            //Transform bit array to byte array
-
             byte[] Transmitpacket = new byte[11];
 
-            bPacket.CopyTo(Transmitpacket, 0);
+            bPacket.CopyTo(Transmitpacket, 0);                          //The bit array bPacket is made into a bytearray which is placed in transmitpacket.
 
-            return Transmitpacket;
+            return Transmitpacket;                                      //The packet which needs to be sent 
         }
 
 
-        static BitArray ChecksumGenerator(BitArray protocolData)
+        static BitArray ChecksumGenerator(BitArray protocolData) //generates the Checksum
         {
             int i = 0;
             int j = 0;
@@ -118,7 +116,7 @@ namespace TransportLayerGr510
 
                 BitArray Temp2 = new BitArray(22, false);
 
-                BitArray[] ProtocolDataSplit = new BitArray[3];
+                BitArray[] ProtocolDataSplit = new BitArray[3]; //To contain the data of 60 bits (source, length, x, y, z) in three 20 bitarray
 
             for (i = 0; i < 3; i++)
             {
@@ -130,7 +128,7 @@ namespace TransportLayerGr510
                 }
             }
 
-            Temp = SumOfbitArrays(ProtocolDataSplit[0], ProtocolDataSplit[1], ProtocolDataSplit[2]); //the 3 20 bitarray is summed together
+            Temp = SumOfbitArrays(ProtocolDataSplit[0], ProtocolDataSplit[1], ProtocolDataSplit[2]); //the three 20 bitarray is summed together
 
             if(Temp[20] || Temp[21])
             {
@@ -152,7 +150,7 @@ namespace TransportLayerGr510
             return Checksum;
         }
 
-        static BitArray CarryAdd(BitArray temp)
+        static BitArray CarryAdd(BitArray temp) //The carries which can occure when summing the bitarrays of 20 is added to the summed bitarray
         {
             int i = 0;
             bool Carry = false;
@@ -200,7 +198,7 @@ namespace TransportLayerGr510
             return Final;
         }
 
-        static BitArray SumOfbitArrays(BitArray BitArray1, BitArray BitArray2, BitArray BitArray3)
+        static BitArray SumOfbitArrays(BitArray BitArray1, BitArray BitArray2, BitArray BitArray3) //The three bit arrays of 20 is summed together
         {
             int i = 0;
             bool Carry = false;
@@ -273,32 +271,32 @@ namespace TransportLayerGr510
         }
 
 
-        static int NegToPos(int Number)
+        static int NegToPos(int Number) //implements the signbit into a negative number
         {
             if (Number < 0)
             {
-                Number = (Number * (-1)) + 16384; //implements the signbit into the number
+                Number = (Number * (-1)) + 16384; 
             }
 
             return Number;
         }
 
-        static BitArray IntToBitA(int Number, int Lenght) //converts integer to a certain length bitarray.
+        static BitArray IntToBitA(int Number, int Lenght)   //converts integer to a certain length bitarray.
         {
             BitArray Out = new BitArray(Lenght, false);
 
-                if (Number < 0)  //example: -1 = 11111111 last bit is the sign bit
+                if (Number < 0)                             //example: -1 = 11111111 last bit is the sign bit
                 {
-                    Out[Lenght - 1] = true;  //00000001 the output
+                    Out[Lenght - 1] = true;                 //00000001 the output
                     Lenght = Lenght - 1;     
-                    Number = Number * (-1);  //10000000 - the number is inverted
+                    Number = Number * (-1);                 //10000000 - the number is inverted
                 }
 
             BitArray Temp = new BitArray(new int[] { Number }); //number is put in a temp bitarray
 
-                for (int i = 0; i < Lenght; i++) //length is now 7
+                for (int i = 0; i < Lenght; i++)            //length is now 7
                     {
-                     Out[i] = Temp[i];  //number is put into our output = 10000001
+                     Out[i] = Temp[i];                      //number is put into our output = 10000001
                      }
 
             return Out;
