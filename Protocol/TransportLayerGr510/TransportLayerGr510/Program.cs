@@ -19,7 +19,7 @@ namespace TransportLayerGr510
 
             int LengthSource = 7;
             int LengthOfCoordinate = 15;
-            int FinalBitCount = 80;
+            int FinalBitCount = 88;
 
                 BitArray bPacket = new BitArray(FinalBitCount, false); //creating the necessary quantity of bits for the source
 
@@ -70,27 +70,36 @@ namespace TransportLayerGr510
 
             Checksum = ChecksumGenerator(TemperaryPacket);
 
-            for(i = 0; i < 80; i++)
+            for(i = 0; i < 88; i++)
             {
-                if (i < 60)
+                if(i < 7)
                 {
-                    bPacket[i] = TemperaryPacket[i];
+                    bPacket[i] = false;
                 }
                 else
                 {
-                    bPacket[i] = Checksum[i - 60];
+                    bPacket[i] = true;
+                }
+
+                if (i < 68 && i > 7)
+                {
+                    bPacket[i] = TemperaryPacket[i-8];
+                }
+                else if(i > 67)
+                {
+                    bPacket[i] = Checksum[i - 68];
                 }
             }
 
-            for(j = 0; j < 80; j++)
+            for(j = 0; j < 88; j++)
             {
                 Console.WriteLine(bPacket[j] + j.ToString());
             }
-            Console.ReadLine();
+            //Console.ReadLine();
 
             //Transform bit array to byte array
 
-            byte[] Transmitpacket = new byte[10];
+            byte[] Transmitpacket = new byte[11];
 
             bPacket.CopyTo(Transmitpacket, 0);
 
@@ -297,11 +306,11 @@ namespace TransportLayerGr510
 
         static void Main(string[] args)
         {
-            byte[] Transmitpacket = new byte[10];
+            byte[] Transmitpacket = new byte[11];
 
-            int X = -16383;
-            int Y = -16383;
-            int Z = -16383;
+            int X = 1;
+            int Y = 1;
+            int Z = 80;
 
             X = NegToPos(X);
 
@@ -311,6 +320,13 @@ namespace TransportLayerGr510
 
             Transmitpacket = Protocol(X, Y, Z);
 
+            System.IO.Ports.SerialPort Serialport = new System.IO.Ports.SerialPort("COM17");
+
+            Serialport.Open();
+
+            Serialport.Write(Transmitpacket,0,11);
+
+            Serialport.Close();
         }
     }
 }
