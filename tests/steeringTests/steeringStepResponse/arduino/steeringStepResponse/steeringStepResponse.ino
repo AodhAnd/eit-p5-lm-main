@@ -22,7 +22,7 @@ int batReading;   // Battery voltage reading
 
 void steeringStepResponse(){
 
-  const float Wantedspeed = 5;
+  const float Wantedspeed = 2.5;
   const float SysGain = 0.49;
   float Speedtoduty;
   int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
