@@ -17,37 +17,41 @@ namespace TransportLayerGr510
             int i = 0;
             int j = 0;
 
-            int Source = 7;
+            int LengthSource = 7;
             int LengthOfCoordinate = 15;
             int FinalBitCount = 80;
 
-            BitArray bPacket = new BitArray(FinalBitCount, false); //creating the necessary quantity of bits for the source
+                BitArray bPacket = new BitArray(FinalBitCount, false); //creating the necessary quantity of bits for the source
 
-            BitArray TemperaryPacket = new BitArray(60, false);
+                BitArray TemperaryPacket = new BitArray(60, false);
 
-            BitArray ZData = new BitArray(new int[] { Z });
+                BitArray ZData = new BitArray(new int[] { Z });
 
-            BitArray XData = new BitArray(new int[] { X });
+                BitArray XData = new BitArray(new int[] { X });
 
-            BitArray YData = new BitArray(new int[] { Y });
+                BitArray YData = new BitArray(new int[] { Y });
 
-            BitArray Checksum = new BitArray(20, false);
+                BitArray Checksum = new BitArray(20, false);
 
-            BitArray ProtocolLength = IntToBitA(80, 7);
-
-
+                BitArray ProtocolLength = IntToBitA(80, 7);
+   
 
             while (i != 60)
             {
                  for(j = 0; j < 8; j++)
                 {
-                    if(i == Source)
+                    if(i == LengthSource)
                     {
                         TemperaryPacket[i] = true; //Source is set
                     }
                     i++;
                 }
-                 for(j = 0; j < LengthOfCoordinate; j++)
+                for (j = 0; j < 7; j++)
+                {
+                    TemperaryPacket[i] = ProtocolLength[j]; //Protocol Length is set
+                    i++;
+                }
+                for (j = 0; j < LengthOfCoordinate; j++)
                 {
                     TemperaryPacket[i] = XData[j]; //X data is set
                     i++;
@@ -60,11 +64,6 @@ namespace TransportLayerGr510
                  for (j = 0; j < LengthOfCoordinate; j++)
                 {
                     TemperaryPacket[i] = ZData[j]; //Z data is set
-                    i++;
-                }
-                for (j = 0; j < 7; j++)
-                {
-                    TemperaryPacket[i] = ProtocolLength[j]; //Protocol Length is set
                     i++;
                 }
             }
@@ -104,13 +103,13 @@ namespace TransportLayerGr510
             int i = 0;
             int j = 0;
 
-            BitArray Checksum = new BitArray(20, false);
+                BitArray Checksum = new BitArray(20, false);
 
-            BitArray Temp = new BitArray(22, false);
+                BitArray Temp = new BitArray(22, false);
 
-            BitArray Temp2 = new BitArray(22, false);
+                BitArray Temp2 = new BitArray(22, false);
 
-            BitArray[] ProtocolDataSplit = new BitArray[3];
+                BitArray[] ProtocolDataSplit = new BitArray[3];
 
             for (i = 0; i < 3; i++)
             {
@@ -149,8 +148,8 @@ namespace TransportLayerGr510
             int i = 0;
             bool Carry = false;
 
-            BitArray Final = new BitArray(20, false);
-            BitArray Carries = new BitArray(22, false);
+                BitArray Final = new BitArray(20, false);
+                BitArray Carries = new BitArray(22, false);
 
             while (temp[20] || temp[21])
             {
@@ -287,6 +286,7 @@ namespace TransportLayerGr510
                 }
 
             BitArray Temp = new BitArray(new int[] { Number }); //number is put in a temp bitarray
+
                 for (int i = 0; i < Lenght; i++) //length is now 7
                     {
                      Out[i] = Temp[i];  //number is put into our output = 10000001
@@ -298,6 +298,7 @@ namespace TransportLayerGr510
         static void Main(string[] args)
         {
             byte[] Transmitpacket = new byte[10];
+
             int X = -16383;
             int Y = -16383;
             int Z = -16383;
@@ -307,7 +308,6 @@ namespace TransportLayerGr510
             Y = NegToPos(Y);
 
             Z = NegToPos(Z);
-
 
             Transmitpacket = Protocol(X, Y, Z);
 
