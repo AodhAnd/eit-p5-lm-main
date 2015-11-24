@@ -22,7 +22,7 @@ int batReading;   // Battery voltage reading
 
 void steeringStepResponse(){
 
-  const float Wantedspeed = 2;
+  const float Wantedspeed = 1.6;
   const float SysGain = 0.49;
   float Speedtoduty;
   int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
@@ -64,26 +64,26 @@ void steeringStepResponse(){
     
     
     // Steering is triggered 3s later (at t=5s)
-    if(timestamp>5000) servoPulseWidth = 1600;  //left
-    //if(timestamp>6000) servoPulseWidth = 1150;  //straight
+    if(timestamp>8000) servoPulseWidth = 1600;  //left
+    //if(timestamp>6500) servoPulseWidth = 1150;  //straight
+    
+    /*
+    if(timestamp>8000) servoPulseWidth = 1070;  //right
+    if(timestamp>9500) servoPulseWidth = 1150;  //straight
     
     
-    if(timestamp>7000) servoPulseWidth = 1070;  //right
-    //if(timestamp>8000) servoPulseWidth = 1150;  //straight
+    if(timestamp>11000) servoPulseWidth = 1600;  //left
+    if(timestamp>12500) servoPulseWidth = 1150;  //straight
     
     
-    if(timestamp>9000) servoPulseWidth = 1600;  //left
-    //if(timestamp>10000) servoPulseWidth = 1150;  //straight
-    
-    
-    if(timestamp>11000) servoPulseWidth = 1070;  //right
-    //if(timestamp>12000) servoPulseWidth = 1150;  //straight
+    if(timestamp>14000) servoPulseWidth = 1070;  //right
+    if(timestamp>15500) servoPulseWidth = 1150;  //straight
 
-    if(timestamp>13000) servoPulseWidth = 1600;  //left
-    //if(timestamp>14000) servoPulseWidth = 1150;  //straight
-
+    if(timestamp>17000) servoPulseWidth = 1600;  //left
+    if(timestamp>18500) servoPulseWidth = 1150;  //straight
+    */
     //stop at the end
-    if(timestamp < 15000) speed(duty);      //set the speed
+    if(timestamp < 16000) speed(duty);      //set the speed
     else speed(0);                          //stop at the end
     
     

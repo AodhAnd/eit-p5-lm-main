@@ -161,13 +161,13 @@
 //#define HW__VERSION_CODE 10736 // SparkFun "9DOF Razor IMU" version "SEN-10736" (HMC5883L magnetometer)
 //#define HW__VERSION_CODE 10183 // SparkFun "9DOF Sensor Stick" version "SEN-10183" (HMC5843 magnetometer)
 //#define HW__VERSION_CODE 10321 // SparkFun "9DOF Sensor Stick" version "SEN-10321" (HMC5843 magnetometer)
-//#define HW__VERSION_CODE 10724 // SparkFun "9DOF Sensor Stick" version "SEN-10724" (HMC5883L magnetometer)
+#define HW__VERSION_CODE 10724 // SparkFun "9DOF Sensor Stick" version "SEN-10724" (HMC5883L magnetometer)
 
 
 // OUTPUT OPTIONS
 /*****************************************************************/
 // Set your serial port baud rate used to send out data here!
-#define OUTPUT__BAUD_RATE 57600
+#define OUTPUT__BAUD_RATE 9600
 
 // Sensor data output interval in milliseconds
 // This may not work, if faster than 20ms (=50Hz)

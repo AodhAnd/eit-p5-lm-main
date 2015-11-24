@@ -2,12 +2,12 @@
 
 #define OUTPUT__DATA_INTERVAL 20  // in milliseconds
 
-#define MAGN_X_MIN ((float) -575) //Normal -600 to 600
-#define MAGN_X_MAX ((float) 318)
-#define MAGN_Y_MIN ((float) -316)
-#define MAGN_Y_MAX ((float) 563)
-#define MAGN_Z_MIN ((float) -390)
-#define MAGN_Z_MAX ((float) 507)
+#define MAGN_X_MIN ((float) -478) //Normal -600 to 600
+#define MAGN_X_MAX ((float) 280)
+#define MAGN_Y_MIN ((float) -122)
+#define MAGN_Y_MAX ((float) 456)
+#define MAGN_Z_MIN ((float) 399)
+#define MAGN_Z_MAX ((float) 611)
 #define MAGN_X_OFFSET ((MAGN_X_MIN + MAGN_X_MAX) / 2.0f)
 #define MAGN_Y_OFFSET ((MAGN_Y_MIN + MAGN_Y_MAX) / 2.0f)
 #define MAGN_Z_OFFSET ((MAGN_Z_MIN + MAGN_Z_MAX) / 2.0f)
@@ -29,3 +29,5 @@ void CompassSetup();
 //magn x,y,z (min/max) = -451.00/630.00  -434.00/586.00  -180.00/661.00
 //magn x,y,z (min/max) = -423.00/686.00  -432.00/564.00  -235.00/666.00
 //magn x,y,z (min/max) = -494.00/608.00  -419.00/595.00  -284.00/568.00
+
+//-478.00/280.00  -122.00/456.00  399.00/611.00
