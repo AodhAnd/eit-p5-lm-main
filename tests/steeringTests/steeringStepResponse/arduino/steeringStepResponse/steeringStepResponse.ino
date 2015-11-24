@@ -12,7 +12,7 @@
 struct k_t *pTaskInfo, *task2;
 
 char stack[300];  // Stack of task1
-char stack2[300]; // Stack of task2
+char stack2[1000]; // Stack of task2
 float speed0;     // Speed of belt 1
 float speed1;     // Speed of belt 1
 long int timestamp;
@@ -22,7 +22,7 @@ int batReading;   // Battery voltage reading
 
 void steeringStepResponse(){
 
-  const float Wantedspeed = 2.2;
+  const float Wantedspeed = 2;
   const float SysGain = 0.49;
   float Speedtoduty;
   int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
@@ -53,10 +53,10 @@ void steeringStepResponse(){
     // Vehicle starts after 2 seconds
     if(timestamp>2000)    //P-Controler with feed forward
     {
-      //Error = Wantedspeed - Actualspeed;
+      Error = Wantedspeed - Actualspeed;
       Speedtoduty = 1.0/(((float)batReading/102.4)*SysGain);// Battery reading: 1024 = 10V, so 1V = 102.4. multiply that with the system gain to calculate the duty cycle.
-      duty = Speedtoduty*100.0; 
-      //duty = (((Error)*PGain+feedFwd+0.38)*Speedtoduty)*100.0;//actual P-Controller
+      //duty = Speedtoduty*100.0; 
+      duty = (  ((Error)*PGain+feedFwd+0.38)*Speedtoduty)*100.0;//actual P-Controller
       if(duty > 100) duty = 100;
       if(duty < 0) duty = 0;
     }
@@ -64,23 +64,25 @@ void steeringStepResponse(){
     
     // Steering is triggered 3s later (at t=5s)
     if(timestamp>5000) servoPulseWidth = 1600;  //left
-    if(timestamp>6000) servoPulseWidth = 1150;  //straight
+    //if(timestamp>6000) servoPulseWidth = 1150;  //straight
     
     
     if(timestamp>7000) servoPulseWidth = 1070;  //right
-    if(timestamp>8000) servoPulseWidth = 1150;  //straight
+    //if(timestamp>8000) servoPulseWidth = 1150;  //straight
     
     
     if(timestamp>9000) servoPulseWidth = 1600;  //left
-    if(timestamp>10000) servoPulseWidth = 1150;  //straight
+    //if(timestamp>10000) servoPulseWidth = 1150;  //straight
     
     
     if(timestamp>11000) servoPulseWidth = 1070;  //right
-    if(timestamp>12000) servoPulseWidth = 1150;  //straight
+    //if(timestamp>12000) servoPulseWidth = 1150;  //straight
 
+    if(timestamp>13000) servoPulseWidth = 1600;  //left
+    //if(timestamp>14000) servoPulseWidth = 1150;  //straight
 
     //stop at the end
-    if(timestamp < 14000) speed(duty);      //set the speed
+    if(timestamp < 15000) speed(duty);      //set the speed
     else speed(0);                          //stop at the end
     
     
@@ -138,7 +140,7 @@ void setup() {
 
   delay(2000);
   pTaskInfo=k_crt_task(tSpeed,10,stack,300);              //hall sensors
-  task2=k_crt_task(steeringStepResponse,11,stack2,300);   //main code for the test
+  task2=k_crt_task(steeringStepResponse,11,stack2,1000);   //main code for the test
 
   k_start(1); // krnl runs with 1 msec heartbeat
   /* NOTE: legal time values:

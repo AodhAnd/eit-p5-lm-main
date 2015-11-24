@@ -1,5 +1,5 @@
 #include "hall.h"
-#include <arduino.h>
+#include <Arduino.h>
 volatile unsigned int uiTimeOfRotation[2]; // micro seconds for one rotation of the front(drive) wheel
 
 void initHallTimers()
