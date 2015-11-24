@@ -32,10 +32,10 @@ void steeringStepResponse(){
   float Error;
   const float PGain = 1.0;
   float feedFwd = Wantedspeed;
-  
+  float CompassReading[4];
   
   float compassAverage;
-  float sum = 0;
+  int compasscnt = 0;
   int i;
 
   while(1){
@@ -91,9 +91,12 @@ void steeringStepResponse(){
     
     
     //filtering of the angle data, rolling average of 5
-    sum = 0;
-    for(i=0;i<4;i++) sum += CompassGet();
-    compassAverage = sum/4;
+    CompassReading[compasscnt] = CompassGet();
+    compasscnt++;
+    if (compasscnt == 4) compasscnt = 0;
+    compassAverage = 0;
+    for (i=0;i<4;i++){compassAverage += CompassReading[i];}
+    compassAverage = compassAverage/4;
       
    
     //printing out the data whith commas for easy export as .csv-file:
