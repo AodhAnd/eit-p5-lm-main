@@ -22,7 +22,7 @@ int batReading;   // Battery voltage reading
 
 void steeringStepResponse(){
 
-  const float Wantedspeed = 2.5;
+  const float Wantedspeed = 2.2;
   const float SysGain = 0.49;
   float Speedtoduty;
   int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
@@ -36,7 +36,7 @@ void steeringStepResponse(){
   
   float compassAverage;
   float sum = 0;
-  int count = 0;
+  int i;
 
   while(1){
     
@@ -63,38 +63,49 @@ void steeringStepResponse(){
     
     
     // Steering is triggered 3s later (at t=5s)
-    //if(timestamp>5000) servoPulseWidth = 1420;
+    if(timestamp>5000) servoPulseWidth = 1600;  //left
+    if(timestamp>6000) servoPulseWidth = 1150;  //straight
+    
+    
+    if(timestamp>7000) servoPulseWidth = 1070;  //right
+    if(timestamp>8000) servoPulseWidth = 1150;  //straight
+    
+    
+    if(timestamp>9000) servoPulseWidth = 1600;  //left
+    if(timestamp>10000) servoPulseWidth = 1150;  //straight
+    
+    
+    if(timestamp>11000) servoPulseWidth = 1070;  //right
+    if(timestamp>12000) servoPulseWidth = 1150;  //straight
 
 
     //stop at the end
-    if(timestamp < 30000) speed(duty);
-    else speed(0);
+    if(timestamp < 14000) speed(duty);      //set the speed
+    else speed(0);                          //stop at the end
     
     
     
     
     
-    //filtering of the angle data, print data every 20 cycles
-    sum = CompassGet();
-    count++;
-    //if(count >= 20)      //every 20 loop turns
-    {
-      count = 0;
-      compassAverage = sum/20;        //average of 20 values
-      sum = 0;
+    //filtering of the angle data, rolling average of 5
+    sum = 0;
+    for(i=0;i<4;i++) sum += CompassGet();
+    compassAverage = sum/4;
+      
+   
+    //printing out the data whith commas for easy export as .csv-file:
+    Serial.print(compassAverage);
+    //Serial.print(CompassGet());
+    Serial.print(",");
+    Serial.print((float)batReading/102.4);    //voltage
+    Serial.print(",");
+    Serial.print(Actualspeed);
+    Serial.print(",");
+    Serial.print(timestamp);
+    Serial.print("\n");
+    Serial.print("\r");       //carriage return to return the curser for each new line
+    delay(30);
     
-      //printing out the data whith commas for easy export as .csv-file:
-      Serial.print(compassAverage);
-      Serial.print(",");
-      Serial.print((float)batReading/102.4);    //voltage
-      Serial.print(",");
-      Serial.print(Actualspeed);
-      Serial.print(",");
-      Serial.print(timestamp);
-      Serial.print("\n");
-      Serial.print("\r");       //carriage return to return the curser for each new line
-      delay(30);
-    }
     }
   }
 

@@ -2,7 +2,7 @@
 #define SERVO_DRIVER_H
 #define SERVO_MIN_WIDTH 500								// Minimum pulsewidth for servo
 #define SERVO_MAX_WIDTH 2000							// Maximum pulsewidth for servo
-#define SERVO_MIDDLE_PW 1450             // Pulse width that gets the vehicle to run straight 1578
+#define SERVO_MIDDLE_PW 1150             // Pulse width that gets the vehicle to run straight 1578
 #define SERVO_TIMER_PRESCALE 8							// Prescaler value for timer
 #define SERVO_TIMER_CLOCK F_CPU/SERVO_TIMER_PRESCALE	// Clock speed (16 MHz) in Hz for timer controlling the servo
 #define SERVO_TIMER_PERIOD 1000000/SERVO_TIMER_CLOCK	// Time in microseconds per timer tick 
