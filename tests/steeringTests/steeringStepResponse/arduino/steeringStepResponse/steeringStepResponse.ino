@@ -27,8 +27,8 @@ void steeringStepResponse(){
   float Speedtoduty;
   int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
   float Actualspeed;
-  float duty;
-
+  int duty;
+  float tmp;
   float Error;
   const float PGain = 1.0;
   float feedFwd = Wantedspeed;
@@ -56,7 +56,8 @@ void steeringStepResponse(){
       Error = Wantedspeed - Actualspeed;
       Speedtoduty = 1.0/(((float)batReading/102.4)*SysGain);// Battery reading: 1024 = 10V, so 1V = 102.4. multiply that with the system gain to calculate the duty cycle.
       //duty = Speedtoduty*100.0; 
-      duty = (  ((Error)*PGain+feedFwd+0.38)*Speedtoduty)*100.0;//actual P-Controller
+      tmp = (  ((Error)*PGain+feedFwd+0.38)*Speedtoduty)*100.0;//actual P-Controller
+      duty=tmp;
       if(duty > 100) duty = 100;
       if(duty < 0) duty = 0;
     }
