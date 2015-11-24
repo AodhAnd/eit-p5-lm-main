@@ -17,18 +17,17 @@
 
 
 struct k_t *Test;
-char stack[200];
+char stack[500];
 
 
 void SDdriver(void)
 {
-  while(1)
-  {
-    SDWrite();
-    SDread();
+      Serial.println("\nTask begin");
+      SDWrite();
+      SDread();
       delay(1000);
 
-  }
+   while(1);
 }
 
 
@@ -36,12 +35,20 @@ void SDdriver(void)
 void setup()
 {
 Serial.begin(9600);
-SDinit();
-k_init(1,0,0);
+while (!Serial) {;}
 
-Test = k_crt_task(SDdriver, 1, stack, 200);
+Serial.println("REBOOT");
+
+
+SDinit();
+delay(1000);
+
+k_init(1,0,0);
+Test = k_crt_task(SDdriver, 1, stack, 500);
+Serial.println("SETUP DONE");
 
 k_start(1);
+
 }
 
 

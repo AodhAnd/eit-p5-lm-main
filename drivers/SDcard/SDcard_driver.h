@@ -1,6 +1,5 @@
+#include <SPI.h>
 #include <SD.h>
-
-
 
 #ifdef __cplusplus
 extern "C"{
@@ -10,7 +9,6 @@ extern "C"{
 void SDinit();
 void SDWrite();
 void SDread();
-
 
 #ifdef __cplusplus
 } // extern "C"
