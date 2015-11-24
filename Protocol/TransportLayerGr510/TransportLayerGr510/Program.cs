@@ -83,7 +83,7 @@ namespace TransportLayerGr510
 
                 if (i < 68 && i > 7)
                 {
-                    bPacket[i] = TemperaryPacket[i-8];                  //the length and the coordinates is placed into the transmit packet
+                    bPacket[i] = TemperaryPacket[i-8];                  //the source, length and the coordinates is placed into the transmit packet
                 }
                 else if(i > 67)
                 {
@@ -306,25 +306,28 @@ namespace TransportLayerGr510
         {
             byte[] Transmitpacket = new byte[11];
 
-            int X = 1;
-            int Y = 1;
-            int Z = 80;
+            for (int i = 0; i < 1; i++)
+            {
+                int X = 100;
+                int Y = 120;
+                int Z = -130;
 
-            X = NegToPos(X);
+                X = NegToPos(X);
 
-            Y = NegToPos(Y);
+                Y = NegToPos(Y);
 
-            Z = NegToPos(Z);
+                Z = NegToPos(Z);
 
-            Transmitpacket = Protocol(X, Y, Z);
+                Transmitpacket = Protocol(X, Y, Z);
 
-            System.IO.Ports.SerialPort Serialport = new System.IO.Ports.SerialPort("COM17");
+                System.IO.Ports.SerialPort Serialport = new System.IO.Ports.SerialPort("COM17");
 
-            Serialport.Open();
+                Serialport.Open();
 
-            Serialport.Write(Transmitpacket,0,11);
+                Serialport.Write(Transmitpacket, 0, 11);
 
-            Serialport.Close();
+                Serialport.Close();
+            }
         }
     }
 }
