@@ -120,26 +120,26 @@ void steeringStepResponse(){
     
     
     // Steering is triggered 3s later (at t=5s)
-    if(timestamp>8000) servoPulseWidth = 1600;  //left
-    //if(timestamp>6500) servoPulseWidth = 1150;  //straight
-    
-    /*
-    if(timestamp>8000) servoPulseWidth = 1070;  //right
-    if(timestamp>9500) servoPulseWidth = 1150;  //straight
+   // if(timestamp>8000) servoPulseWidth = SERVO_MIDDLE_PW + 100;  //left
+    //if(timestamp>6500) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
     
     
-    if(timestamp>11000) servoPulseWidth = 1600;  //left
-    if(timestamp>12500) servoPulseWidth = 1150;  //straight
+    if(timestamp>3000) servoPulseWidth = SERVO_MIDDLE_PW - 420;  //right
+    if(timestamp>5000) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
     
     
-    if(timestamp>14000) servoPulseWidth = 1070;  //right
-    if(timestamp>15500) servoPulseWidth = 1150;  //straight
+    if(timestamp>6000) servoPulseWidth = SERVO_MIDDLE_PW + 200;  //left
+    if(timestamp>8000) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
+    
+    
+    if(timestamp>9000) servoPulseWidth = SERVO_MIDDLE_PW - 420; //right
+    if(timestamp>11000) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
 
-    if(timestamp>17000) servoPulseWidth = 1600;  //left
-    if(timestamp>18500) servoPulseWidth = 1150;  //straight
-    */
+    if(timestamp>12000) servoPulseWidth = SERVO_MIDDLE_PW + 200;  //left
+    if(timestamp>14000) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
+    
     //stop at the end
-    if(timestamp<10000)speed(duty);
+    if(timestamp<15000)speed(duty);
   
     else speed(0);    
     
