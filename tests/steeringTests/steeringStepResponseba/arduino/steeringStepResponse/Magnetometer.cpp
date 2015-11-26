@@ -13,39 +13,9 @@ void Read_Magn();
 
 void compensate_sensor_errors() 
 {
-  int r;
-  Serial.print(magnetom[0]);
-  Serial.print(",");
-
-  //magnetom[0] = (magnetom[0] - MAGN_X_OFFSET) * MAGN_X_SCALE;
-  magnetom[0] = magnetom[0] + 110;
-  Serial.print(magnetom[0]);
-  Serial.print(",");
-
-
-
-  Serial.print(magnetom[1]  );
-  Serial.print(",");
-  //magnetom[1] = (magnetom[1] - MAGN_Y_OFFSET) * MAGN_Y_SCALE;
-  magnetom[1] = magnetom[1] -134;
-
-  Serial.print(magnetom[1]  );
-  Serial.print(",");
-  
-  
-  
-  
-  Serial.print(magnetom[2]  );
-  Serial.print(",");
-  //magnetom[2] = (magnetom[2] - MAGN_Z_OFFSET) * MAGN_Z_SCALE;
-  magnetom[2] = magnetom[2] +18;
-  Serial.print(magnetom[2]  );
-  Serial.print(",");
-  
-  
-  //r = sqrt(pow(magnetom[0],2)+pow(magnetom[1],2)+pow(magnetom[2],2));
-  //Serial.print(r);
-  Serial.print("\n\r");
+  magnetom[0] = (magnetom[0] - MAGN_X_OFFSET) * MAGN_X_SCALE;
+  magnetom[1] = (magnetom[1] - MAGN_Y_OFFSET) * MAGN_Y_SCALE;
+  magnetom[2] = (magnetom[2] - MAGN_Z_OFFSET) * MAGN_Z_SCALE;
 }
 
 void CompassSetup()

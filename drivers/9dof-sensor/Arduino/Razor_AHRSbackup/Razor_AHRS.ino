@@ -228,13 +228,6 @@ boolean output_errors = false;  // true or false
 #define MAGN_Y_MAX ((float) 600)
 #define MAGN_Z_MIN ((float) -600)
 #define MAGN_Z_MAX ((float) 600)
-/*
-#define MAGN_X_MIN ((float) -68)
-#define MAGN_X_MAX ((float) 335)
-#define MAGN_Y_MIN ((float) 41)
-#define MAGN_Y_MAX ((float) 391)
-#define MAGN_Z_MIN ((float) -220)
-#define MAGN_Z_MAX ((float) 625)*/
 
 // Magnetometer (extended calibration mode)
 // Uncommend to use extended magnetometer calibration (compensates hard & soft iron errors)
@@ -260,7 +253,7 @@ boolean output_errors = false;  // true or false
 #define ACCEL_Z_MAX ((float) 235)
 
 // "magn x,y,z (min/max) = -511.00/581.00  -516.00/568.00  -489.00/486.00"
-//#define ((float) -511)
+//#define MAGN_X_MIN ((float) -511)
 //#define MAGN_X_MAX ((float) 581)
 //#define MAGN_Y_MIN ((float) -516)
 //#define MAGN_Y_MAX ((float) 568)

@@ -103,13 +103,13 @@ void steeringStepResponse(){
     Serial.print(compassAverage);
     //Serial.print(CompassGet());
     Serial.print(",");
-    /*Serial.print((float)batReading/102.4);    //voltage
+    Serial.print((float)batReading/102.4);    //voltage
     Serial.print(",");
     Serial.print(Actualspeed);
     Serial.print(",");
     Serial.print(timestamp);
     Serial.print("\n");
-    Serial.print("\r");      */ //carriage return to return the curser for each new line
+    Serial.print("\r");       //carriage return to return the curser for each new line
     delay(30);
     
     }
