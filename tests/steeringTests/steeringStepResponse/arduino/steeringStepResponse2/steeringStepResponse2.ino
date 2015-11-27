@@ -76,7 +76,7 @@ int batReading;   // Battery voltage reading
 
 void steeringStepResponse(){
 
-  const float Wantedspeed = 1.6;
+  const float Wantedspeed = 1.2;
   const float SysGain = 0.49;
   float Speedtoduty;
   int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
@@ -124,18 +124,18 @@ void steeringStepResponse(){
     //if(timestamp>6500) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
     
     
-    if(timestamp>3000) servoPulseWidth = SERVO_MIDDLE_PW - 420;  //right
+    if(timestamp>3000) servoPulseWidth = SERVO_MIDDLE_PW - 290;  //right
     if(timestamp>5000) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
     
     
-    if(timestamp>6000) servoPulseWidth = SERVO_MIDDLE_PW + 200;  //left
+    if(timestamp>6000) servoPulseWidth = SERVO_MIDDLE_PW + 300;  //left
     if(timestamp>8000) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
     
     
-    if(timestamp>9000) servoPulseWidth = SERVO_MIDDLE_PW - 420; //right
+    if(timestamp>9000) servoPulseWidth = SERVO_MIDDLE_PW - 290; //right
     if(timestamp>11000) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
 
-    if(timestamp>12000) servoPulseWidth = SERVO_MIDDLE_PW + 200;  //left
+    if(timestamp>12000) servoPulseWidth = SERVO_MIDDLE_PW + 300;  //left
     if(timestamp>14000) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
     
     //stop at the end
@@ -175,7 +175,7 @@ void steeringStepResponse(){
   Serial.print(MAG_Heading);
   Serial.print(',');
   
-  Serial.print(calibrated_values[0]);
+ /* Serial.print(calibrated_values[0]);
   Serial.print(',');
 
   Serial.print(calibrated_values[1]);
@@ -183,7 +183,10 @@ void steeringStepResponse(){
 
   Serial.print(calibrated_values[2]);
   Serial.print(',');
-  
+*/  Serial.print(Actualspeed),
+  Serial.print(',');
+  Serial.print(batReading);
+  Serial.print(',');
   Serial.print(timestamp);
 
   Serial.println(' ');
@@ -212,7 +215,7 @@ void steeringStepResponse(){
     Serial.print(timestamp);
     Serial.print("\n");
     Serial.print("\r");      */ //carriage return to return the curser for each new line
-    delay(100);
+    delay(50);
     
     }
   }
