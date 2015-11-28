@@ -1,4 +1,4 @@
-
+sudo putt
 #include "hall.h"
 #include <krnl.h>
 #include "motor_driver.h"
@@ -202,14 +202,13 @@ void SpeedControl(){
   
     else speed(0);    
     
-/*  Serial.print(Actualspeed),
+  Serial.print(Actualspeed),
   Serial.print(',');
   Serial.print(batReading);
   Serial.print(',');
   Serial.print(timestamp);
 
   Serial.println(' ');
-*/
 
     delay(50);
     
