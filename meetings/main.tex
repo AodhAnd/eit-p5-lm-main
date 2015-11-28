@@ -6,53 +6,58 @@
 \renewcommand\figurename{Figur}
 \renewcommand\tablename{Tabel}
 
-\section*{Supervisor meeting\\ \small 20th of November 2015}
+\section*{Supervisor meeting\\ \small 27th of November 2015}
 
-\subsection{Comparison of Step-responses with controllers}
+\subsection{Problem with SD card}
 \begin{itemize}
-\item[-] Done again with new gain and stiction offset
-\item[-] P-controller with feed-forward is fine for straight runs of the vehicle
-\item[-] It might be necessary to add an integrator when adding the steering
+\item[-] It is not so important, so fine to cut it because of time constraints.
 \end{itemize}
 
-\subsection{Comparison of first and second order system simulations}
+\subsection{Magnetometer}
 \begin{itemize}
-\item[-] Done again with new gain and time constant $\rightarrow$ fine
+\item[-] Calibration of the offset worked
+\item[-] Fixed the incoherence problems due to external magnetic fields (wires, battery and other metallic objects moving around the sensor)
 \end{itemize}
 
-\subsection{Inertia Formula}
+\subsection{Steering test}
 \begin{itemize}
-\item[-] Inertia formula fixed
+  \item[-] Good job with has been done for the steering test yet
+  \item[-] A problem was found during the test; the steering is not consistent, maybe because of heating brakes
+  \item[-] Maybe we are lucky, and the controller will fix the problem
+  \item[-] Try making 10 test and see the difference between them
+  \item[-] Just jump out to it : try to estimate, test it and adapt it accordingly
+  \item[-] There should be a integrator in the steering model, which should result in a type 1 system
+  \item[-] Integrator is depending on the velocity : use an operating point (assume constant speed)
+  \item[-] The black box drawn yet looks correct 
+  \item[-] The time constant should vary according to the velocity
+  \item[-] When making this linear, the speed shall be kept constant. P controller
+  \item[-] Don't use too much time on different types of controller
+  \item[-] Make an inner loop to measure the angle and an outer loop the distance to a determined line
 \end{itemize}
 
-\subsection{Steering Model And Test}
+\subsection{Velocity part}
 \begin{itemize}
-\item[-] Magnetometer data: have to do a plot of the vehicle turning without motor, to see if it's the magnet wich is not good or if we juste have to do a filtering on the data because of the magnetic field from the motor.
+\item[-] There are just few comments, but otherwis it is good
+\item[-] Be consistent regarding the terms in equations: clarify which are constant wich are varying depending on time
+\item[-] In Equation 5.20, the $2 \cdot \pi$ should not be there (same thing for other equations)
+\item[-] $L_a$ can not just removed because it is small, but because the associated pole is much less important/far from the dominant pole/out of the range of passing frequencies for our system to show the difference between 1st and 2nd order
+\item[-] In Figure 5.13 : 
+  \begin{itemize}
+  \item[-] Rounding errors have gave a velocity smaller than 0
+  \item[-] More explanation about the delay in 5.13
+  \end{itemize}
+\item[-] Make a step down
 \end{itemize}
 
 
-\subsection{Hall Sensor Section}
+\subsection{Signal processings}
 \begin{itemize}
-\item[-] Try to do a plot comparison between the  wanted and the real velocity, to have a statistic error.
-\item[-] Algorithm flowchart should be in appendix
-\item[-] Add in the report that the frequency sampling has to be constant.
-\end{itemize}
-
-\subsection{Requirements}
-\begin{itemize}
-\item[-] Velocity: the vehicle should be able to keep the velocity for different disturbance and inputs.
-\item[-] Controller: should control the disturbances more than the input error, and in a certain time. It should ensure the stability of the system, even on steep terrain, for example.
-\end{itemize}
-
-
-\subsection{Route planning}
-\begin{itemize}
-\item[-] Shoud be simple, like a spiral, smooth
+\item[-] If we really want to make a filter, make a really fast sampling on the hall sensor, so it could make it there
 \end{itemize}
 
 
 \subsection{Next Supervisor meeting}
-Next Friday (27th of November) at 12.30
+Next Friday (4th of December) at 12.30
 
 \end{document}
 
