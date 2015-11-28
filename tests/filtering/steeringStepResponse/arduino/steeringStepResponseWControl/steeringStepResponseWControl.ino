@@ -1,4 +1,4 @@
-sudo putt
+
 #include "hall.h"
 #include <krnl.h>
 #include "motor_driver.h"
@@ -83,6 +83,8 @@ float values_from_magnetometer[3];
 float angles[8];
 
 void SteeringControl(){
+
+   
    
    int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
    float MAG_Heading_Old;                 // Heading to compare with from last run
@@ -97,7 +99,7 @@ void SteeringControl(){
    const int rightOffset = -250; 
    const int leftOffset = 250;
    
-   k_set_sem_timer(sem2,50); // krnl will signal sem every 50th tick
+   k_set_sem_timer(sem2,7); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
   getHeading();
@@ -156,17 +158,19 @@ void SteeringControl(){
     if(timestamp>5000) Omega_wanted = 0;  //straight
     
     
-    if(timestamp>6000) Omega_wanted = 10;  //left
+    if(timestamp>6000) Omega_wanted = 10; //left
     if(timestamp>8000) Omega_wanted = 0;  //straight
     
     
-    if(timestamp>9000) Omega_wanted = -10;  //right
+    if(timestamp>9000) Omega_wanted = -10; //right
     if(timestamp>11000) Omega_wanted = 0;  //straight
 
-    if(timestamp>12000) Omega_wanted = 10;  //left
+    if(timestamp>12000) Omega_wanted = 10; //left
     if(timestamp>14000) Omega_wanted = 0;  //straight
-      
-     k_wait(sem2,0);     //wait for semaphore
+
+      digitalWrite(31,LOW);
+     k_wait(sem2,0);                        //wait for semaphore
+      digitalWrite(31,HIGH);
      timestampMagneto = millis();
 
   }
@@ -243,6 +247,7 @@ void setup() {
   setupHMC5883L(); 
   // Init Hall sensors
   pinMode(35,INPUT);
+  pinMode(31,OUTPUT);
   initHallTimers();
 
   sem2 = k_crt_sem(1,2);
