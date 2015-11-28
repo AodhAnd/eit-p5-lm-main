@@ -92,7 +92,7 @@ void SteeringControl(){
    float Omega_wanted = 0;                // Wanted angular velocity
    float P_out;                           // Output from P controller
 
-   float P_gain = 0.5;                      // to convert angle or speed error into ms
+   float P_gain = 1;                      // to convert angle or speed error into ms
 
    const int rightOffset = -250; 
    const int leftOffset = 280;
@@ -148,11 +148,11 @@ void SteeringControl(){
   
     //P_out = Omega_error * P_gain;
     P_out = Theta_error * P_gain;
-  
-    if(P_out>0.5){setServo(SERVO_MIDDLE_PW+leftOffset+P_out);}
-    if(P_out<-0.5){setServo(SERVO_MIDDLE_PW+rightOffset+P_out);}
+  /*
+    if(P_out>0){setServo(SERVO_MIDDLE_PW+leftOffset+P_out);}
+    if(P_out<0){setServo(SERVO_MIDDLE_PW+rightOffset+P_out);}
     if(P_out==0){setServo(SERVO_MIDDLE_PW);}
-      
+      */
     //Serial.flush(); 
     
    
@@ -164,7 +164,7 @@ void SteeringControl(){
     Serial.println(',');
     
       
-      
+      /*
       if(timestamp>3000) Omega_wanted = -turningWanted;  //right
       if(timestamp>5000) Omega_wanted = 0;  //straight
       
@@ -177,7 +177,7 @@ void SteeringControl(){
       if(timestamp>11000) Omega_wanted = 0;  //straight
   
       if(timestamp>12000) Omega_wanted = turningWanted;  //left
-      if(timestamp>14000) Omega_wanted = 0;  //straight
+      if(timestamp>14000) Omega_wanted = 0;  //straight*/
     
       k_wait(sem2,0);     //wait for semaphore
   }
