@@ -143,7 +143,7 @@ void SteeringControl(){
   //Serial.flush(); 
 
   
-  timestampMagneto = millis();
+  
 
   Serial.print(MAG_Heading_New);
   Serial.print(',');
@@ -167,6 +167,7 @@ void SteeringControl(){
     if(timestamp>14000) Omega_wanted = 0;  //straight
       
      k_wait(sem2,0);     //wait for semaphore
+     timestampMagneto = millis();
 
   }
 }
