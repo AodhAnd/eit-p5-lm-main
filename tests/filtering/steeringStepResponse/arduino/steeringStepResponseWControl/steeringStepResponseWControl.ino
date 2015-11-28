@@ -99,7 +99,7 @@ void SteeringControl(){
    const int rightOffset = -250; 
    const int leftOffset = 250;
    
-   k_set_sem_timer(sem2,7); // krnl will signal sem every 50th tick
+   k_set_sem_timer(sem2,6); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
   getHeading();
@@ -150,9 +150,9 @@ void SteeringControl(){
   Serial.print(MAG_Heading_New);
   Serial.print(',');
   Serial.print(P_out);
-  Serial.println(',');
-  Serial.print(timestampMagneto);
-  Serial.println(',');
+  Serial.print(',');
+  //Serial.print(timestampMagneto);
+  //Serial.print(',');
     
     if(timestamp>3000) Omega_wanted = -10;  //right
     if(timestamp>5000) Omega_wanted = 0;  //straight
@@ -171,7 +171,9 @@ void SteeringControl(){
       digitalWrite(31,LOW);
      k_wait(sem2,0);                        //wait for semaphore
       digitalWrite(31,HIGH);
-     timestampMagneto = millis();
+     //timestampMagneto = millis();
+       Serial.println(millis());
+
 
   }
 }
