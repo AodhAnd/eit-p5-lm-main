@@ -1,4 +1,3 @@
-sudo putt
 #include "hall.h"
 #include <krnl.h>
 #include "motor_driver.h"
@@ -96,6 +95,8 @@ void SteeringControl(){
    const int rightOffset = -250; 
    const int leftOffset = 250;
    
+   int turningWanted = 0;
+   
    k_set_sem_timer(sem2,50); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
@@ -125,11 +126,11 @@ void SteeringControl(){
   if (sampleNumber > 8){sampleNumber = 0;}
   
 /* Calculate current angular velocity  */
-  Omega_current = (MAG_Heading_New - MAG_Heading_Old);
+  Omega_current = (MAG_Heading_New - MAG_Heading_Old);    //not a speed yet, difference of angle headings
   if (Omega_current < 180){Omega_current +=360;}
   if (Omega_current > 180){Omega_current -=360;}
   Omega_current = Omega_current * 20;  // (Old heading - New heading)/50ms = degrees per second
-  MAG_Heading_Old = MAG_Heading_New;
+  //MAG_Heading_Old = MAG_Heading_New;
 
   Omega_error = Omega_wanted - Omega_current;
 
@@ -148,18 +149,18 @@ void SteeringControl(){
   Serial.println(',');
     
     
-    if(timestamp>3000) Omega_wanted = -10;  //right
+    if(timestamp>3000) Omega_wanted = -turningWanted;  //right
     if(timestamp>5000) Omega_wanted = 0;  //straight
     
     
-    if(timestamp>6000) Omega_wanted = 10;  //left
+    if(timestamp>6000) Omega_wanted = turningWanted;  //left
     if(timestamp>8000) Omega_wanted = 0;  //straight
     
     
-    if(timestamp>9000) Omega_wanted = -10;  //right
+    if(timestamp>9000) Omega_wanted = -turningWanted;  //right
     if(timestamp>11000) Omega_wanted = 0;  //straight
 
-    if(timestamp>12000) Omega_wanted = 10;  //left
+    if(timestamp>12000) Omega_wanted = turningWanted;  //left
     if(timestamp>14000) Omega_wanted = 0;  //straight
   
     k_wait(sem2,0);     //wait for semaphore
@@ -201,14 +202,16 @@ void SpeedControl(){
     if(timestamp<15000)speed(duty);
   
     else speed(0);    
-    
-  Serial.print(Actualspeed),
-  Serial.print(',');
-  Serial.print(batReading);
-  Serial.print(',');
-  Serial.print(timestamp);
+      
+    Serial.print(Actualspeed),
+    Serial.print(',');
+    Serial.print(batReading);
+    Serial.print(',');
+    Serial.print(timestamp);
+    Serial.print(',');
 
-  Serial.println(' ');
+  
+    //Serial.println(' ');
 
     delay(50);
     
