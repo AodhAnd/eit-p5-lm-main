@@ -1,0 +1,11 @@
+digraph "File::available"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="File::available",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="File::size",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_file.html#a603d3cd3319142d00a7ebd434970b017"];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="File::position",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_file.html#aae991c597c0bc4c5eb44c1f3b06a21ec"];
+}

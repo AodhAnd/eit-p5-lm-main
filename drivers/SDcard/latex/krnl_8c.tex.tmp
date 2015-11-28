@@ -1,0 +1,1160 @@
+\hypertarget{krnl_8c}{}\section{C\+:/\+Program Files (x86)/\+Arduino/libraries/krnl/krnl.c File Reference}
+\label{krnl_8c}\index{C\+:/\+Program Files (x86)/\+Arduino/libraries/krnl/krnl.\+c@{C\+:/\+Program Files (x86)/\+Arduino/libraries/krnl/krnl.\+c}}
+{\ttfamily \#include \char`\"{}krnl.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$avr/wdt.\+h$>$}\\*
+{\ttfamily \#include $<$avr/interrupt.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+Include dependency graph for krnl.\+c\+:
+% FIG 0
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{krnl_8c_a8390550b01018588df23043e908ded51}{K\+R\+N\+L\+T\+M\+R\+V\+E\+C\+T\+O\+R}~T\+I\+M\+E\+R1\+\_\+\+O\+V\+F\+\_\+vect
+\item 
+\#define \hyperlink{krnl_8c_a6e681752552f535dfb234bf75808e2a1}{T\+C\+N\+Tx}~T\+C\+N\+T1
+\item 
+\#define \hyperlink{krnl_8c_aedef1a8b3de29d96e6f2e152ccfe2a26}{T\+C\+C\+Rx\+A}~T\+C\+C\+R1\+A
+\item 
+\#define \hyperlink{krnl_8c_a1898265baad35102ca5d950b41e7dc1a}{T\+C\+C\+Rx\+B}~T\+C\+C\+R1\+B
+\item 
+\#define \hyperlink{krnl_8c_a6e681752552f535dfb234bf75808e2a1}{T\+C\+N\+Tx}~T\+C\+N\+T1
+\item 
+\#define \hyperlink{krnl_8c_a8d7bc6726e0fd85c5873faeb6e4246f9}{O\+C\+Rx\+A}~O\+C\+R1\+A
+\item 
+\#define \hyperlink{krnl_8c_a1e363f21cd8c0e899bbe4d9908466375}{T\+I\+M\+S\+Kx}~T\+I\+M\+S\+K1
+\item 
+\#define \hyperlink{krnl_8c_a6e9792cc10d49106aa9bfac11ab374bc}{T\+O\+I\+Ex}~T\+O\+I\+E1
+\item 
+\#define \hyperlink{krnl_8c_ab27d12aac1a3a46aed25604d4c00cc18}{P\+R\+E\+S\+C\+A\+L\+E}~0x04
+\item 
+\#define \hyperlink{krnl_8c_a5880ec0d5758fc1e5be1306456ed28b3}{C\+O\+U\+N\+T\+M\+A\+X}~65535
+\item 
+\#define \hyperlink{krnl_8c_a734615b1179c3466e4cee6d7777ff3a1}{D\+I\+V\+V}~62.\+5
+\item 
+\#define \hyperlink{krnl_8c_a1e55b17b4f68107071bec1eb064edb66}{D\+I\+V\+V8}~31.\+25
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{krnl_8c_a74c9726898ac428dc70ce64773423224}{k\+\_\+eat\+\_\+time} (unsigned int eat\+Time)
+\item 
+void \hyperlink{krnl_8c_ab750c904258e717b40c17f55400ca3b2}{en\+Q} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$Q, struct \hyperlink{structk__t}{k\+\_\+t} $\ast$el)
+\item 
+struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ \hyperlink{krnl_8c_a7ac8496c83319bfc569e4fdab8149940}{de\+Q} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$el)
+\item 
+void \hyperlink{krnl_8c_ae7d9dd598f0d68cea2903843117e8ebe}{prio\+\_\+en\+Q} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$Q, struct \hyperlink{structk__t}{k\+\_\+t} $\ast$el)
+\item 
+\hyperlink{krnl_8c_a790cb408825575b88d1107608b1ff389}{I\+S\+R} (\hyperlink{krnl_8c_a8390550b01018588df23043e908ded51}{K\+R\+N\+L\+T\+M\+R\+V\+E\+C\+T\+O\+R}, I\+S\+R\+\_\+\+N\+A\+K\+E\+D)
+\item 
+void \hyperlink{krnl_8c_ab04f0f0b9eae773e634b2af977e882a9}{\+\_\+\+\_\+attribute\+\_\+\+\_\+} ((naked, noinline))
+\item 
+struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ \hyperlink{krnl_8c_ab0cfe9f72acf96b6f901b1fccf3e723f}{k\+\_\+crt\+\_\+task} (void($\ast$p\+Task)(void), char prio, char $\ast$p\+Stk, int stk\+Size)
+\item 
+int \hyperlink{krnl_8c_abde03a57484eac43bffbad24df5fc794}{free\+Ram} (void)
+\item 
+int \hyperlink{krnl_8c_a56febc95937d41bc48b48b6fdd6f6987}{k\+\_\+sleep} (int time)
+\item 
+int \hyperlink{krnl_8c_aab50fd7741fd86d4215ecc6aceb892a3}{k\+\_\+unused\+\_\+stak} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$t)
+\item 
+\hyperlink{krnl_8c_a677cdc92c3e1e40ab40eeb577dd370e3}{k\+\_\+set\+\_\+prio} (char prio)
+\item 
+struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ \hyperlink{krnl_8c_a27f33ac31a1b04e73084d19333e10486}{k\+\_\+crt\+\_\+sem} (char init\+\_\+val, int maxvalue)
+\item 
+int \hyperlink{krnl_8c_aa6aa0c34f3e3b21e906a765498ee02b2}{k\+\_\+set\+\_\+sem\+\_\+timer} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$sem, int val)
+\item 
+int \hyperlink{krnl_8c_a45c4a121f17683f0cd3593c0ee0bff1b}{ki\+\_\+signal} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$sem)
+\item 
+int \hyperlink{krnl_8c_a9dd68e067508f30ffdc08622cf7a43dd}{k\+\_\+prio\+\_\+signal} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$sem, char prio)
+\item 
+int \hyperlink{krnl_8c_a0c2f743e45400c5d9ac04457b78d3d97}{k\+\_\+signal} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$sem)
+\item 
+int \hyperlink{krnl_8c_aead12f2e7f6ee98b98bb847c42d5027c}{ki\+\_\+wait} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$sem, int timeout)
+\item 
+int \hyperlink{krnl_8c_a7f65c7a1cbda113524b3009faf639357}{k\+\_\+wait} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$sem, int timeout)
+\item 
+int \hyperlink{krnl_8c_abf03efd6d21b2031433854ad359463b5}{k\+\_\+prio\+\_\+wait} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$sem, int timeout, char prio)
+\item 
+int \hyperlink{krnl_8c_a74756a33d34544159e50f335cb7ed9af}{k\+\_\+wait\+\_\+lost} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$sem, int timeout, int $\ast$lost)
+\item 
+int \hyperlink{krnl_8c_aba6630458cb65380757b92a0dcc85f85}{k\+\_\+sem\+\_\+signals\+\_\+lost} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$sem)
+\item 
+int \hyperlink{krnl_8c_a306bc3e4b53fc2f608e5945f20cf9ea5}{ki\+\_\+semval} (struct \hyperlink{structk__t}{k\+\_\+t} $\ast$sem)
+\item 
+struct \hyperlink{structk__msg__t}{k\+\_\+msg\+\_\+t} $\ast$ \hyperlink{krnl_8c_a8ad6ae5f7e3cac59845df0de94e55c68}{k\+\_\+crt\+\_\+send\+\_\+\+Q} (int nr\+\_\+el, int el\+\_\+size, void $\ast$p\+Buf)
+\item 
+char \hyperlink{krnl_8c_a7f0e5da0dbd3154fa3b69e3e2e650bed}{ki\+\_\+send} (struct \hyperlink{structk__msg__t}{k\+\_\+msg\+\_\+t} $\ast$p\+B, void $\ast$el)
+\item 
+char \hyperlink{krnl_8c_aad1cd26ac0560fb40b088b229c07f7a3}{k\+\_\+send} (struct \hyperlink{structk__msg__t}{k\+\_\+msg\+\_\+t} $\ast$p\+B, void $\ast$el)
+\item 
+char \hyperlink{krnl_8c_a66c23bd6aa71c0d083e4a4b71b35ff71}{ki\+\_\+receive} (struct \hyperlink{structk__msg__t}{k\+\_\+msg\+\_\+t} $\ast$p\+B, void $\ast$el, int $\ast$lost\+\_\+msg)
+\item 
+char \hyperlink{krnl_8c_a3e7f34b848366b08928c72711b6c008a}{k\+\_\+receive} (struct \hyperlink{structk__msg__t}{k\+\_\+msg\+\_\+t} $\ast$p\+B, void $\ast$el, int timeout, int $\ast$lost\+\_\+msg)
+\item 
+void \hyperlink{krnl_8c_a9b36880ab6632f7533f77dbbe3119dd5}{k\+\_\+round\+\_\+robbin} (void)
+\item 
+int \hyperlink{krnl_8c_ad939ea35387a46c6c94a096d41c0d18b}{k\+\_\+init} (int nr\+Task, int nr\+Sem, int nr\+Msg)
+\item 
+int \hyperlink{krnl_8c_abed191616e4e3d1fa684f9ca719715fb}{k\+\_\+start} (int tm)
+\item 
+int \hyperlink{krnl_8c_a7ee5036463c30b3ba1c02a27ed96aedf}{k\+\_\+stop} (int exit\+Val)
+\item 
+void \hyperlink{krnl_8c_a1403e8934fe3c3155f50aa70fb939b01}{k\+\_\+reset} ()
+\item 
+unsigned long \hyperlink{krnl_8c_a0bc5cd2b2978ba0da05370e31b7e231d}{k\+\_\+millis} (void)
+\item 
+int \hyperlink{krnl_8c_a3ccf696f0ef7f772a9d339348b6b52e2}{k\+\_\+tmr\+Info} (void)
+\item 
+char \hyperlink{krnl_8c_a3f78785f06706a3135f9300d6ab0b01d}{k\+\_\+set\+\_\+preempt} (char on)
+\item 
+char \hyperlink{krnl_8c_a64ccac5defa817ee73df6105c0927901}{k\+\_\+get\+\_\+preempt} (void)
+\item 
+void \hyperlink{krnl_8c_a201468129b483039afc5a619e2d31097}{\+\_\+\+\_\+attribute\+\_\+\+\_\+} ((weak))
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ \hyperlink{krnl_8c_ae8508664812d71fc106d8929f6104cf6}{task\+\_\+pool}
+\item 
+struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ \hyperlink{krnl_8c_a7734e7465577a12ef1bee5923cc7b121}{sem\+\_\+pool}
+\item 
+struct \hyperlink{structk__t}{k\+\_\+t} \hyperlink{krnl_8c_ae12cf3a4490ccd9d1e18de83b62f7296}{A\+Q}
+\item 
+struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ \hyperlink{krnl_8c_a80e96fa9f2ed99168a71edefd1fc47ae}{pmain\+\_\+el}
+\item 
+struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ \hyperlink{krnl_8c_a39d231356e06de7246adccc268aa1147}{p\+A\+Q}
+\item 
+struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ \hyperlink{krnl_8c_ac0ba8f7ce796b6b1e572f969328a2ca5}{p\+Dmy}
+\item 
+struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ \hyperlink{krnl_8c_a35d8daf7bc4e2ffe82f95963bcfdf857}{p\+Run}
+\item 
+struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ \hyperlink{krnl_8c_a6e675bcea12aa787eabf1ca6a9271ce8}{p\+Sleep\+Sem}
+\item 
+struct \hyperlink{structk__msg__t}{k\+\_\+msg\+\_\+t} $\ast$ \hyperlink{krnl_8c_ad1488042c624f027559bf393cb60030c}{send\+\_\+pool}
+\item 
+int \hyperlink{krnl_8c_a5f7cbf98727b1a04fadd5890d0278487}{k\+\_\+task}
+\item 
+int \hyperlink{krnl_8c_a3612c72062520ffab60364b0d956e431}{k\+\_\+sem}
+\item 
+int \hyperlink{krnl_8c_a11c6706cca7518dfd785ea9f37a8b9c8}{k\+\_\+msg}
+\item 
+char \hyperlink{krnl_8c_adb04c7a4b69d0318cdfcf19f8bbdf2ec}{nr\+\_\+task} = 0
+\item 
+char \hyperlink{krnl_8c_a836f47dd0a5450a93da2951223de72ef}{nr\+\_\+sem} = 0
+\item 
+char \hyperlink{krnl_8c_a3153e25cb4a1062d7b56bc10485c9ab8}{nr\+\_\+send} = 0
+\item 
+volatile char \hyperlink{krnl_8c_a2680e3dfc16aaf181f466757b1460793}{krnl\+\_\+preempt\+\_\+flag} =1
+\item 
+volatile char \hyperlink{krnl_8c_a5cd13e276eb8b12ec888845f354e159c}{k\+\_\+running} = 0
+\item 
+volatile char \hyperlink{krnl_8c_ae320347a3a0f5d049aa456b4ebf21d28}{k\+\_\+err\+\_\+cnt} = 0
+\item 
+volatile unsigned int \hyperlink{krnl_8c_a4b4a047399e1ee15b40777542d354b52}{tcnt\+Value}
+\item 
+volatile int \hyperlink{krnl_8c_ab6049c624c71022617cb364ecab34dba}{fakecnt}
+\item 
+volatile int \hyperlink{krnl_8c_ab86ac5ffb302fcda5e40378d29e70d40}{fakecnt\+\_\+preset}
+\item 
+unsigned long \hyperlink{krnl_8c_af95ed4a3eb440bda3b8088a52e345f5b}{k\+\_\+millis\+\_\+counter} =0
+\item 
+unsigned int \hyperlink{krnl_8c_a156af655170a22467a9d657098c84e09}{k\+\_\+tick\+\_\+size}
+\item 
+int \hyperlink{krnl_8c_aca8f692a56d85f636f0caaf14abd57d2}{tmr\+\_\+indx}
+\item 
+struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ \hyperlink{krnl_8c_a40fbdb3ae83ed2142131282188c01d88}{p\+E}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{krnl_8c_a5880ec0d5758fc1e5be1306456ed28b3}{}\index{krnl.\+c@{krnl.\+c}!C\+O\+U\+N\+T\+M\+A\+X@{C\+O\+U\+N\+T\+M\+A\+X}}
+\index{C\+O\+U\+N\+T\+M\+A\+X@{C\+O\+U\+N\+T\+M\+A\+X}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{C\+O\+U\+N\+T\+M\+A\+X}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+O\+U\+N\+T\+M\+A\+X~65535}\label{krnl_8c_a5880ec0d5758fc1e5be1306456ed28b3}
+
+
+Definition at line 90 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a734615b1179c3466e4cee6d7777ff3a1}{}\index{krnl.\+c@{krnl.\+c}!D\+I\+V\+V@{D\+I\+V\+V}}
+\index{D\+I\+V\+V@{D\+I\+V\+V}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{D\+I\+V\+V}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+I\+V\+V~62.\+5}\label{krnl_8c_a734615b1179c3466e4cee6d7777ff3a1}
+
+
+Definition at line 91 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a1e55b17b4f68107071bec1eb064edb66}{}\index{krnl.\+c@{krnl.\+c}!D\+I\+V\+V8@{D\+I\+V\+V8}}
+\index{D\+I\+V\+V8@{D\+I\+V\+V8}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{D\+I\+V\+V8}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+I\+V\+V8~31.\+25}\label{krnl_8c_a1e55b17b4f68107071bec1eb064edb66}
+
+
+Definition at line 92 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a8390550b01018588df23043e908ded51}{}\index{krnl.\+c@{krnl.\+c}!K\+R\+N\+L\+T\+M\+R\+V\+E\+C\+T\+O\+R@{K\+R\+N\+L\+T\+M\+R\+V\+E\+C\+T\+O\+R}}
+\index{K\+R\+N\+L\+T\+M\+R\+V\+E\+C\+T\+O\+R@{K\+R\+N\+L\+T\+M\+R\+V\+E\+C\+T\+O\+R}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{K\+R\+N\+L\+T\+M\+R\+V\+E\+C\+T\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define K\+R\+N\+L\+T\+M\+R\+V\+E\+C\+T\+O\+R~T\+I\+M\+E\+R1\+\_\+\+O\+V\+F\+\_\+vect}\label{krnl_8c_a8390550b01018588df23043e908ded51}
+
+
+Definition at line 81 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a8d7bc6726e0fd85c5873faeb6e4246f9}{}\index{krnl.\+c@{krnl.\+c}!O\+C\+Rx\+A@{O\+C\+Rx\+A}}
+\index{O\+C\+Rx\+A@{O\+C\+Rx\+A}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{O\+C\+Rx\+A}]{\setlength{\rightskip}{0pt plus 5cm}\#define O\+C\+Rx\+A~O\+C\+R1\+A}\label{krnl_8c_a8d7bc6726e0fd85c5873faeb6e4246f9}
+
+
+Definition at line 86 of file krnl.\+c.
+
+\hypertarget{krnl_8c_ab27d12aac1a3a46aed25604d4c00cc18}{}\index{krnl.\+c@{krnl.\+c}!P\+R\+E\+S\+C\+A\+L\+E@{P\+R\+E\+S\+C\+A\+L\+E}}
+\index{P\+R\+E\+S\+C\+A\+L\+E@{P\+R\+E\+S\+C\+A\+L\+E}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{P\+R\+E\+S\+C\+A\+L\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+R\+E\+S\+C\+A\+L\+E~0x04}\label{krnl_8c_ab27d12aac1a3a46aed25604d4c00cc18}
+
+
+Definition at line 89 of file krnl.\+c.
+
+\hypertarget{krnl_8c_aedef1a8b3de29d96e6f2e152ccfe2a26}{}\index{krnl.\+c@{krnl.\+c}!T\+C\+C\+Rx\+A@{T\+C\+C\+Rx\+A}}
+\index{T\+C\+C\+Rx\+A@{T\+C\+C\+Rx\+A}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{T\+C\+C\+Rx\+A}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+C\+C\+Rx\+A~T\+C\+C\+R1\+A}\label{krnl_8c_aedef1a8b3de29d96e6f2e152ccfe2a26}
+
+
+Definition at line 83 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a1898265baad35102ca5d950b41e7dc1a}{}\index{krnl.\+c@{krnl.\+c}!T\+C\+C\+Rx\+B@{T\+C\+C\+Rx\+B}}
+\index{T\+C\+C\+Rx\+B@{T\+C\+C\+Rx\+B}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{T\+C\+C\+Rx\+B}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+C\+C\+Rx\+B~T\+C\+C\+R1\+B}\label{krnl_8c_a1898265baad35102ca5d950b41e7dc1a}
+
+
+Definition at line 84 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a6e681752552f535dfb234bf75808e2a1}{}\index{krnl.\+c@{krnl.\+c}!T\+C\+N\+Tx@{T\+C\+N\+Tx}}
+\index{T\+C\+N\+Tx@{T\+C\+N\+Tx}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{T\+C\+N\+Tx}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+C\+N\+Tx~T\+C\+N\+T1}\label{krnl_8c_a6e681752552f535dfb234bf75808e2a1}
+
+
+Definition at line 85 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a6e681752552f535dfb234bf75808e2a1}{}\index{krnl.\+c@{krnl.\+c}!T\+C\+N\+Tx@{T\+C\+N\+Tx}}
+\index{T\+C\+N\+Tx@{T\+C\+N\+Tx}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{T\+C\+N\+Tx}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+C\+N\+Tx~T\+C\+N\+T1}\label{krnl_8c_a6e681752552f535dfb234bf75808e2a1}
+
+
+Definition at line 85 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a1e363f21cd8c0e899bbe4d9908466375}{}\index{krnl.\+c@{krnl.\+c}!T\+I\+M\+S\+Kx@{T\+I\+M\+S\+Kx}}
+\index{T\+I\+M\+S\+Kx@{T\+I\+M\+S\+Kx}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{T\+I\+M\+S\+Kx}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+I\+M\+S\+Kx~T\+I\+M\+S\+K1}\label{krnl_8c_a1e363f21cd8c0e899bbe4d9908466375}
+
+
+Definition at line 87 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a6e9792cc10d49106aa9bfac11ab374bc}{}\index{krnl.\+c@{krnl.\+c}!T\+O\+I\+Ex@{T\+O\+I\+Ex}}
+\index{T\+O\+I\+Ex@{T\+O\+I\+Ex}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{T\+O\+I\+Ex}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+O\+I\+Ex~T\+O\+I\+E1}\label{krnl_8c_a6e9792cc10d49106aa9bfac11ab374bc}
+
+
+Definition at line 88 of file krnl.\+c.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{krnl_8c_ab04f0f0b9eae773e634b2af977e882a9}{}\index{krnl.\+c@{krnl.\+c}!\+\_\+\+\_\+attribute\+\_\+\+\_\+@{\+\_\+\+\_\+attribute\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+attribute\+\_\+\+\_\+@{\+\_\+\+\_\+attribute\+\_\+\+\_\+}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{\+\_\+\+\_\+attribute\+\_\+\+\_\+((naked, noinline))}]{\setlength{\rightskip}{0pt plus 5cm}void \+\_\+\+\_\+attribute\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{(naked, noinline)}]{}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_ab04f0f0b9eae773e634b2af977e882a9}
+
+
+Definition at line 344 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a201468129b483039afc5a619e2d31097}{}\index{krnl.\+c@{krnl.\+c}!\+\_\+\+\_\+attribute\+\_\+\+\_\+@{\+\_\+\+\_\+attribute\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+attribute\+\_\+\+\_\+@{\+\_\+\+\_\+attribute\+\_\+\+\_\+}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{\+\_\+\+\_\+attribute\+\_\+\+\_\+((weak))}]{\setlength{\rightskip}{0pt plus 5cm}void \+\_\+\+\_\+attribute\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{(weak)}]{}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a201468129b483039afc5a619e2d31097}
+a function for overloading on usersite which is called when a msg\+Q is overflooding no reset occur -\/ it\textquotesingle{}s only readind out smsg\+Q idendity 1\+: means first msg\+Q allocated by user etc Interrupt is disabled when called and must not be enabled during.. so no print etc 
+\begin{DoxyParams}{Parameters}
+{\em nr} & \+: id of send Q 0,1,2,... \\
+\hline
+{\em nr\+Clip} & number of times clip has occured (may be reset by call k\+\_\+receive and lost parm not eq N\+U\+L\+L)\\
+\hline
+\end{DoxyParams}
+Breakout functino called from scheduler 
+
+Definition at line 1177 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a7ac8496c83319bfc569e4fdab8149940}{}\index{krnl.\+c@{krnl.\+c}!de\+Q@{de\+Q}}
+\index{de\+Q@{de\+Q}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{de\+Q(struct k\+\_\+t $\ast$el)}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+t}$\ast$ de\+Q (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{el}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a7ac8496c83319bfc569e4fdab8149940}
+
+
+Definition at line 224 of file krnl.\+c.
+
+\hypertarget{krnl_8c_ab750c904258e717b40c17f55400ca3b2}{}\index{krnl.\+c@{krnl.\+c}!en\+Q@{en\+Q}}
+\index{en\+Q@{en\+Q}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{en\+Q(struct k\+\_\+t $\ast$\+Q, struct k\+\_\+t $\ast$el)}]{\setlength{\rightskip}{0pt plus 5cm}void en\+Q (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{Q, }
+\item[{struct {\bf k\+\_\+t} $\ast$}]{el}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_ab750c904258e717b40c17f55400ca3b2}
+
+
+Definition at line 213 of file krnl.\+c.
+
+\hypertarget{krnl_8c_abde03a57484eac43bffbad24df5fc794}{}\index{krnl.\+c@{krnl.\+c}!free\+Ram@{free\+Ram}}
+\index{free\+Ram@{free\+Ram}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{free\+Ram(void)}]{\setlength{\rightskip}{0pt plus 5cm}int free\+Ram (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_abde03a57484eac43bffbad24df5fc794}
+returns amount of free memory in your system 
+
+Definition at line 435 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a790cb408825575b88d1107608b1ff389}{}\index{krnl.\+c@{krnl.\+c}!I\+S\+R@{I\+S\+R}}
+\index{I\+S\+R@{I\+S\+R}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{I\+S\+R(\+K\+R\+N\+L\+T\+M\+R\+V\+E\+C\+T\+O\+R, I\+S\+R\+\_\+\+N\+A\+K\+E\+D)}]{\setlength{\rightskip}{0pt plus 5cm}I\+S\+R (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+R\+N\+L\+T\+M\+R\+V\+E\+C\+T\+O\+R}}]{, }
+\item[{I\+S\+R\+\_\+\+N\+A\+K\+E\+D}]{}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a790cb408825575b88d1107608b1ff389}
+
+
+Definition at line 266 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a27f33ac31a1b04e73084d19333e10486}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+crt\+\_\+sem@{k\+\_\+crt\+\_\+sem}}
+\index{k\+\_\+crt\+\_\+sem@{k\+\_\+crt\+\_\+sem}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+crt\+\_\+sem(char init\+\_\+val, int maxvalue)}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+t}$\ast$ k\+\_\+crt\+\_\+sem (
+\begin{DoxyParamCaption}
+\item[{char}]{init\+\_\+val, }
+\item[{int}]{maxvalue}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a27f33ac31a1b04e73084d19333e10486}
+creates a standard Dijkstra semaphore. It can be initialized to values in range \mbox{[}0..maxvalue\mbox{]} 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em init\+\_\+val} & startvalue of semaphore 0,1,2,... maxvalue \\
+\hline
+\mbox{\tt in}  & {\em maxvalue} & which is maxvalue semaphore can reach \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+handle to semaphore or N\+U\+L\+L pointer 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called before start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 503 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a8ad6ae5f7e3cac59845df0de94e55c68}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+crt\+\_\+send\+\_\+\+Q@{k\+\_\+crt\+\_\+send\+\_\+\+Q}}
+\index{k\+\_\+crt\+\_\+send\+\_\+\+Q@{k\+\_\+crt\+\_\+send\+\_\+\+Q}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+crt\+\_\+send\+\_\+\+Q(int nr\+\_\+el, int el\+\_\+size, void $\ast$p\+Buf)}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+msg\+\_\+t}$\ast$ k\+\_\+crt\+\_\+send\+\_\+\+Q (
+\begin{DoxyParamCaption}
+\item[{int}]{nr\+\_\+el, }
+\item[{int}]{el\+\_\+size, }
+\item[{void $\ast$}]{p\+Buf}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a8ad6ae5f7e3cac59845df0de94e55c68}
+
+
+Definition at line 789 of file krnl.\+c.
+
+\hypertarget{krnl_8c_ab0cfe9f72acf96b6f901b1fccf3e723f}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+crt\+\_\+task@{k\+\_\+crt\+\_\+task}}
+\index{k\+\_\+crt\+\_\+task@{k\+\_\+crt\+\_\+task}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+crt\+\_\+task(void($\ast$p\+Task)(void), char prio, char $\ast$p\+Stk, int stk\+Size)}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+t}$\ast$ k\+\_\+crt\+\_\+task (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)(void)}]{p\+Task, }
+\item[{char}]{prio, }
+\item[{char $\ast$}]{p\+Stk, }
+\item[{int}]{stk\+Size}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_ab0cfe9f72acf96b6f901b1fccf3e723f}
+creates a task and put it in the active Q 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+Task} & pointer to function for code ( void task(void) ...) \\
+\hline
+\mbox{\tt in}  & {\em prio} & Priority 1\+: highest (Q\+H\+E\+A\+D\+\_\+\+P\+R\+I\+O-\/1)\+: lowest \\
+\hline
+\mbox{\tt in}  & {\em p\+Stk} & Reference to data area to be used as stak \\
+\hline
+\mbox{\tt in}  & {\em stk\+Size} & size of data area(in bytes) to be used for stak \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: pointer to task handle or N\+U\+L\+L if no success 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called before start of K\+R\+N\+L but after k\+\_\+init 
+\end{DoxyRemark}
+
+
+Definition at line 357 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a74c9726898ac428dc70ce64773423224}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+eat\+\_\+time@{k\+\_\+eat\+\_\+time}}
+\index{k\+\_\+eat\+\_\+time@{k\+\_\+eat\+\_\+time}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+eat\+\_\+time(unsigned int eat\+Time)}]{\setlength{\rightskip}{0pt plus 5cm}void k\+\_\+eat\+\_\+time (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{eat\+Time}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a74c9726898ac428dc70ce64773423224}
+just for eating time eat\+Time in msec\textquotesingle{}s 
+
+Definition at line 199 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a64ccac5defa817ee73df6105c0927901}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+get\+\_\+preempt@{k\+\_\+get\+\_\+preempt}}
+\index{k\+\_\+get\+\_\+preempt@{k\+\_\+get\+\_\+preempt}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+get\+\_\+preempt(void)}]{\setlength{\rightskip}{0pt plus 5cm}char k\+\_\+get\+\_\+preempt (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a64ccac5defa817ee73df6105c0927901}
+Get preempt or non preempt \begin{DoxyReturn}{Returns}
+\+: current state\+: 1 preempt sch. 0 non preempt 
+\end{DoxyReturn}
+
+
+Definition at line 1170 of file krnl.\+c.
+
+\hypertarget{krnl_8c_ad939ea35387a46c6c94a096d41c0d18b}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+init@{k\+\_\+init}}
+\index{k\+\_\+init@{k\+\_\+init}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+init(int nr\+Task, int nr\+Sem, int nr\+Msg)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{int}]{nr\+Task, }
+\item[{int}]{nr\+Sem, }
+\item[{int}]{nr\+Msg}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_ad939ea35387a46c6c94a096d41c0d18b}
+Initialise K\+R\+N\+L. First function to be called. You have to give max number of tasks, semaphores and message queues you will use 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em nr\+Task} & ... \\
+\hline
+\mbox{\tt in}  & {\em nr\+Sem} & ... \\
+\hline
+\mbox{\tt in}  & {\em nr\+Msg} & ... \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 988 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a0bc5cd2b2978ba0da05370e31b7e231d}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+millis@{k\+\_\+millis}}
+\index{k\+\_\+millis@{k\+\_\+millis}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+millis(void)}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long k\+\_\+millis (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a0bc5cd2b2978ba0da05370e31b7e231d}
+millis in krnle -\/ N\+B steps equals milli seconds given in k\+\_\+start 
+
+Definition at line 1142 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a9dd68e067508f30ffdc08622cf7a43dd}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+prio\+\_\+signal@{k\+\_\+prio\+\_\+signal}}
+\index{k\+\_\+prio\+\_\+signal@{k\+\_\+prio\+\_\+signal}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+prio\+\_\+signal(struct k\+\_\+t $\ast$sem, char prio)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+prio\+\_\+signal (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{sem, }
+\item[{char}]{prio}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a9dd68e067508f30ffdc08622cf7a43dd}
+Signal a semaphore. Task shift will task place if a task is started by the signal and has higher priority than you. you shall supply with priority for prio ceiling protocol 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sem} & semaphore handle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0\+: ok , -\/1\+: max value of semaphore reached 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+The ki\+\_\+ indicates that interrups is N\+O\+T enabled when leaving ki\+\_\+signal 
+
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 585 of file krnl.\+c.
+
+\hypertarget{krnl_8c_abf03efd6d21b2031433854ad359463b5}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+prio\+\_\+wait@{k\+\_\+prio\+\_\+wait}}
+\index{k\+\_\+prio\+\_\+wait@{k\+\_\+prio\+\_\+wait}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+prio\+\_\+wait(struct k\+\_\+t $\ast$sem, int timeout, char prio)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+prio\+\_\+wait (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{sem, }
+\item[{int}]{timeout, }
+\item[{char}]{prio}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_abf03efd6d21b2031433854ad359463b5}
+Wait on a semaphore. Task shift will task place if you are blocked. you shall supply with priority for prio ceiling protocol 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sem} & semaphore handle \\
+\hline
+\mbox{\tt in}  & {\em timeout} & \char`\"{}$<$0\char`\"{} you will be started after timeout ticks, \char`\"{}=0\char`\"{} wait forever \char`\"{}-\/1\char`\"{} you will not wait \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0\+: ok , -\/1\+: timeout has occured, -\/2 no wait bq timeout was -\/1 and semaphore was negative 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 699 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a3e7f34b848366b08928c72711b6c008a}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+receive@{k\+\_\+receive}}
+\index{k\+\_\+receive@{k\+\_\+receive}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+receive(struct k\+\_\+msg\+\_\+t $\ast$p\+B, void $\ast$el, int timeout, int $\ast$lost\+\_\+msg)}]{\setlength{\rightskip}{0pt plus 5cm}char k\+\_\+receive (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+msg\+\_\+t} $\ast$}]{p\+B, }
+\item[{void $\ast$}]{el, }
+\item[{int}]{timeout, }
+\item[{int $\ast$}]{lost\+\_\+msg}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a3e7f34b848366b08928c72711b6c008a}
+Receive data (one element of el\+\_\+size)in the ringbuffer if there are data D\+O\+N\+E B\+Y C\+O\+P\+Y ! 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+B} & Ref to message buffer \\
+\hline
+\mbox{\tt out}  & {\em el} & Reference to where data shall be copied to at your site \\
+\hline
+\mbox{\tt in}  & {\em timeout} & Max time you want to wait on data, -\/1\+: never, 0\+: forever, positive\+: nr of K\+R\+N\+L timer quants \\
+\hline
+\mbox{\tt out}  & {\em lost\+\_\+msg} & nr of lost messages since last receive. will clip at 10000. If lost\+\_\+msg ptr is N\+U\+L\+L then overrun counter is not reset to 0. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0\+: operation did succed, -\/1\+: no data in ringbuffer 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 924 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a1403e8934fe3c3155f50aa70fb939b01}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+reset@{k\+\_\+reset}}
+\index{k\+\_\+reset@{k\+\_\+reset}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+reset()}]{\setlength{\rightskip}{0pt plus 5cm}void k\+\_\+reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a1403e8934fe3c3155f50aa70fb939b01}
+Reset by disable interrupt plus activate watchdog (15 millisseconds) and just wait... 
+
+Definition at line 1134 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a9b36880ab6632f7533f77dbbe3119dd5}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+round\+\_\+robbin@{k\+\_\+round\+\_\+robbin}}
+\index{k\+\_\+round\+\_\+robbin@{k\+\_\+round\+\_\+robbin}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+round\+\_\+robbin(void)}]{\setlength{\rightskip}{0pt plus 5cm}void k\+\_\+round\+\_\+robbin (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a9b36880ab6632f7533f77dbbe3119dd5}
+
+
+Definition at line 963 of file krnl.\+c.
+
+\hypertarget{krnl_8c_aba6630458cb65380757b92a0dcc85f85}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+sem\+\_\+signals\+\_\+lost@{k\+\_\+sem\+\_\+signals\+\_\+lost}}
+\index{k\+\_\+sem\+\_\+signals\+\_\+lost@{k\+\_\+sem\+\_\+signals\+\_\+lost}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+sem\+\_\+signals\+\_\+lost(struct k\+\_\+t $\ast$sem)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+sem\+\_\+signals\+\_\+lost (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{sem}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_aba6630458cb65380757b92a0dcc85f85}
+Returns how many signals has been lost on semaphore due to saturation 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sem} & semaphore handle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+nr of signals lost 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 758 of file krnl.\+c.
+
+\hypertarget{krnl_8c_aad1cd26ac0560fb40b088b229c07f7a3}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+send@{k\+\_\+send}}
+\index{k\+\_\+send@{k\+\_\+send}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+send(struct k\+\_\+msg\+\_\+t $\ast$p\+B, void $\ast$el)}]{\setlength{\rightskip}{0pt plus 5cm}char k\+\_\+send (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+msg\+\_\+t} $\ast$}]{p\+B, }
+\item[{void $\ast$}]{el}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_aad1cd26ac0560fb40b088b229c07f7a3}
+Put data (one element of el\+\_\+size)in the ringbuffer if there are room for it. D\+O\+N\+E B\+Y C\+O\+P\+Y ! 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+B} & Ref to message buffer \\
+\hline
+\mbox{\tt in}  & {\em el} & Reference to data to be put in buffer. Size if already given in k\+\_\+crt\+\_\+send \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0\+: operation did succed, -\/1\+: no room in ringbuffer 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called after start of K\+R\+N\+L 
+
+k\+\_\+send does not block if no space in buffer. Instead -\/1 is returned 
+\end{DoxyRemark}
+
+
+Definition at line 868 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a3f78785f06706a3135f9300d6ab0b01d}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+set\+\_\+preempt@{k\+\_\+set\+\_\+preempt}}
+\index{k\+\_\+set\+\_\+preempt@{k\+\_\+set\+\_\+preempt}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+set\+\_\+preempt(char on)}]{\setlength{\rightskip}{0pt plus 5cm}char k\+\_\+set\+\_\+preempt (
+\begin{DoxyParamCaption}
+\item[{char}]{on}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a3f78785f06706a3135f9300d6ab0b01d}
+Set preempt or non preempt  on \+: 1\+: preempt on, 0\+: off 2\+: no change \begin{DoxyReturn}{Returns}
+\+: current state\+: 1 preempt sch. 0 non preempt 
+\end{DoxyReturn}
+
+
+Definition at line 1161 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a677cdc92c3e1e40ab40eeb577dd370e3}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+set\+\_\+prio@{k\+\_\+set\+\_\+prio}}
+\index{k\+\_\+set\+\_\+prio@{k\+\_\+set\+\_\+prio}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+set\+\_\+prio(char prio)}]{\setlength{\rightskip}{0pt plus 5cm}k\+\_\+set\+\_\+prio (
+\begin{DoxyParamCaption}
+\item[{char}]{prio}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a677cdc92c3e1e40ab40eeb577dd370e3}
+change priority of calling task) 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em prio} & new prio, Priority 1\+: highest (Q\+H\+E\+A\+D\+\_\+\+P\+R\+I\+O-\/1)\+: lowest \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: 0\+: ok, -\/1\+: K\+R\+N\+L not running, -\/2\+: illegal value 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 476 of file krnl.\+c.
+
+\hypertarget{krnl_8c_aa6aa0c34f3e3b21e906a765498ee02b2}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+set\+\_\+sem\+\_\+timer@{k\+\_\+set\+\_\+sem\+\_\+timer}}
+\index{k\+\_\+set\+\_\+sem\+\_\+timer@{k\+\_\+set\+\_\+sem\+\_\+timer}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+set\+\_\+sem\+\_\+timer(struct k\+\_\+t $\ast$sem, int val)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+set\+\_\+sem\+\_\+timer (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{sem, }
+\item[{int}]{val}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_aa6aa0c34f3e3b21e906a765498ee02b2}
+attach a timer to the semaphore so K\+R\+N\+L will signal the semaphore with regular intervals. Can be used for cyclic real time run of a task. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sem} & semaphore handle \\
+\hline
+\mbox{\tt in}  & {\em val} & interval in quant of K\+R\+N\+L ticks (0\+: disable cyclic timer, 1,2,3... cyclic quant) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/1\+: negative val, 0. ok 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 542 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a0c2f743e45400c5d9ac04457b78d3d97}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+signal@{k\+\_\+signal}}
+\index{k\+\_\+signal@{k\+\_\+signal}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+signal(struct k\+\_\+t $\ast$sem)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+signal (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{sem}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a0c2f743e45400c5d9ac04457b78d3d97}
+Signal a semaphore. Task shift will task place if a task is started by the signal and has higher priority than you. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sem} & semaphore handle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0\+: ok , -\/1\+: max value of semaphore reached 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+The ki\+\_\+ indicates that interrups is N\+O\+T enabled when leaving ki\+\_\+signal 
+
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 607 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a56febc95937d41bc48b48b6fdd6f6987}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+sleep@{k\+\_\+sleep}}
+\index{k\+\_\+sleep@{k\+\_\+sleep}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+sleep(int time)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+sleep (
+\begin{DoxyParamCaption}
+\item[{int}]{time}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a56febc95937d41bc48b48b6fdd6f6987}
+Set task asleep for a number of ticks. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em time} & nr of ticks to sleep $<$ 0 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyRemark}{Remarks}
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 447 of file krnl.\+c.
+
+\hypertarget{krnl_8c_abed191616e4e3d1fa684f9ca719715fb}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+start@{k\+\_\+start}}
+\index{k\+\_\+start@{k\+\_\+start}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+start(int tm)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+start (
+\begin{DoxyParamCaption}
+\item[{int}]{tm}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_abed191616e4e3d1fa684f9ca719715fb}
+start K\+R\+N\+L with tm tick speed (1= 1 msec, 5 = 5 msec) 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em tm} & Tick length in milli seconds(1..10,20,30..10000 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/1-\/333 nr of k\+\_\+\+Crt calls taht went wrong. krnl did not start -\/555 negative tick parm value -\/666 bad tick quant (legal is 1-\/10,20,30-\/10000 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called after init of K\+R\+N\+L 
+
+K\+R\+N\+L W\+I\+L\+L N\+O\+T S\+T\+A\+R\+T I\+F Y\+O\+U H\+A\+V\+E T\+R\+I\+E\+D T\+O C\+R\+E\+A\+T\+E M\+O\+R\+E T\+A\+S\+K\+S/\+S\+E\+M\+S/\+M\+S\+G Q\+S T\+H\+A\+N Y\+O\+U H\+A\+V\+E A\+L\+L\+O\+C\+A\+T\+E\+D S\+P\+A\+C\+E F\+O\+R I\+N k\+\_\+init !!! 
+\end{DoxyRemark}
+
+
+Definition at line 1029 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a7ee5036463c30b3ba1c02a27ed96aedf}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+stop@{k\+\_\+stop}}
+\index{k\+\_\+stop@{k\+\_\+stop}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+stop(int exit\+Val)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+stop (
+\begin{DoxyParamCaption}
+\item[{int}]{exit\+Val}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a7ee5036463c30b3ba1c02a27ed96aedf}
+stop K\+R\+N\+L 
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 1112 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a3ccf696f0ef7f772a9d339348b6b52e2}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+tmr\+Info@{k\+\_\+tmr\+Info}}
+\index{k\+\_\+tmr\+Info@{k\+\_\+tmr\+Info}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+tmr\+Info(void)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+tmr\+Info (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a3ccf696f0ef7f772a9d339348b6b52e2}
+returns which timer is used \begin{DoxyReturn}{Returns}
+0,1,2,3,4,5 ... 
+\end{DoxyReturn}
+
+
+Definition at line 1154 of file krnl.\+c.
+
+\hypertarget{krnl_8c_aab50fd7741fd86d4215ecc6aceb892a3}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+unused\+\_\+stak@{k\+\_\+unused\+\_\+stak}}
+\index{k\+\_\+unused\+\_\+stak@{k\+\_\+unused\+\_\+stak}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+unused\+\_\+stak(struct k\+\_\+t $\ast$t)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+unused\+\_\+stak (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{t}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_aab50fd7741fd86d4215ecc6aceb892a3}
+Returns amount of unused stak  t . Ptr to taskdescriptor. If N\+U\+L\+L it is yourself \begin{DoxyReturn}{Returns}
+\+: amount of unused stak(in bytes) 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+\+: a watermark philosophy is used 
+\end{DoxyRemark}
+
+
+Definition at line 455 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a7f65c7a1cbda113524b3009faf639357}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+wait@{k\+\_\+wait}}
+\index{k\+\_\+wait@{k\+\_\+wait}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+wait(struct k\+\_\+t $\ast$sem, int timeout)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+wait (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{sem, }
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a7f65c7a1cbda113524b3009faf639357}
+Wait on a semaphore. Task shift will task place if you are blocked. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sem} & semaphore handle \\
+\hline
+\mbox{\tt in}  & {\em timeout} & \char`\"{}$<$0\char`\"{} you will be started after timeout ticks, \char`\"{}=0\char`\"{} wait forever \char`\"{}-\/1\char`\"{} you will not wait \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0\+: ok , -\/1\+: timeout has occured, -\/2 no wait bq timeout was -\/1 and semaphore was negative 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 660 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a74756a33d34544159e50f335cb7ed9af}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+wait\+\_\+lost@{k\+\_\+wait\+\_\+lost}}
+\index{k\+\_\+wait\+\_\+lost@{k\+\_\+wait\+\_\+lost}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+wait\+\_\+lost(struct k\+\_\+t $\ast$sem, int timeout, int $\ast$lost)}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+wait\+\_\+lost (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{sem, }
+\item[{int}]{timeout, }
+\item[{int $\ast$}]{lost}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a74756a33d34544159e50f335cb7ed9af}
+Wait on a semaphore. Task shift will task place if you are blocked. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sem} & semaphore handle \\
+\hline
+\mbox{\tt in}  & {\em timeout} & \char`\"{}$<$0\char`\"{} you will be started after timeout ticks, \char`\"{}=0\char`\"{} wait forever \char`\"{}-\/1\char`\"{} you will not wait \\
+\hline
+\mbox{\tt out}  & {\em lost} & if not eq N\+U\+L\+L it resturns how many signals has been lost \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0\+: ok , -\/1\+: timeout has occured, -\/2 no wait bq timeout was -\/1 and semaphore was negative 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 746 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a66c23bd6aa71c0d083e4a4b71b35ff71}{}\index{krnl.\+c@{krnl.\+c}!ki\+\_\+receive@{ki\+\_\+receive}}
+\index{ki\+\_\+receive@{ki\+\_\+receive}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{ki\+\_\+receive(struct k\+\_\+msg\+\_\+t $\ast$p\+B, void $\ast$el, int $\ast$lost\+\_\+msg)}]{\setlength{\rightskip}{0pt plus 5cm}char ki\+\_\+receive (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+msg\+\_\+t} $\ast$}]{p\+B, }
+\item[{void $\ast$}]{el, }
+\item[{int $\ast$}]{lost\+\_\+msg}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a66c23bd6aa71c0d083e4a4b71b35ff71}
+Receive data (one element of el\+\_\+size)in the ringbuffer if there are data D\+O\+N\+E B\+Y C\+O\+P\+Y ! No blocking if no data Interrupt will not be enabled after ki\+\_\+receive 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+B} & Ref to message buffer \\
+\hline
+\mbox{\tt out}  & {\em el} & Reference to where data shall be copied to at your site \\
+\hline
+\mbox{\tt out}  & {\em lost\+\_\+msg} & nr of lost messages since last receive. will clip at 10000. If lost\+\_\+msg ptr is N\+U\+L\+L then overrun counter is not reset to 0 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0\+: operation did succed, -\/1\+: no data in ringbuffer 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+can be used from I\+S\+R 
+
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 888 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a306bc3e4b53fc2f608e5945f20cf9ea5}{}\index{krnl.\+c@{krnl.\+c}!ki\+\_\+semval@{ki\+\_\+semval}}
+\index{ki\+\_\+semval@{ki\+\_\+semval}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{ki\+\_\+semval(struct k\+\_\+t $\ast$sem)}]{\setlength{\rightskip}{0pt plus 5cm}int ki\+\_\+semval (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{sem}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a306bc3e4b53fc2f608e5945f20cf9ea5}
+returns value of semaphore 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sem} & semaphore handle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0\+: semaphore value, negative\+: tasks are waiting, 0\+: nothing, positive\+: ... 
+
+-\/99 \+: timeout 
+
+-\/1 no wait maybe bq no timeout was allowed 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 771 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a7f0e5da0dbd3154fa3b69e3e2e650bed}{}\index{krnl.\+c@{krnl.\+c}!ki\+\_\+send@{ki\+\_\+send}}
+\index{ki\+\_\+send@{ki\+\_\+send}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{ki\+\_\+send(struct k\+\_\+msg\+\_\+t $\ast$p\+B, void $\ast$el)}]{\setlength{\rightskip}{0pt plus 5cm}char ki\+\_\+send (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+msg\+\_\+t} $\ast$}]{p\+B, }
+\item[{void $\ast$}]{el}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a7f0e5da0dbd3154fa3b69e3e2e650bed}
+Put data (one element of el\+\_\+size)in the ringbuffer if there are room for it. Intended for I\+S\+R use D\+O\+N\+E B\+Y C\+O\+P\+Y ! 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+B} & Ref to message buffer \\
+\hline
+\mbox{\tt in}  & {\em el} & Reference to data to be put in buffer. Size if already given in k\+\_\+crt\+\_\+send \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0\+: operation did succed, -\/1\+: no room in ringbuffer 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+Interrupt will not enabled upon leaving, so ki\+\_\+send is intended to be used from an I\+S\+R 
+
+only to be called before start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 829 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a45c4a121f17683f0cd3593c0ee0bff1b}{}\index{krnl.\+c@{krnl.\+c}!ki\+\_\+signal@{ki\+\_\+signal}}
+\index{ki\+\_\+signal@{ki\+\_\+signal}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{ki\+\_\+signal(struct k\+\_\+t $\ast$sem)}]{\setlength{\rightskip}{0pt plus 5cm}int ki\+\_\+signal (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{sem}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_a45c4a121f17683f0cd3593c0ee0bff1b}
+Signal a semaphore. Can be called from an I\+S\+R when interrupt is disabled. No task shift will occur -\/ only queue manipulation. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sem} & semaphore handle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0\+: ok , -\/1\+: max value of semaphore reached 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 560 of file krnl.\+c.
+
+\hypertarget{krnl_8c_aead12f2e7f6ee98b98bb847c42d5027c}{}\index{krnl.\+c@{krnl.\+c}!ki\+\_\+wait@{ki\+\_\+wait}}
+\index{ki\+\_\+wait@{ki\+\_\+wait}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{ki\+\_\+wait(struct k\+\_\+t $\ast$sem, int timeout)}]{\setlength{\rightskip}{0pt plus 5cm}int ki\+\_\+wait (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{sem, }
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_aead12f2e7f6ee98b98bb847c42d5027c}
+Like k\+\_\+wait with the exception interrupt is N\+O\+T enabled when leaving 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sem} & semaphore handle \\
+\hline
+\mbox{\tt in}  & {\em timeout} & \char`\"{}$<$0\char`\"{} you will be started after timeout ticks, \char`\"{}=0\char`\"{} wait forever \char`\"{}-\/1\char`\"{} you will not wait \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0\+: ok , -\/1\+: could do wait bw blocking would have taken place 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+The ki\+\_\+ indicates that interrups is N\+O\+T enabled when leaving ki\+\_\+wait 
+
+only to be called after start of K\+R\+N\+L 
+\end{DoxyRemark}
+
+
+Definition at line 626 of file krnl.\+c.
+
+\hypertarget{krnl_8c_ae7d9dd598f0d68cea2903843117e8ebe}{}\index{krnl.\+c@{krnl.\+c}!prio\+\_\+en\+Q@{prio\+\_\+en\+Q}}
+\index{prio\+\_\+en\+Q@{prio\+\_\+en\+Q}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{prio\+\_\+en\+Q(struct k\+\_\+t $\ast$\+Q, struct k\+\_\+t $\ast$el)}]{\setlength{\rightskip}{0pt plus 5cm}void prio\+\_\+en\+Q (
+\begin{DoxyParamCaption}
+\item[{struct {\bf k\+\_\+t} $\ast$}]{Q, }
+\item[{struct {\bf k\+\_\+t} $\ast$}]{el}
+\end{DoxyParamCaption}
+)}\label{krnl_8c_ae7d9dd598f0d68cea2903843117e8ebe}
+
+
+Definition at line 235 of file krnl.\+c.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{krnl_8c_ae12cf3a4490ccd9d1e18de83b62f7296}{}\index{krnl.\+c@{krnl.\+c}!A\+Q@{A\+Q}}
+\index{A\+Q@{A\+Q}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{A\+Q}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+t} A\+Q}\label{krnl_8c_ae12cf3a4490ccd9d1e18de83b62f7296}
+
+
+Definition at line 164 of file krnl.\+c.
+
+\hypertarget{krnl_8c_ab6049c624c71022617cb364ecab34dba}{}\index{krnl.\+c@{krnl.\+c}!fakecnt@{fakecnt}}
+\index{fakecnt@{fakecnt}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{fakecnt}]{\setlength{\rightskip}{0pt plus 5cm}volatile int fakecnt}\label{krnl_8c_ab6049c624c71022617cb364ecab34dba}
+
+
+Definition at line 184 of file krnl.\+c.
+
+\hypertarget{krnl_8c_ab86ac5ffb302fcda5e40378d29e70d40}{}\index{krnl.\+c@{krnl.\+c}!fakecnt\+\_\+preset@{fakecnt\+\_\+preset}}
+\index{fakecnt\+\_\+preset@{fakecnt\+\_\+preset}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{fakecnt\+\_\+preset}]{\setlength{\rightskip}{0pt plus 5cm}volatile int fakecnt\+\_\+preset}\label{krnl_8c_ab86ac5ffb302fcda5e40378d29e70d40}
+
+
+Definition at line 184 of file krnl.\+c.
+
+\hypertarget{krnl_8c_ae320347a3a0f5d049aa456b4ebf21d28}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+err\+\_\+cnt@{k\+\_\+err\+\_\+cnt}}
+\index{k\+\_\+err\+\_\+cnt@{k\+\_\+err\+\_\+cnt}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+err\+\_\+cnt}]{\setlength{\rightskip}{0pt plus 5cm}volatile char k\+\_\+err\+\_\+cnt = 0}\label{krnl_8c_ae320347a3a0f5d049aa456b4ebf21d28}
+
+
+Definition at line 182 of file krnl.\+c.
+
+\hypertarget{krnl_8c_af95ed4a3eb440bda3b8088a52e345f5b}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+millis\+\_\+counter@{k\+\_\+millis\+\_\+counter}}
+\index{k\+\_\+millis\+\_\+counter@{k\+\_\+millis\+\_\+counter}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+millis\+\_\+counter}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long k\+\_\+millis\+\_\+counter =0}\label{krnl_8c_af95ed4a3eb440bda3b8088a52e345f5b}
+
+
+Definition at line 189 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a11c6706cca7518dfd785ea9f37a8b9c8}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+msg@{k\+\_\+msg}}
+\index{k\+\_\+msg@{k\+\_\+msg}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+msg}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+msg}\label{krnl_8c_a11c6706cca7518dfd785ea9f37a8b9c8}
+
+
+Definition at line 176 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a5cd13e276eb8b12ec888845f354e159c}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+running@{k\+\_\+running}}
+\index{k\+\_\+running@{k\+\_\+running}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+running}]{\setlength{\rightskip}{0pt plus 5cm}volatile char k\+\_\+running = 0}\label{krnl_8c_a5cd13e276eb8b12ec888845f354e159c}
+
+
+Definition at line 182 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a3612c72062520ffab60364b0d956e431}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+sem@{k\+\_\+sem}}
+\index{k\+\_\+sem@{k\+\_\+sem}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+sem}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+sem}\label{krnl_8c_a3612c72062520ffab60364b0d956e431}
+
+
+Definition at line 176 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a5f7cbf98727b1a04fadd5890d0278487}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+task@{k\+\_\+task}}
+\index{k\+\_\+task@{k\+\_\+task}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+task}]{\setlength{\rightskip}{0pt plus 5cm}int k\+\_\+task}\label{krnl_8c_a5f7cbf98727b1a04fadd5890d0278487}
+
+
+Definition at line 176 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a156af655170a22467a9d657098c84e09}{}\index{krnl.\+c@{krnl.\+c}!k\+\_\+tick\+\_\+size@{k\+\_\+tick\+\_\+size}}
+\index{k\+\_\+tick\+\_\+size@{k\+\_\+tick\+\_\+size}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{k\+\_\+tick\+\_\+size}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int k\+\_\+tick\+\_\+size}\label{krnl_8c_a156af655170a22467a9d657098c84e09}
+
+
+Definition at line 190 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a2680e3dfc16aaf181f466757b1460793}{}\index{krnl.\+c@{krnl.\+c}!krnl\+\_\+preempt\+\_\+flag@{krnl\+\_\+preempt\+\_\+flag}}
+\index{krnl\+\_\+preempt\+\_\+flag@{krnl\+\_\+preempt\+\_\+flag}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{krnl\+\_\+preempt\+\_\+flag}]{\setlength{\rightskip}{0pt plus 5cm}volatile char krnl\+\_\+preempt\+\_\+flag =1}\label{krnl_8c_a2680e3dfc16aaf181f466757b1460793}
+
+
+Definition at line 181 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a836f47dd0a5450a93da2951223de72ef}{}\index{krnl.\+c@{krnl.\+c}!nr\+\_\+sem@{nr\+\_\+sem}}
+\index{nr\+\_\+sem@{nr\+\_\+sem}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{nr\+\_\+sem}]{\setlength{\rightskip}{0pt plus 5cm}char nr\+\_\+sem = 0}\label{krnl_8c_a836f47dd0a5450a93da2951223de72ef}
+
+
+Definition at line 177 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a3153e25cb4a1062d7b56bc10485c9ab8}{}\index{krnl.\+c@{krnl.\+c}!nr\+\_\+send@{nr\+\_\+send}}
+\index{nr\+\_\+send@{nr\+\_\+send}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{nr\+\_\+send}]{\setlength{\rightskip}{0pt plus 5cm}char nr\+\_\+send = 0}\label{krnl_8c_a3153e25cb4a1062d7b56bc10485c9ab8}
+
+
+Definition at line 177 of file krnl.\+c.
+
+\hypertarget{krnl_8c_adb04c7a4b69d0318cdfcf19f8bbdf2ec}{}\index{krnl.\+c@{krnl.\+c}!nr\+\_\+task@{nr\+\_\+task}}
+\index{nr\+\_\+task@{nr\+\_\+task}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{nr\+\_\+task}]{\setlength{\rightskip}{0pt plus 5cm}char nr\+\_\+task = 0}\label{krnl_8c_adb04c7a4b69d0318cdfcf19f8bbdf2ec}
+
+
+Definition at line 177 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a39d231356e06de7246adccc268aa1147}{}\index{krnl.\+c@{krnl.\+c}!p\+A\+Q@{p\+A\+Q}}
+\index{p\+A\+Q@{p\+A\+Q}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{p\+A\+Q}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+t} $\ast$ p\+A\+Q}\label{krnl_8c_a39d231356e06de7246adccc268aa1147}
+
+
+Definition at line 164 of file krnl.\+c.
+
+\hypertarget{krnl_8c_ac0ba8f7ce796b6b1e572f969328a2ca5}{}\index{krnl.\+c@{krnl.\+c}!p\+Dmy@{p\+Dmy}}
+\index{p\+Dmy@{p\+Dmy}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{p\+Dmy}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+t} $\ast$ p\+Dmy}\label{krnl_8c_ac0ba8f7ce796b6b1e572f969328a2ca5}
+
+
+Definition at line 164 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a40fbdb3ae83ed2142131282188c01d88}{}\index{krnl.\+c@{krnl.\+c}!p\+E@{p\+E}}
+\index{p\+E@{p\+E}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{p\+E}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+t}$\ast$ p\+E}\label{krnl_8c_a40fbdb3ae83ed2142131282188c01d88}
+
+
+Definition at line 263 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a80e96fa9f2ed99168a71edefd1fc47ae}{}\index{krnl.\+c@{krnl.\+c}!pmain\+\_\+el@{pmain\+\_\+el}}
+\index{pmain\+\_\+el@{pmain\+\_\+el}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{pmain\+\_\+el}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+t} $\ast$ pmain\+\_\+el}\label{krnl_8c_a80e96fa9f2ed99168a71edefd1fc47ae}
+
+
+Definition at line 164 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a35d8daf7bc4e2ffe82f95963bcfdf857}{}\index{krnl.\+c@{krnl.\+c}!p\+Run@{p\+Run}}
+\index{p\+Run@{p\+Run}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{p\+Run}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+t} $\ast$ p\+Run}\label{krnl_8c_a35d8daf7bc4e2ffe82f95963bcfdf857}
+
+
+Definition at line 164 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a6e675bcea12aa787eabf1ca6a9271ce8}{}\index{krnl.\+c@{krnl.\+c}!p\+Sleep\+Sem@{p\+Sleep\+Sem}}
+\index{p\+Sleep\+Sem@{p\+Sleep\+Sem}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{p\+Sleep\+Sem}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+t} $\ast$ p\+Sleep\+Sem}\label{krnl_8c_a6e675bcea12aa787eabf1ca6a9271ce8}
+
+
+Definition at line 164 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a7734e7465577a12ef1bee5923cc7b121}{}\index{krnl.\+c@{krnl.\+c}!sem\+\_\+pool@{sem\+\_\+pool}}
+\index{sem\+\_\+pool@{sem\+\_\+pool}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{sem\+\_\+pool}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+t} $\ast$ sem\+\_\+pool}\label{krnl_8c_a7734e7465577a12ef1bee5923cc7b121}
+
+
+Definition at line 164 of file krnl.\+c.
+
+\hypertarget{krnl_8c_ad1488042c624f027559bf393cb60030c}{}\index{krnl.\+c@{krnl.\+c}!send\+\_\+pool@{send\+\_\+pool}}
+\index{send\+\_\+pool@{send\+\_\+pool}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{send\+\_\+pool}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+msg\+\_\+t}$\ast$ send\+\_\+pool}\label{krnl_8c_ad1488042c624f027559bf393cb60030c}
+
+
+Definition at line 174 of file krnl.\+c.
+
+\hypertarget{krnl_8c_ae8508664812d71fc106d8929f6104cf6}{}\index{krnl.\+c@{krnl.\+c}!task\+\_\+pool@{task\+\_\+pool}}
+\index{task\+\_\+pool@{task\+\_\+pool}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{task\+\_\+pool}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf k\+\_\+t}$\ast$ task\+\_\+pool}\label{krnl_8c_ae8508664812d71fc106d8929f6104cf6}
+
+
+Definition at line 164 of file krnl.\+c.
+
+\hypertarget{krnl_8c_a4b4a047399e1ee15b40777542d354b52}{}\index{krnl.\+c@{krnl.\+c}!tcnt\+Value@{tcnt\+Value}}
+\index{tcnt\+Value@{tcnt\+Value}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{tcnt\+Value}]{\setlength{\rightskip}{0pt plus 5cm}volatile unsigned int tcnt\+Value}\label{krnl_8c_a4b4a047399e1ee15b40777542d354b52}
+
+
+Definition at line 183 of file krnl.\+c.
+
+\hypertarget{krnl_8c_aca8f692a56d85f636f0caaf14abd57d2}{}\index{krnl.\+c@{krnl.\+c}!tmr\+\_\+indx@{tmr\+\_\+indx}}
+\index{tmr\+\_\+indx@{tmr\+\_\+indx}!krnl.\+c@{krnl.\+c}}
+\subsubsection[{tmr\+\_\+indx}]{\setlength{\rightskip}{0pt plus 5cm}int tmr\+\_\+indx}\label{krnl_8c_aca8f692a56d85f636f0caaf14abd57d2}
+
+
+Definition at line 192 of file krnl.\+c.
+

@@ -1,0 +1,129 @@
+\hypertarget{structspi__options__t}{}\section{spi\+\_\+options\+\_\+t Struct Reference}
+\label{structspi__options__t}\index{spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}}
+
+
+Option structure for S\+P\+I channels.  
+
+
+
+
+{\ttfamily \#include $<$spi.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+unsigned char \hyperlink{structspi__options__t_a1e6dfa9b370d7e4f0b4e8d6cb75835a5}{reg}
+\begin{DoxyCompactList}\small\item\em The S\+P\+I channel to set up. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{structspi__options__t_a68bf86b07a5c69d257ae8d4a9c307b9e}{baudrate}
+\begin{DoxyCompactList}\small\item\em Preferred baudrate for the S\+P\+I. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{structspi__options__t_afdd53dbfebb4b94e95fa18a8e3037c65}{bits}
+\begin{DoxyCompactList}\small\item\em Number of bits in each character (8 to 16). \end{DoxyCompactList}\item 
+unsigned char \hyperlink{structspi__options__t_aa9434f07d440208f42f817cb977f6a52}{spck\+\_\+delay}
+\begin{DoxyCompactList}\small\item\em Delay before first clock pulse after selecting slave (in P\+B\+A clock periods). \end{DoxyCompactList}\item 
+unsigned char \hyperlink{structspi__options__t_aee521fc57eda6597539edb8d4dff56eb}{trans\+\_\+delay}
+\begin{DoxyCompactList}\small\item\em Delay between each transfer/character (in P\+B\+A clock periods). \end{DoxyCompactList}\item 
+unsigned char \hyperlink{structspi__options__t_a7c76c05bc4b82544aabe1d71e68baef1}{stay\+\_\+act}
+\begin{DoxyCompactList}\small\item\em Sets this chip to stay active after last transfer to it. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{structspi__options__t_a98a1b706e726c41dfb40c2b67719e722}{spi\+\_\+mode}
+\begin{DoxyCompactList}\small\item\em Which S\+P\+I mode to use when transmitting. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{structspi__options__t_a25aaa6f8b4d65ae291edeb9e4c1c3b57}{modfdis}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Option structure for S\+P\+I channels. 
+
+Definition at line 74 of file spi.\+h.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structspi__options__t_a68bf86b07a5c69d257ae8d4a9c307b9e}{}\index{spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}!baudrate@{baudrate}}
+\index{baudrate@{baudrate}!spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}}
+\subsubsection[{baudrate}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int spi\+\_\+options\+\_\+t\+::baudrate}\label{structspi__options__t_a68bf86b07a5c69d257ae8d4a9c307b9e}
+
+
+Preferred baudrate for the S\+P\+I. 
+
+
+
+Definition at line 80 of file spi.\+h.
+
+\hypertarget{structspi__options__t_afdd53dbfebb4b94e95fa18a8e3037c65}{}\index{spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}!bits@{bits}}
+\index{bits@{bits}!spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}}
+\subsubsection[{bits}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char spi\+\_\+options\+\_\+t\+::bits}\label{structspi__options__t_afdd53dbfebb4b94e95fa18a8e3037c65}
+
+
+Number of bits in each character (8 to 16). 
+
+
+
+Definition at line 83 of file spi.\+h.
+
+\hypertarget{structspi__options__t_a25aaa6f8b4d65ae291edeb9e4c1c3b57}{}\index{spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}!modfdis@{modfdis}}
+\index{modfdis@{modfdis}!spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}}
+\subsubsection[{modfdis}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char spi\+\_\+options\+\_\+t\+::modfdis}\label{structspi__options__t_a25aaa6f8b4d65ae291edeb9e4c1c3b57}
+Disables the mode fault detection. With this bit cleared, the S\+P\+I master mode will disable itself if another master tries to address it. 
+
+Definition at line 100 of file spi.\+h.
+
+\hypertarget{structspi__options__t_a1e6dfa9b370d7e4f0b4e8d6cb75835a5}{}\index{spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}!reg@{reg}}
+\index{reg@{reg}!spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}}
+\subsubsection[{reg}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char spi\+\_\+options\+\_\+t\+::reg}\label{structspi__options__t_a1e6dfa9b370d7e4f0b4e8d6cb75835a5}
+
+
+The S\+P\+I channel to set up. 
+
+
+
+Definition at line 77 of file spi.\+h.
+
+\hypertarget{structspi__options__t_aa9434f07d440208f42f817cb977f6a52}{}\index{spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}!spck\+\_\+delay@{spck\+\_\+delay}}
+\index{spck\+\_\+delay@{spck\+\_\+delay}!spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}}
+\subsubsection[{spck\+\_\+delay}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char spi\+\_\+options\+\_\+t\+::spck\+\_\+delay}\label{structspi__options__t_aa9434f07d440208f42f817cb977f6a52}
+
+
+Delay before first clock pulse after selecting slave (in P\+B\+A clock periods). 
+
+
+
+Definition at line 86 of file spi.\+h.
+
+\hypertarget{structspi__options__t_a98a1b706e726c41dfb40c2b67719e722}{}\index{spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}!spi\+\_\+mode@{spi\+\_\+mode}}
+\index{spi\+\_\+mode@{spi\+\_\+mode}!spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}}
+\subsubsection[{spi\+\_\+mode}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char spi\+\_\+options\+\_\+t\+::spi\+\_\+mode}\label{structspi__options__t_a98a1b706e726c41dfb40c2b67719e722}
+
+
+Which S\+P\+I mode to use when transmitting. 
+
+
+
+Definition at line 95 of file spi.\+h.
+
+\hypertarget{structspi__options__t_a7c76c05bc4b82544aabe1d71e68baef1}{}\index{spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}!stay\+\_\+act@{stay\+\_\+act}}
+\index{stay\+\_\+act@{stay\+\_\+act}!spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}}
+\subsubsection[{stay\+\_\+act}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char spi\+\_\+options\+\_\+t\+::stay\+\_\+act}\label{structspi__options__t_a7c76c05bc4b82544aabe1d71e68baef1}
+
+
+Sets this chip to stay active after last transfer to it. 
+
+
+
+Definition at line 92 of file spi.\+h.
+
+\hypertarget{structspi__options__t_aee521fc57eda6597539edb8d4dff56eb}{}\index{spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}!trans\+\_\+delay@{trans\+\_\+delay}}
+\index{trans\+\_\+delay@{trans\+\_\+delay}!spi\+\_\+options\+\_\+t@{spi\+\_\+options\+\_\+t}}
+\subsubsection[{trans\+\_\+delay}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char spi\+\_\+options\+\_\+t\+::trans\+\_\+delay}\label{structspi__options__t_aee521fc57eda6597539edb8d4dff56eb}
+
+
+Delay between each transfer/character (in P\+B\+A clock periods). 
+
+
+
+Definition at line 89 of file spi.\+h.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Program Files (x86)/\+Arduino/libraries/\+Wi\+Fi/extras/wifi\+\_\+dnld/src/\+S\+O\+F\+T\+W\+A\+R\+E\+\_\+\+F\+R\+A\+M\+E\+W\+O\+R\+K/\+D\+R\+I\+V\+E\+R\+S/\+S\+P\+I/\hyperlink{spi_8h}{spi.\+h}\end{DoxyCompactItemize}

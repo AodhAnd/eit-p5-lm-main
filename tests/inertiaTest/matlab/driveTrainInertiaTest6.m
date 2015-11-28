@@ -5,7 +5,7 @@ clc;
 rt = 0.166/(2*pi)
 N = 4773/187
 
-data2 = csvread('data4.2.csv');%, 0, 0);
+data2 = csvread('dataInertiaDrivetrain.csv');%, 0, 0);
 
 left2  = data2(:,2);
 right2 = data2(:,3);

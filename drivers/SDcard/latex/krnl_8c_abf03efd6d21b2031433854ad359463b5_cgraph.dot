@@ -1,0 +1,13 @@
+digraph "k_prio_wait"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="k_prio_wait",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="enQ",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$krnl_8c.html#ab750c904258e717b40c17f55400ca3b2"];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="deQ",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$krnl_8c.html#a7ac8496c83319bfc569e4fdab8149940"];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="ki_task_shift",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$krnl_8h.html#a9910c513b91fd26369e121b1d6d1ee72"];
+}

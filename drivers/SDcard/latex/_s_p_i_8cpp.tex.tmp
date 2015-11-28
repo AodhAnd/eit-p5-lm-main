@@ -1,0 +1,20 @@
+\hypertarget{_s_p_i_8cpp}{}\section{C\+:/\+Program Files (x86)/\+Arduino/hardware/arduino/avr/libraries/\+S\+P\+I/\+S\+P\+I.cpp File Reference}
+\label{_s_p_i_8cpp}\index{C\+:/\+Program Files (x86)/\+Arduino/hardware/arduino/avr/libraries/\+S\+P\+I/\+S\+P\+I.\+cpp@{C\+:/\+Program Files (x86)/\+Arduino/hardware/arduino/avr/libraries/\+S\+P\+I/\+S\+P\+I.\+cpp}}
+{\ttfamily \#include \char`\"{}S\+P\+I.\+h\char`\"{}}\\*
+Include dependency graph for S\+P\+I.\+cpp\+:
+% FIG 0
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_s_p_i_class}{S\+P\+I\+Class} \hyperlink{_s_p_i_8cpp_a56953eb3affc2a9f56e1680bbc537bf7}{S\+P\+I}
+\end{DoxyCompactItemize}
+
+
+\subsection{Variable Documentation}
+\hypertarget{_s_p_i_8cpp_a56953eb3affc2a9f56e1680bbc537bf7}{}\index{S\+P\+I.\+cpp@{S\+P\+I.\+cpp}!S\+P\+I@{S\+P\+I}}
+\index{S\+P\+I@{S\+P\+I}!S\+P\+I.\+cpp@{S\+P\+I.\+cpp}}
+\subsubsection[{S\+P\+I}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+P\+I\+Class} S\+P\+I}\label{_s_p_i_8cpp_a56953eb3affc2a9f56e1680bbc537bf7}
+
+
+Definition at line 16 of file S\+P\+I.\+cpp.
+

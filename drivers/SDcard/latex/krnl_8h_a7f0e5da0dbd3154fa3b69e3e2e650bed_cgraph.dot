@@ -1,0 +1,13 @@
+digraph "ki_send"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="ki_send",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="ki_signal",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$krnl_8c.html#a45c4a121f17683f0cd3593c0ee0bff1b"];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="prio_enQ",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$krnl_8c.html#ae7d9dd598f0d68cea2903843117e8ebe"];
+  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="deQ",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$krnl_8c.html#a7ac8496c83319bfc569e4fdab8149940"];
+}

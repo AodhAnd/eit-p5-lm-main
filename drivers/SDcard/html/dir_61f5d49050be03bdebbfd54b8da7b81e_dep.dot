@@ -1,0 +1,13 @@
+digraph "C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6907cda998f9d396760c5d63246bffa8 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="avr" fontname="Helvetica", fontsize="10", URL="dir_6907cda998f9d396760c5d63246bffa8.html"]
+  subgraph clusterdir_61f5d49050be03bdebbfd54b8da7b81e {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_61f5d49050be03bdebbfd54b8da7b81e.html"];
+    dir_61f5d49050be03bdebbfd54b8da7b81e [shape=plaintext label="libraries"];
+    dir_78de5803952d8f7ade75423480ccbab7 [shape=box label="SPI" color="black" fillcolor="white" style="filled" URL="dir_78de5803952d8f7ade75423480ccbab7.html"];
+  }
+  }
+}

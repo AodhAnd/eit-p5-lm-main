@@ -1,0 +1,13 @@
+digraph "C:/Program Files (x86)/Arduino/libraries/WiFi/extras" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_a115c8587d49c315026bdf322621e7bd {
+    graph [ bgcolor="#ddddee", pencolor="black", label="WiFi" fontname="Helvetica", fontsize="10", URL="dir_a115c8587d49c315026bdf322621e7bd.html"]
+  subgraph clusterdir_91fcf658e5afaf28d79d32ea0f658dbf {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_91fcf658e5afaf28d79d32ea0f658dbf.html"];
+    dir_91fcf658e5afaf28d79d32ea0f658dbf [shape=plaintext label="extras"];
+    dir_3688e30cf3e2a3a8f078979a90ace8fb [shape=box label="wifi_dnld" color="red" fillcolor="white" style="filled" URL="dir_3688e30cf3e2a3a8f078979a90ace8fb.html"];
+  }
+  }
+}

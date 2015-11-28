@@ -1,0 +1,11 @@
+digraph "k_crt_sem"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="k_crt_sem",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="k_crt_send_Q",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$krnl_8h.html#a8ad6ae5f7e3cac59845df0de94e55c68"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="k_init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$krnl_8h.html#ad939ea35387a46c6c94a096d41c0d18b"];
+}

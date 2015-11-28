@@ -15,7 +15,7 @@ PwithFF2 = csvread('feedFW2.csv');
 
 %scatter(Step1(:,6),(Step1(:,5)+Step1(:,4))/2);
 %hold;
-%scatter(Step2(:,6)/1000,(Step2(:,5)+Step2(:,4))/2, 15,'b','*') 
+%scatter(Step2(:,6)/1000,(Step2(:,5)+Step2(:,4))/2, 200,'r','.')
 hold
 P1=plot(Step2(:,6)/1000,(Step2(:,5)+Step2(:,4))/2, 'b')
 

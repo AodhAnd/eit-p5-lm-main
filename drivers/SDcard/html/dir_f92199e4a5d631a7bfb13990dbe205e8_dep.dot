@@ -1,0 +1,9 @@
+digraph "C:/Program Files (x86)/Arduino/libraries/krnl" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_fea9f0b346f511d617f3958ccd65594b {
+    graph [ bgcolor="#ddddee", pencolor="black", label="libraries" fontname="Helvetica", fontsize="10", URL="dir_fea9f0b346f511d617f3958ccd65594b.html"]
+  dir_f92199e4a5d631a7bfb13990dbe205e8 [shape=box, label="krnl", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_f92199e4a5d631a7bfb13990dbe205e8.html"];
+  }
+}

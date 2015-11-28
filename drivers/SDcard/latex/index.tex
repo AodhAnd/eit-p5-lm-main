@@ -1,0 +1,105 @@
+this file only for doxygen use
+
+my own small Ke\+R\+Ne\+L adapted for Arduino -\/ now known as K\+R\+N\+L (old name was S\+N\+O\+T)
+
+(C) 2012,2013,2014
+
+Jens Dalsgaard Nielsen \href{mailto:jdn@es.aau.dk}{\tt jdn@es.\+aau.\+dk} \href{http://www.control.aau.dk/~jdn}{\tt http\+://www.\+control.\+aau.\+dk/$\sim$jdn} Section of Automation \& Control Aalborg University, Denmark
+
+\char`\"{}\+T\+H\+E B\+E\+E\+R-\/\+W\+A\+R\+E L\+I\+C\+E\+N\+S\+E\char`\"{} (frit efter P\+H\+K) \href{mailto:jdn@es.aau.dk}{\tt jdn@es.\+aau.\+dk} wrote this file. As long as you retain this notice you can do whatever you want with this stuff. If we meet some day, and you think this stuff is worth it, you can buy me a beer in return \+:-\/) or if you are real happy then ... single malt will be well received \+:-\/)
+
+(C) Jens Dalsgaard Nielsen\hypertarget{index_Introduction}{}\section{Introduction}\label{index_Introduction}
+K\+R\+N\+L is a preemptive realtime kernel here ported for Arduino
+
+See \hyperlink{krnl_8h}{krnl.\+h} for documentation or follow the links below
+
+N\+E\+W\+S \+: get it from github Q see \href{https://github.com/jdn-aau/krnl}{\tt https\+://github.\+com/jdn-\/aau/krnl}
+
+One note before starting\+:\hypertarget{index_a1}{}\section{Before you start}\label{index_a1}
+All initialization must be carried out after k\+\_\+init and B\+E\+F\+O\+R\+E k\+\_\+start
+
+So no creation of semaphores, tasks, etc when the system is running.
+
+Why ? because we are dealing with embedded systems and once your system is configured it shall just run.
+
+I do also really advise not to use dynamic memory after k\+\_\+start\+: no malloc and free when your system is running.
+
+If ... you need to do so please protect memory by a mutex (semaphore + k\+\_\+wait and k\+\_\+signal) or just encapsule malloc in \hyperlink{krnl_8h_a7339898dcc9ad3b952a63479a4d6eb98}{D\+I()} and \hyperlink{krnl_8h_a9180679bb516152437cbc6e91dc21a6f}{E\+I()}. And never never use and rely on free. You may end up with fragmented memory which on the long run is of no use.
+
+So the advise is to
+
+
+\begin{DoxyItemize}
+\item create all tasks, semaphores etc
+\item allocate what is needed of memory, resources etc
+\item and then k\+\_\+start
+\end{DoxyItemize}\hypertarget{index_a112}{}\section{Memory usage}\label{index_a112}
+Use free\+Ram for testing (part of krnl)
+
+
+\begin{DoxyItemize}
+\item Task descriptor 17\+B
+\item Semaphore descriptor 17\+B
+\item Message Queue descriptor 33\+B (17\+B for semaphore + 16\+B)
+\end{DoxyItemize}
+
+On the 1280/2560 a few more bytes is used due to extended program counter register
+
+K\+R\+N\+L itself uses approx 190\+B before allocating task/sem/msg\+Q descriptors\hypertarget{index_a3}{}\section{Initialization}\label{index_a3}
+If any call fails (like no more R\+A\+M or bad parameters) K\+R\+N\+L will not start but will return an error code in k\+\_\+start
+\begin{DoxyItemize}
+\item int \hyperlink{krnl_8h_ad939ea35387a46c6c94a096d41c0d18b}{k\+\_\+init(int nr\+Task, int nr\+Sem, int nr\+Msg)};
+\item int \hyperlink{krnl_8h_abed191616e4e3d1fa684f9ca719715fb}{k\+\_\+start(int tm)}; // tm in milliseconds
+\end{DoxyItemize}\hypertarget{index_a4}{}\section{Creation calls -\/ before k\+\_\+start}\label{index_a4}
+\hypertarget{index_a41}{}\subsection{Semaphore}\label{index_a41}
+
+\begin{DoxyItemize}
+\item struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ \hyperlink{krnl_8h_a27f33ac31a1b04e73084d19333e10486}{k\+\_\+crt\+\_\+sem(char init\+\_\+val, int maxvalue)}; 
+\end{DoxyItemize}\hypertarget{index_a42}{}\subsection{Task}\label{index_a42}
+
+\begin{DoxyItemize}
+\item struct \hyperlink{structk__t}{k\+\_\+t} $\ast$ k\+\_\+crt\+\_\+task(void ($\ast$p\+Task)(void), char prio, char $\ast$p\+Stk, int stk\+Size); 
+\end{DoxyItemize}\hypertarget{index_a43}{}\subsection{Message Queue}\label{index_a43}
+
+\begin{DoxyItemize}
+\item struct \hyperlink{structk__msg__t}{k\+\_\+msg\+\_\+t} $\ast$ \hyperlink{krnl_8h_a8ad6ae5f7e3cac59845df0de94e55c68}{k\+\_\+crt\+\_\+send\+\_\+\+Q(int nr\+\_\+el, int el\+\_\+size, void $\ast$p\+Buf)};
+\end{DoxyItemize}\hypertarget{index_a55}{}\section{Semaphore runtime calls}\label{index_a55}
+\hypertarget{index_a5}{}\subsection{User space}\label{index_a5}
+
+\begin{DoxyItemize}
+\item char \hyperlink{krnl_8h_aa6aa0c34f3e3b21e906a765498ee02b2}{k\+\_\+set\+\_\+sem\+\_\+timer(struct k\+\_\+t $\ast$ sem, int val)};
+\item char \hyperlink{krnl_8h_a0c2f743e45400c5d9ac04457b78d3d97}{k\+\_\+signal(struct k\+\_\+t $\ast$ sem)};
+\item char \hyperlink{krnl_8h_a7f65c7a1cbda113524b3009faf639357}{k\+\_\+wait(struct k\+\_\+t $\ast$ sem, int timeout)};
+\end{DoxyItemize}\hypertarget{index_a51}{}\subsection{I\+S\+R space}\label{index_a51}
+\+\_\+i indicates that no lock/unlock(disable/enable) is carried out
+
+
+\begin{DoxyItemize}
+\item char \hyperlink{krnl_8h_a45c4a121f17683f0cd3593c0ee0bff1b}{ki\+\_\+signal(struct k\+\_\+t $\ast$ sem)};
+\item char ki\+\_\+nowait(struct k\+\_\+t $\ast$ sem);
+\item char \hyperlink{krnl_8h_aead12f2e7f6ee98b98bb847c42d5027c}{ki\+\_\+wait(struct k\+\_\+t $\ast$ sem, int timeout)};
+\item int \hyperlink{krnl_8h_a306bc3e4b53fc2f608e5945f20cf9ea5}{ki\+\_\+semval(struct k\+\_\+t $\ast$ sem)};
+\end{DoxyItemize}\hypertarget{index_a61}{}\section{Message Queue calls}\label{index_a61}
+\hypertarget{index_a611}{}\subsection{User space}\label{index_a611}
+
+\begin{DoxyItemize}
+\item char \hyperlink{krnl_8h_aad1cd26ac0560fb40b088b229c07f7a3}{k\+\_\+send(struct k\+\_\+msg\+\_\+t $\ast$p\+B, void $\ast$el)};
+\item char \hyperlink{krnl_8h_a3e7f34b848366b08928c72711b6c008a}{k\+\_\+receive(struct k\+\_\+msg\+\_\+t $\ast$p\+B, void $\ast$el, int timeout, int $\ast$lost\+\_\+msg)};
+\end{DoxyItemize}\hypertarget{index_a612}{}\subsection{I\+S\+R space}\label{index_a612}
+
+\begin{DoxyItemize}
+\item char \hyperlink{krnl_8h_a7f0e5da0dbd3154fa3b69e3e2e650bed}{ki\+\_\+send(struct k\+\_\+msg\+\_\+t $\ast$p\+B, void $\ast$el)};
+\item char \hyperlink{krnl_8h_a66c23bd6aa71c0d083e4a4b71b35ff71}{ki\+\_\+receive(struct k\+\_\+msg\+\_\+t $\ast$p\+B, void $\ast$el, int $\ast$ lost\+\_\+msg)};
+\end{DoxyItemize}\hypertarget{index_a8}{}\section{Task calls}\label{index_a8}
+
+\begin{DoxyItemize}
+\item void \hyperlink{krnl_8h_a9910c513b91fd26369e121b1d6d1ee72}{ki\+\_\+task\+\_\+shift(void)} {\bfseries attribute} ((naked));
+\item char \hyperlink{krnl_8h_a56febc95937d41bc48b48b6fdd6f6987}{k\+\_\+sleep(int time)};
+\item char \hyperlink{krnl_8h_a77ca854c9aa048f21a82d7a9b3e7c070}{k\+\_\+set\+\_\+prio(char prio)};
+\item int \hyperlink{krnl_8h_a290d756b6f6023ccc202155eb0140843}{k\+\_\+stk\+\_\+chk(struct k\+\_\+t $\ast$t)};
+\end{DoxyItemize}\hypertarget{index_a9}{}\section{Div calls}\label{index_a9}
+
+\begin{DoxyItemize}
+\item int \hyperlink{krnl_8h_aab50fd7741fd86d4215ecc6aceb892a3}{k\+\_\+unused\+\_\+stak(struct k\+\_\+t $\ast$t)};
+\item int \hyperlink{krnl_8h_abde03a57484eac43bffbad24df5fc794}{free\+Ram(void)}; 
+\end{DoxyItemize}
