@@ -63,10 +63,13 @@ void getHeading()
 // (servo pulse-width)
 //#define SERVO_PW 1650
 
-struct k_t *pTaskInfo, *task2;
+struct k_t *task1, *task2, *task3;
 
-char stack[300];  // Stack of task1
-char stack2[1000]; // Stack of task2
+struct k_t *sem2; //semaphore for Steering controller
+
+char stack[300];  // Stack of Hall sensor
+char stack2[300]; // Stack of Speed Control
+char stack3[1000]; // Stack of Steering control
 float speed0;     // Speed of belt 1
 float speed1;     // Speed of belt 1
 long int timestamp;
@@ -74,36 +77,113 @@ char byte1;
 char byte2;
 int batReading;   // Battery voltage reading
 
-void steeringStepResponse(){
+float values_from_magnetometer[3];
+
+float angles[8];
+
+void SteeringControl(){
+   
+   int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
+   float MAG_Heading_Old;                 // Heading to compare with from last run
+   float MAG_Heading_New;                 // Current heading
+   float Omega_current;                   // Current angular velocity
+   float Omega_error;                     // Error angular velocity
+   float Omega_wanted = 0;                // Wanted angular velocity
+   float P_out;                           // Output from P controller
+
+   float P_gain = 0.2;
+
+   const int rightOffset = -250; 
+   const int leftOffset = 250;
+   
+   k_set_sem_timer(sem2,50); // krnl will signal sem every 50th tick
+   
+/* Get initial heading */   
+  getHeading();
+  values_from_magnetometer[0] = xv;
+  values_from_magnetometer[1] = yv;
+  values_from_magnetometer[2] = zv;
+  transformation(values_from_magnetometer);
+  MAG_Heading_Old = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
+  int i;
+  for (i=0;i<8;i++){angles[i]= MAG_Heading_Old;} //start with current direction in every slot; 
+
+  int sampleNumber = 0;
+  while(1){
+
+/* Get current heading */  
+  getHeading();
+  values_from_magnetometer[0] = xv;
+  values_from_magnetometer[1] = yv;
+  values_from_magnetometer[2] = zv;
+  transformation(values_from_magnetometer);
+  angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
+  for(i=0; i<8; i++){MAG_Heading_New += angles[i];}
+  MAG_Heading_New = MAG_Heading_New /8; // Rolling average
+  sampleNumber++;
+
+  if (sampleNumber > 8){sampleNumber = 0;}
+  
+/* Calculate current angular velocity  */
+  Omega_current = (MAG_Heading_New - MAG_Heading_Old);
+  if (Omega_current < 180){Omega_current +=360;}
+  if (Omega_current > 180){Omega_current -=360;}
+  Omega_current = Omega_current * 20;  // (Old heading - New heading)/50ms = degrees per second
+  MAG_Heading_Old = MAG_Heading_New;
+
+  Omega_error = Omega_wanted - Omega_current;
+
+  P_out = Omega_error * P_gain;
+
+  if(P_out>0){setServo(SERVO_MIDDLE_PW+leftOffset+P_out);}
+  if(P_out<0){setServo(SERVO_MIDDLE_PW+rightOffset+P_out);}
+  if(P_out==0){setServo(SERVO_MIDDLE_PW);}
+    
+  //Serial.flush(); 
+  
+
+  Serial.print(MAG_Heading_New);
+  Serial.print(',');
+  Serial.print(P_out);
+  Serial.println(',');
+    
+    
+    if(timestamp>3000) Omega_wanted = -10;  //right
+    if(timestamp>5000) Omega_wanted = 0;  //straight
+    
+    
+    if(timestamp>6000) Omega_wanted = 10;  //left
+    if(timestamp>8000) Omega_wanted = 0;  //straight
+    
+    
+    if(timestamp>9000) Omega_wanted = -10;  //right
+    if(timestamp>11000) Omega_wanted = 0;  //straight
+
+    if(timestamp>12000) Omega_wanted = 10;  //left
+    if(timestamp>14000) Omega_wanted = 0;  //straight
+  
+    k_wait(sem2,0);     //wait for semaphore
+  }
+}
+
+void SpeedControl(){
 
   const float Wantedspeed = 1.2;
   const float SysGain = 0.49;
   float Speedtoduty;
-  int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
   float Actualspeed;
   int duty;
   float tmp;
   float Error;
   const float PGain = 1.0;
   float feedFwd = Wantedspeed;
-  float CompassReading[4];
-  
-  float compassAverage;
-  int compasscnt = 0;
-  int i;
-  int bou = 1;
-  int count = 0;
-  
+ 
   while(1){
-    
     batReading = analogRead(8); //reading battery voltage
     speed0 = getSpeed(0);       //reading speed of first belt
     speed1 = getSpeed(1);       //reading speed of the other belt
     timestamp = millis();       //getting time at which data was recorded
 
-    // The servo is set whatever happens
-    setServo(servoPulseWidth);
-    
     Actualspeed = (speed0 + speed1)/2; // average speed of the vehicle
     
     // Vehicle starts after 2 seconds
@@ -117,104 +197,20 @@ void steeringStepResponse(){
       if(duty > 100) duty = 100;
       if(duty < 0) duty = 0;
     }
-    
-    
-    // Steering is triggered 3s later (at t=5s)
-   // if(timestamp>8000) servoPulseWidth = SERVO_MIDDLE_PW + 100;  //left
-    //if(timestamp>6500) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
-    
-    
-    if(timestamp>3000) servoPulseWidth = SERVO_MIDDLE_PW - 290;  //right
-    if(timestamp>5000) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
-    
-    
-    if(timestamp>6000) servoPulseWidth = SERVO_MIDDLE_PW + 300;  //left
-    if(timestamp>8000) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
-    
-    
-    if(timestamp>9000) servoPulseWidth = SERVO_MIDDLE_PW - 290; //right
-    if(timestamp>11000) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
-
-    if(timestamp>12000) servoPulseWidth = SERVO_MIDDLE_PW + 300;  //left
-    if(timestamp>14000) servoPulseWidth = SERVO_MIDDLE_PW;  //straight
-    
     //stop at the end
     if(timestamp<15000)speed(duty);
   
     else speed(0);    
     
-    /*count++;
-   if(count == 25)
-   {
-     if(bou == 1) 
-     {
-       speed(50);      //set the speed
-       bou = 0;
-     }
-     else
-     {
-       speed(0);
-       bou = 1;
-     }
-     count= 0;
-   }
-*/
-//speed(50);
-    
-    float values_from_magnetometer[3];
-  
-  getHeading();
-  values_from_magnetometer[0] = xv;
-  values_from_magnetometer[1] = yv;
-  values_from_magnetometer[2] = zv;
-  transformation(values_from_magnetometer);
-
-  //Serial.flush(); 
-  
-  float MAG_Heading = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
-  Serial.print(MAG_Heading);
-  Serial.print(',');
-  
- /* Serial.print(calibrated_values[0]);
-  Serial.print(',');
-
-  Serial.print(calibrated_values[1]);
-  Serial.print(',');
-
-  Serial.print(calibrated_values[2]);
-  Serial.print(',');
-*/  Serial.print(Actualspeed),
+/*  Serial.print(Actualspeed),
   Serial.print(',');
   Serial.print(batReading);
   Serial.print(',');
   Serial.print(timestamp);
 
   Serial.println(' ');
+*/
 
-  
-  
-    
-    
-    //filtering of the angle data, rolling average of 5
-    /*CompassReading[compasscnt] = CompassGet();
-    compasscnt++;
-    if (compasscnt == 4) compasscnt = 0;
-    compassAverage = 0;
-    for (i=0;i<4;i++){compassAverage += CompassReading[i];}
-    compassAverage = compassAverage/4;*/
-      
-   
-    //printing out the data whith commas for easy export as .csv-file:
-    //Serial.print(compassAverage);
-    //Serial.print(CompassGet());
-    //Serial.print(",");
-    /*Serial.print((float)batReading/102.4);    //voltage
-    Serial.print(",");
-    Serial.print(Actualspeed);
-    Serial.print(",");
-    Serial.print(timestamp);
-    Serial.print("\n");
-    Serial.print("\r");      */ //carriage return to return the curser for each new line
     delay(50);
     
     }
@@ -223,7 +219,7 @@ void steeringStepResponse(){
 
 
 void setup() {
-  k_init(2,1,0);
+  k_init(3,2,0);
 
   pinMode(5,OUTPUT);
   initServo();
@@ -246,12 +242,16 @@ void setup() {
   pinMode(35,INPUT);
   initHallTimers();
 
+  sem2 = k_crt_sem(1,2);
+
+
   Serial.begin(9600);
   Serial.println("REBOOT");
 
   delay(2000);
-  pTaskInfo=k_crt_task(tSpeed,10,stack,300);              //hall sensors
-  task2=k_crt_task(steeringStepResponse,11,stack2,1000);   //main code for the test
+  task1=k_crt_task(tSpeed,10,stack,300);              //hall sensors
+  task2=k_crt_task(SpeedControl,12,stack2,300);   // Velocity controller
+  task3=k_crt_task(SteeringControl,11,stack3,1000); // Steering controller
 
   k_start(1); // krnl runs with 1 msec heartbeat
   /* NOTE: legal time values:
