@@ -16,12 +16,19 @@ Step1(:,1) = Data1(:,3);    %time
 %Step3(:,1) = Data3(:,4);
 
 %% FFT
+plot(Data1(:,1));
+figure;
 
+input = Data1(:,1);
+
+input_fft = mag2db(abs(fft(input)));
+
+plot(input_fft);
 
 
 %% Noise
-hold;
-P1 = scatter(Step1(:,1),Step1(:,2));
+%hold;
+%P1 = scatter(Step1(:,1),Step1(:,2));
 %P2 = plot(Step2(:,1),Step2(:,2));
 %P3 = plot(Step3(:,1),Step3(:,2));
 

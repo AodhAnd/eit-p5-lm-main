@@ -99,7 +99,7 @@ void SteeringControl(){
    
    int turningWanted = 0;
    
-   k_set_sem_timer(sem2,50); // krnl will signal sem every 50th tick
+   k_set_sem_timer(sem2,6); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
   getHeading();
@@ -172,8 +172,10 @@ void SteeringControl(){
 
     if(timestamp>12000) Omega_wanted = turningWanted;  //left
     if(timestamp>14000) Omega_wanted = 0;  //straight
-  
+
+    digitalWrite(31, LOW);  
     k_wait(sem2,0);     //wait for semaphore
+    digitalWrite(31, HIGH);
     Serial.print(millis());
     Serial.println(',');
   }
@@ -236,6 +238,7 @@ void setup() {
   k_init(3,2,0);
 
   pinMode(5,OUTPUT);
+  pinMode(31,OUTPUT);
   initServo();
   
   pinMode(dPinMove1, OUTPUT); 
@@ -259,7 +262,7 @@ void setup() {
   sem2 = k_crt_sem(1,2);
 
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("REBOOT");
 
   delay(2000);
