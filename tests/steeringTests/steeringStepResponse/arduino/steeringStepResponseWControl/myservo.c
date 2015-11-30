@@ -23,6 +23,7 @@ int setServo(int pulsewidth){
   if(pulsewidth<=SERVO_MIN_WIDTH) pulsewidth = SERVO_MIN_WIDTH;
   
   OCR3A = (pulsewidth<<1);
-    
+  
+  return pulsewidth;
 }
 
