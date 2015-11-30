@@ -122,11 +122,12 @@ void SteeringControl(){
   values_from_magnetometer[2] = zv;
   transformation(values_from_magnetometer);
   angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
-  for(i=0; i<8; i++){MAG_Heading_New += angles[i];}
+  MAG_Heading_New += angles[sampleNumber];
+  /*for(i=0; i<8; i++){MAG_Heading_New += angles[i];}
   MAG_Heading_New = MAG_Heading_New /8; // Rolling average
   sampleNumber++;
 
-  if (sampleNumber > 8){sampleNumber = 0;}
+  if (sampleNumber > 8){sampleNumber = 0;}*/
   
 /* Calculate current angular velocity  */
   /*Omega_current = (MAG_Heading_New - MAG_Heading_Old);    //not a speed yet, difference of angle headings
@@ -139,7 +140,7 @@ void SteeringControl(){
   
   
   
-  Theta_error = MAG_Heading_New - MAG_Heading_Ref;
+  /*Theta_error = MAG_Heading_New - MAG_Heading_Ref;
   if (Theta_error < 180){Theta_error +=360;}    //if heading around +-180°
   if (Theta_error > 180){Theta_error -=360;}
 
@@ -148,7 +149,7 @@ void SteeringControl(){
 
   if(P_out>0){setServo(SERVO_MIDDLE_PW+leftOffset+P_out);}
   if(P_out<0){setServo(SERVO_MIDDLE_PW+rightOffset+P_out);}
-  if(P_out==0){setServo(SERVO_MIDDLE_PW);}
+  if(P_out==0){setServo(SERVO_MIDDLE_PW);}*/
     
   //Serial.flush(); 
   
@@ -158,6 +159,11 @@ void SteeringControl(){
   //Serial.print(Theta_error);
   //Serial.print(',');
     
+    if(timestamp>3000) setServo(SERVO_MIDDLE_PW+500);  //left
+    if(timestamp>5000) setServo(SERVO_MIDDLE_PW);  //straight
+    
+    if(timestamp>6000) setServo(SERVO_MIDDLE_PW-500);  //left
+    if(timestamp>8000) setServo(SERVO_MIDDLE_PW);  //straight
     /*
     if(timestamp>3000) Omega_wanted = -turningWanted;  //right
     if(timestamp>5000) Omega_wanted = 0;  //straight
@@ -213,7 +219,7 @@ void SpeedControl(){
       if(duty < 0) duty = 0;
     }
     //stop at the end
-    if(timestamp<15000)speed(duty);
+    if(timestamp<10000)speed(duty);
   
     else speed(0);    
       /*
