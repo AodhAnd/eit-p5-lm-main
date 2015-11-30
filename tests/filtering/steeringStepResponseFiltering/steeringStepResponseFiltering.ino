@@ -121,8 +121,8 @@ void SteeringControl(){
   values_from_magnetometer[1] = yv;
   values_from_magnetometer[2] = zv;
   transformation(values_from_magnetometer);
-  angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
-  MAG_Heading_New += angles[sampleNumber];
+  //angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
+  MAG_Heading_New = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
   /*for(i=0; i<8; i++){MAG_Heading_New += angles[i];}
   MAG_Heading_New = MAG_Heading_New /8; // Rolling average
   sampleNumber++;
