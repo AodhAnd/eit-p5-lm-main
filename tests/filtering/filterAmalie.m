@@ -5,7 +5,7 @@ clc;
 Data1 = csvread('twoturns.3.csv');
 Data1(:,2) = Data1(:,2)/1000;
 
-Data1 = Data1+190;
+Data1 = Data1;
 format long
 
 fs = 40;
@@ -85,7 +85,7 @@ for i=1:369
    BUF1 = BUF0;
 end
 
-%plot(Data1(:,2),Data1(:,1), 'b',Data1(:,2),output, 'r')
+plot(Data1(:,2),Data1(:,1), 'b',Data1(:,2),output, 'r')
 %scatter(Data1(:,2),output)
 
 %% Noise
