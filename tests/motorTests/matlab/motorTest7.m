@@ -35,6 +35,7 @@ end
 %Plotting the inertia against rotational velocity (rad/s)
 p = scatter( rad, J, 1, 'b', '+' );
 
+
 %limmiting x-axis to remove zero results
 xlim([168 3500])
 
