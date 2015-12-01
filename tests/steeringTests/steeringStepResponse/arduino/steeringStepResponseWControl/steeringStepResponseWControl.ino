@@ -92,7 +92,7 @@ void SteeringControl(){
    float Omega_wanted = 0;                // Wanted angular velocity
    float P_out;                           // Output from P controller
 
-   float P_gain = 2.5;                      // to convert angle or speed error into ms
+   float P_gain = 2.1;                      // to convert angle or speed error into ms
 
    const int rightOffset = -220; 
    const int leftOffset = 250;
@@ -108,7 +108,7 @@ void SteeringControl(){
   values_from_magnetometer[2] = zv;
   transformation(values_from_magnetometer);
   MAG_Heading_Old = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
-  MAG_Heading_Ref = 0; //MAG_Heading_Old;        //initialize reference of the angle(first one)
+  MAG_Heading_Ref = 25; //MAG_Heading_Old;        //initialize reference of the angle(first one)
   int i;
   for (i=0;i<8;i++){angles[i]= MAG_Heading_Old;} //start with current direction in every slot; 
 
