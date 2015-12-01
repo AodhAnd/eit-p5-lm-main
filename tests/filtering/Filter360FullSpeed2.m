@@ -2,10 +2,14 @@ close all;
 clear all;
 clc;
 
+%% Convert pisture from - and + degrees to only + degrees
 Data1 = csvread('twoturns.3.csv');
 Data1(:,2) = Data1(:,2)/1000;
 
-Data1 = Data1;
+Data1(73:192,1) = Data1(73:192,1)+360;
+Data1(116:193,1) = Data1(116:193,1)+360;
+Data1(193:231,1) = Data1(193:231,1)+360;
+
 format long
 
 fs = 40;
@@ -16,7 +20,7 @@ f = w/(2*pi);
 wd = w/(2*fm);
 s = tf('s');
 z = tf('z');
-H = 9.8358*10^9/((s^2+23.961*s+2142.6)*(s^2+65.460*s+2142.6)*(s^2+89.422*s+2142.6))
+H =  (73.61015518^(3))/((s^(2)-2*-1/2*73.61015518*s+73.61015518^(2))*(s-73.61015518*-1))
 bodeplot(H)
 %% LOWPASS FILTER
 
@@ -28,7 +32,7 @@ den = den{1}/(1.131121758*10^(11));
 H = tf(num, den, 0.025, 'variable', 'z^-1')
 den
 H_freq = freqz(num, den, wd);
-magdb = 20*log10(abs(H_freq));
+magdb = (abs(H_freq));
 
 semilogx(f, magdb)
 
@@ -40,13 +44,13 @@ figure;
 
 input = Data1(:,1);
 
-%input_fft = mag2db(abs(fft(input)));
-input_fft = abs(fft(input));
+input_fft = mag2db(abs(fft(input)));
+%input_fft = abs(fft(input));
 freq = linspace(0,40,length(input_fft));
 plot(freq,input_fft);
 figure;
 spectrogram(input,hamming(20),19,100,40,'yaxis') %fft for hvert sekund (40)
-
+figure;
 
 %% Test filter algorithm
 BUF0 = 0;
@@ -86,22 +90,3 @@ for i=1:369
 end
 
 plot(Data1(:,2),Data1(:,1), 'b',Data1(:,2),output, 'r')
-%scatter(Data1(:,2),output)
-
-%% Noise
-%hold;
-%P1 = plot(Step1(:,1),Step1(:,2));
-%P2 = plot(Step2(:,1),Step2(:,2));
-%P3 = plot(Step3(:,1),Step3(:,2));
-
-%set( P1, 'color', '[1 0 0]', 'LineWidth', 2 );
-%set( P2, 'color', '[0 .5 0]', 'LineWidth', 2 );
-%set( P3, 'color', '[0 0 1]', 'LineWidth', 2 );
-
-%title('Step response with and without control')
-%xlabel('Time [s]')
-%ylabel('Velocity [m \cdot s^{-1}]')
-% xlim([3 7]);
-%legend('Voltage step', 'P control','P control with Feed forward','Location', 'southeast' )
-%grid on
-%set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)

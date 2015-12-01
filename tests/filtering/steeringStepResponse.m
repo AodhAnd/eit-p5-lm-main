@@ -4,6 +4,10 @@ clc;
 
 Data1 = csvread('twoturns.3.csv');
 Data1(:,2) = Data1(:,2)/1000;
+
+Data1(73:192,1) = Data1(73:192,1)+360;
+Data1(116:193,1) = Data1(116:193,1)+360;
+Data1(193:231,1) = Data1(193:231,1)+360;
 %Data2 = csvread('zigzag1600and1070.3.csv');
 %Data3 = csvread('test1650.csv');
 
