@@ -85,16 +85,18 @@ void SteeringControl(){
    int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
    float MAG_Heading_Old;                 // Heading to compare with from last run
    float MAG_Heading_New;                 // Current heading
-   float MAG_Heading_Ref;                 // Reference heading
+   float MAG_Heading_Ref = 0;                 // Reference heading
    float Omega_current;                   // Current angular velocity
    float Omega_error;                     // Error angular velocity
    float Theta_error;
    float Omega_wanted = 0;                // Wanted angular velocity
-   float P_out;                           // Output from P controller
+   float P_out;    // Output from P controller
+   
+   int turnedYet = 0;
 
-   float P_gain = 0.2;
+   float P_gain = 2;
 
-   const int rightOffset = -250; 
+   const int rightOffset = -220; 
    const int leftOffset = 250;
    
    int turningWanted = 0;
@@ -108,7 +110,7 @@ void SteeringControl(){
   values_from_magnetometer[2] = zv;
   transformation(values_from_magnetometer);
   MAG_Heading_Old = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
-  MAG_Heading_Ref = MAG_Heading_Old;        //initialize reference of the angle(first one)
+  //MAG_Heading_Ref = MAG_Heading_Old;        //initialize reference of the angle(first one)
   int i;
   for (i=0;i<8;i++){angles[i]= MAG_Heading_Old;} //start with current direction in every slot; 
 
@@ -140,14 +142,14 @@ void SteeringControl(){
   
   
   
-  /*Theta_error = MAG_Heading_New - MAG_Heading_Ref;
+  Theta_error = MAG_Heading_New - MAG_Heading_Ref;
   if (Theta_error < 180){Theta_error +=360;}    //if heading around +-180°
   if (Theta_error > 180){Theta_error -=360;}
 
   //P_out = Omega_error * P_gain;
   P_out = Theta_error * P_gain;
 
-  if(P_out>0){setServo(SERVO_MIDDLE_PW+leftOffset+P_out);}
+  /*if(P_out>0){setServo(SERVO_MIDDLE_PW+leftOffset+P_out);}
   if(P_out<0){setServo(SERVO_MIDDLE_PW+rightOffset+P_out);}
   if(P_out==0){setServo(SERVO_MIDDLE_PW);}*/
     
@@ -156,14 +158,22 @@ void SteeringControl(){
   
   Serial.print(MAG_Heading_New);
   Serial.print(',');
-  //Serial.print(Theta_error);
-  //Serial.print(',');
+  Serial.print(Theta_error);
+  Serial.print(',');
+  Serial.print(millis());
+  Serial.println(',');
     
-    if(timestamp>3000) setServo(SERVO_MIDDLE_PW+500);  //left
-    if(timestamp>5000) setServo(SERVO_MIDDLE_PW);  //straight
-    
-    if(timestamp>6000) setServo(SERVO_MIDDLE_PW-500);  //left
-    if(timestamp>8000) setServo(SERVO_MIDDLE_PW);  //straight
+    if(timestamp>4000 && timestamp<4157)
+    {
+      setServo(200000);
+      MAG_Heading_Ref = 180;
+      /*if((MAG_Heading_New >= ) || (MAG_Heading_New <= -10)) turnedYet = 1;
+      if(turnedYet == 0) setServo(200000);
+      if(turnedYet == 1) setServo(SERVO_MIDDLE_PW);*/
+      
+    }
+    else setServo(SERVO_MIDDLE_PW);
+       
     /*
     if(timestamp>3000) Omega_wanted = -turningWanted;  //right
     if(timestamp>5000) Omega_wanted = 0;  //straight
@@ -182,8 +192,6 @@ void SteeringControl(){
     digitalWrite(31, LOW);  
     k_wait(sem2,0);     //wait for semaphore
     digitalWrite(31, HIGH);
-    Serial.print(millis());
-    Serial.println(',');
   }
 }
 
@@ -219,7 +227,7 @@ void SpeedControl(){
       if(duty < 0) duty = 0;
     }
     //stop at the end
-    if(timestamp<10000)speed(duty);
+    if(timestamp<4157)speed(100);
   
     else speed(0);    
       /*

@@ -70,7 +70,7 @@ char stack[300];  // Stack of Hall sensor
 char stack2[300]; // Stack of Speed Control
 char stack3[1000]; // Stack of Steering control
 float speed0;     // Speed of belt 1
-float speed1;     // Speed of belt 1
+float speed1;     // Speed of belt 2
 long int timestamp;
 char byte1;
 char byte2;
@@ -92,7 +92,7 @@ void SteeringControl(){
    float Omega_wanted = 0;                // Wanted angular velocity
    float P_out;                           // Output from P controller
 
-   float P_gain = 2.5;                      // to convert angle or speed error into ms
+   float P_gain = 1.8;                      // to convert angle or speed error into ms
 
    const int rightOffset = -220; 
    const int leftOffset = 250;
@@ -124,12 +124,13 @@ void SteeringControl(){
     values_from_magnetometer[1] = yv;
     values_from_magnetometer[2] = zv;
     transformation(values_from_magnetometer);
-    angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
+    MAG_Heading_New = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
+    /*angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
     for(i=0; i<8; i++){MAG_Heading_New += angles[i];}
     MAG_Heading_New = MAG_Heading_New /8; // Rolling average
-    sampleNumber++;
+    sampleNumber++;*/
   
-    if (sampleNumber > 8){sampleNumber = 0;}
+    //if (sampleNumber > 8){sampleNumber = 0;}
     
   /* Calculate current angular velocity  */
     /*Omega_current = (MAG_Heading_New - MAG_Heading_Old);    //not a speed yet, difference of angle headings
@@ -140,7 +141,6 @@ void SteeringControl(){
   
     Omega_error = Omega_wanted - Omega_current;*/
     
-    if(millis()>=4000) {
     
     Theta_error = MAG_Heading_New - MAG_Heading_Ref;
     if (Theta_error < 180){Theta_error +=360;}    //if heading around +-180°
@@ -149,31 +149,26 @@ void SteeringControl(){
     //P_out = Omega_error * P_gain;
     P_out = Theta_error * P_gain;
   
-    if(P_out<0)
-    {
-      servoPulseWidth = setServo(SERVO_MIDDLE_PW+leftOffset-P_out);//send middle PWM, plus offset to begin tunring, minus the error of angle times gain
-    }
-    
-    if(P_out>0)
-    {
-      servoPulseWidth =setServo(SERVO_MIDDLE_PW+rightOffset-P_out);
-    }
-    
+    if(P_out<0) {servoPulseWidth = setServo(SERVO_MIDDLE_PW+leftOffset-P_out);}//send middle PWM, plus offset to begin tunring, minus the error of angle times gain
+    if(P_out>0) {servoPulseWidth =setServo(SERVO_MIDDLE_PW+rightOffset-P_out);}
     if(P_out==0){setServo(SERVO_MIDDLE_PW);}
-    
-  }
+
+    if(millis()>=4000) MAG_Heading_Ref = -60;
+
+  
+    /*if(millis()>=4000) MAG_Heading_Ref = -45;
+    if(millis()>=6000) MAG_Heading_Ref = 45;
+    if(millis()>=8000) MAG_Heading_Ref = -45;
+    if(millis()>=10000) MAG_Heading_Ref = +45;*/
     //Serial.flush(); 
     
-    
+    Serial.print(millis());
+    Serial.print(',');
     Serial.print(MAG_Heading_New);
     Serial.print(',');
     Serial.print(Theta_error);
     Serial.print(',');
-    Serial.print(P_out);
-    Serial.print(',');
     Serial.print(servoPulseWidth);
-    Serial.print(',');
-    Serial.print(millis());
     Serial.println(',');
     
       
@@ -198,7 +193,7 @@ void SteeringControl(){
 
 void SpeedControl(){
 
-  const float Wantedspeed = 1;
+  const float Wantedspeed = 2.4;
   const float SysGain = 0.49;
   float Speedtoduty;
   float Actualspeed;
@@ -228,7 +223,7 @@ void SpeedControl(){
       if(duty < 0) duty = 0;
     }
     //stop at the end
-    if(timestamp<20000)speed(duty);
+    if(timestamp<10000)speed(duty);
   
     else speed(0);    
       
