@@ -4,11 +4,17 @@ Kp = 2.1;
 ThetaRef = 0;
 
 % Read the data from the test
-Data1 = readcsv('steeringStep');
+%Data1 = csvread('stepresponse1.2-60.csv');
+%Data1 = csvread('stepresponse1.5-60.csv');
+%Data1 = csvread('stepresponse1.8-60.csv');
+%Data1 = csvread('stepresponse2.1-60.csv');
+%Data1 = csvread('stepresponse2.4-60.1.csv');
+%Data1 = csvread('stepresponse2.4-60.2.csv');
+
 
 t     = Data1(:,1);
 Theta = Data1(:,2);
-ThetaError = Data(:,3);
+ThetaError = Data1(:,3);
 
 % Plots
 P1 = plot(t,Theta);
