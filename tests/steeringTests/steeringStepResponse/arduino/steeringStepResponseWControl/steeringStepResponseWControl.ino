@@ -194,7 +194,7 @@ void SteeringControl(){
 
 void SpeedControl(){
 
-  const float Wantedspeed = 1;
+  const float Wantedspeed = 2.4;
   const float SysGain = 0.49;
   float Speedtoduty;
   float Actualspeed;
@@ -224,7 +224,7 @@ void SpeedControl(){
       if(duty < 0) duty = 0;
     }
     //stop at the end
-    if(timestamp<10000)speed(duty);
+    if(timestamp<15000)speed(duty);
   
     else speed(0);    
       
