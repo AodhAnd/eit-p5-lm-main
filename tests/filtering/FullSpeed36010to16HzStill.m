@@ -2,8 +2,12 @@ close all;
 clear all;
 clc;
 
-Data1 = csvread('StillAngle.csv');
+Data1 = csvread('straight4.csv');
 Data1(:,2) = Data1(:,2)/1000;
+
+Data1(:,1) = Data1(:,1)-147.8;
+
+scatter(Data1(:,2),Data1(:,1))
 
 format long
 
@@ -29,9 +33,9 @@ den
 H_freq = freqz(num, den, wd);
 magdb = 20*log10(abs(H_freq));
 
-bodeplot(Hs)
+%bodeplot(Hs)
 
-%semilogx(f, magdb)
+semilogx(f, magdb)
 
 grid;
 figure;
@@ -69,7 +73,8 @@ for i=1:183
    BUF1 = BUF0;
 end
 
-%plot(Data1(:,2),Data1(:,1), 'b',Data1(:,2),output, 'r')
+plot(Data1(:,2),Data1(:,1), 'b',Data1(:,2),output, 'r')
+
 %scatter(Data1(:,2),output)
 
 %% FFT
@@ -79,7 +84,7 @@ end
 input = Data1(:,1);
 
 %input_fft = mag2db(abs(fft(input)));
-input_fft = mag2db(abs(fft(input)));
+input_fft = mag2db(2/length(input)*abs(fft(input)));
 freq = linspace(0,40,length(input_fft));
 plot(freq,input_fft);
 figure;
@@ -90,10 +95,13 @@ figure;
 inputfilter = output;
 
 %input_fft = mag2db(abs(fft(input)));
-input_fft = mag2db(abs(fft(inputfilter)));
+input_fft = mag2db(2/length(inputfilter)*abs(fft(inputfilter)));
 freq = linspace(0,40,length(input_fft));
 plot(freq,input_fft);
 figure;
 spectrogram(output,hamming(20),19,100,40,'yaxis') %fft for hvert sekund (40)
 
+figure;
+
+plot(Data1(:,2),Data1(:,1),Data1(:,2),output, 'r')
 figure;
