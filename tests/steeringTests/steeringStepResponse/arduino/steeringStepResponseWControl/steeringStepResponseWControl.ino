@@ -99,7 +99,7 @@ void SteeringControl(){
    
    int turningWanted = 0;
    
-   k_set_sem_timer(sem2,50); // krnl will signal sem every 50th tick
+   k_set_sem_timer(sem2,25); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
   getHeading();
@@ -125,6 +125,12 @@ void SteeringControl(){
     values_from_magnetometer[1] = yv;
     values_from_magnetometer[2] = zv;
     transformation(values_from_magnetometer);
+    
+    Serial.print(xv);
+    Serial.print(',');
+    Serial.print(values_from_magnetometer[0]);
+    Serial.print(',');
+    
     MAG_Heading_New = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
     /*angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
     for(i=0; i<8; i++){MAG_Heading_New += angles[i];}
@@ -228,8 +234,8 @@ void SpeedControl(){
   
     else speed(0);    
       
-    Serial.print(Actualspeed),
-    Serial.print(',');
+    //Serial.print(Actualspeed),
+    //Serial.print(',');
     /*Serial.print(batReading);
     Serial.print(',');
     Serial.print(millis());
@@ -272,7 +278,7 @@ void setup() {
   sem2 = k_crt_sem(1,2);
 
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("REBOOT");
 
   delay(2000);
