@@ -16,7 +16,7 @@ float calibrated_values[3];
 //transformation(float uncalibrated_values[3]) is the function of the magnetometer data correction 
 //uncalibrated_values[3] is the array of the non calibrated magnetometer data
 //uncalibrated_values[3]: [0]=Xnc, [1]=Ync, [2]=Znc
-void transformation(float uncalibrated_values[3])    
+void transformation(float uncalibrated_values[3]) //moves the data to the the center of the coordinatesystem
 {
   //calibration_matrix[3][3] is the transformation matrix
   //replace M11, M12,..,M33 with your transformation matrix data
@@ -55,7 +55,6 @@ void getHeading()
   xv = (float)raw.XAxis;
   yv = (float)raw.YAxis;
   zv = (float)raw.ZAxis;
- 
 }
 
 // This is the value to change to change the steering angle
@@ -84,7 +83,7 @@ void SteeringControl(){
    
    int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
    float MAG_Heading_Old;                 // Heading to compare with from last run
-   float MAG_Heading_New;                 // Current heading
+   float MAG_Heading_New;                 // Current heading hold the angle
    float MAG_Heading_Ref = 0;                 // Reference heading
    float Omega_current;                   // Current angular velocity
    float Omega_error;                     // Error angular velocity
@@ -117,12 +116,14 @@ void SteeringControl(){
   int sampleNumber = 0;
   while(1){
 
+  Serial.println(xv);
+
 /* Get current heading */  
   getHeading();
   values_from_magnetometer[0] = xv;
   values_from_magnetometer[1] = yv;
   values_from_magnetometer[2] = zv;
-  transformation(values_from_magnetometer);
+  //transformation(values_from_magnetometer);
   //angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
   MAG_Heading_New = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
   /*for(i=0; i<8; i++){MAG_Heading_New += angles[i];}
@@ -156,12 +157,12 @@ void SteeringControl(){
   //Serial.flush(); 
   
   
-  Serial.print(MAG_Heading_New);
-  Serial.print(',');
-  Serial.print(Theta_error);
-  Serial.print(',');
-  Serial.print(millis());
-  Serial.println(',');
+  //Serial.print(MAG_Heading_New);
+  //Serial.print(',');
+  //Serial.print(Theta_error);
+  //Serial.print(',');
+  //Serial.print(millis());
+  //Serial.println(',');
     
     if(timestamp>4000 && timestamp<4157)
     {

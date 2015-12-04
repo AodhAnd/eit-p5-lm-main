@@ -2,7 +2,7 @@ close all;
 clear all;
 clc;
 
-Data1 = csvread('straight.csv');
+Data1 = csvread('stepresponse1-45.csv');
 %Data2 = csvread('zigzag1600and1070.3.csv');
 %Data3 = csvread('test1650.csv');
 
