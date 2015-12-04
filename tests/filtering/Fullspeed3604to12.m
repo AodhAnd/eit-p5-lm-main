@@ -3,12 +3,14 @@ clear all;
 clc;
 
 %% Convert pisture from - and + degrees to only + degrees
-Data1 = csvread('twoturns.3.csv');
-Data1(:,2) = Data1(:,2)/1000;
+Data1 = csvread('Drej.csv');
+Data1(:,1) = Data1(:,1)/1000;
 
-Data1(73:192,1) = Data1(73:192,1)+360;
-Data1(116:193,1) = Data1(116:193,1)+360;
-Data1(193:231,1) = Data1(193:231,1)+360;
+%Data1(73:192,1) = Data1(73:192,1)+360;
+%Data1(116:193,1) = Data1(116:193,1)+360;
+%Data1(193:231,1) = Data1(193:231,1)+360;
+
+plot(Data1(:,1),Data1(:,2))
 
 format long
 
@@ -21,7 +23,7 @@ wd = w/(2*fm);
 s = tf('s');
 z = tf('z');
 H =  (1.272700000*10^9*z^3+3.818100000*10^9*z^2+3.818100000*10^9*z+1.272700000*10^9)/(1.142435399*10^6*z^3-1.676955160*10^6*z^2+1.048261882*10^6*z-2.283475581*10^5)
-bodeplot(H)
+%bodeplot(H)
 %% LOWPASS FILTER
 
 %H = (0.4347829973e-2+0.2608697984e-1/z+0.6521744960e-1/z^2+0.8695659946e-1/z^3+0.6521744960e-1/z^4+0.2608697984e-1/z^5+0.4347829973e-2/z^6)/(1-1.974486371/z+2.241740971/z^2-1.460131921/z^3+.5920585105/z^4-.1343581056/z^5+0.1344675427e-1/z^6)
@@ -44,7 +46,7 @@ figure;
 %scatter(Data1(:,2),Data1(:,1));
 %figure;
 
-input = Data1(:,1);
+input = Data1(:,2);
 
 input_fft = mag2db(abs(fft(input)));
 %input_fft = abs(fft(input));
@@ -73,9 +75,9 @@ b2 = 0.09372;
 b3 = 0.03124;
 
 
-input = Data1(:,1);
-output = zeros(369,1);
-for i=1:369
+input = Data1(:,2);
+output = zeros(218,1);
+for i=1:218
    BUF0 = input(i) - (a1*BUF1 + a2*BUF2 + a3*BUF3);
    output(i) = BUF0*b0 + b1*BUF1 + b2*BUF2 + b3*BUF3;
    BUF3 = BUF2;
@@ -83,4 +85,4 @@ for i=1:369
    BUF1 = BUF0;
 end
 
-plot(Data1(:,2),Data1(:,1), 'b',Data1(:,2),output, 'r')
+plot(Data1(:,1),Data1(:,2), 'b',Data1(:,1),output, 'r')

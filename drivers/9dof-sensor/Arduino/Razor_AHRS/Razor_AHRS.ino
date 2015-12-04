@@ -289,7 +289,7 @@ const float magn_ellipsoid_transform[3][3] = {{0.902, -0.00354, 0.000636}, {-0.0
 // When set to true, gyro drift correction will not be applied
 #define DEBUG__NO_DRIFT_CORRECTION false
 // Print elapsed time after each I/O loop
-#define DEBUG__PRINT_LOOP_TIME false
+#define DEBUG__PRINT_LOOP_TIME true
 
 
 /*****************************************************************/
