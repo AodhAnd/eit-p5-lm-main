@@ -126,14 +126,14 @@ void SteeringControl(){
     values_from_magnetometer[2] = zv;
     transformation(values_from_magnetometer);
     
-    Serial.print(xv);
-    Serial.print(",   ");
-    Serial.print(yv);
-    Serial.print(",   ");
-    Serial.print(values_from_magnetometer[0]);
-    Serial.print(",   ");
-    Serial.print(values_from_magnetometer[1]);
-    Serial.print(",   |||    ");
+//    Serial.print(xv);
+//    Serial.print(",   ");
+//    Serial.print(yv);
+//    Serial.print(",   ");
+//    Serial.print(values_from_magnetometer[0]);
+//    Serial.print(",   ");
+//    Serial.print(values_from_magnetometer[1]);
+//    Serial.print(",   |||    ");
     
     MAG_Heading_New = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
     /*angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
@@ -152,7 +152,7 @@ void SteeringControl(){
   
     Omega_error = Omega_wanted - Omega_current;*/
     
-    
+    /*
     Theta_error = MAG_Heading_New - MAG_Heading_Ref;
     if (Theta_error < 180){Theta_error +=360;}    //if heading around +-180°
     if (Theta_error > 180){Theta_error -=360;}
@@ -164,23 +164,23 @@ void SteeringControl(){
     if(P_out>0) {servoPulseWidth = setServo(SERVO_MIDDLE_PW+rightOffset-P_out);}
     if(P_out==0){setServo(SERVO_MIDDLE_PW);}
 
-    if(millis()>=4000) MAG_Heading_Ref = -45;
+    if(millis()>=4000) MAG_Heading_Ref = -45;*/
 
   
-    /*if(millis()>=4000) MAG_Heading_Ref = -45;
-    if(millis()>=6000) MAG_Heading_Ref = 45;
-    if(millis()>=8000) MAG_Heading_Ref = -45;
-    if(millis()>=10000) MAG_Heading_Ref = +45;*/
+    if(millis()>=4000) setServo(20000);
+    if(millis()>=6000) setServo(SERVO_MIDDLE_PW);
+    if(millis()>=8000) setServo(0);
+    if(millis()>=10000) setServo(SERVO_MIDDLE_PW);
     //Serial.flush(); 
     
     Serial.print(millis());
-    Serial.print(",   |||    ");
+    Serial.print(',');
     Serial.print(MAG_Heading_New);
-    Serial.print(",    ");
-    Serial.print(Theta_error);
-    Serial.print(",    ");
-    Serial.print(servoPulseWidth);
-    Serial.println(",    ");
+    Serial.println(',');
+    //Serial.print(Theta_error);
+    //Serial.print(",    ");
+    //Serial.print(servoPulseWidth);
+    //Serial.println(",    ");
     
       
       /*
@@ -234,7 +234,7 @@ void SpeedControl(){
       if(duty < 0) duty = 0;
     }
     //stop at the end
-    if(timestamp<15000)speed(duty);
+    if(timestamp<12000)speed(100);
   
     else speed(0);    
       
@@ -253,11 +253,9 @@ void SpeedControl(){
     }
   }
 
-
-
 void setup() {
   k_init(3,2,0);
-
+ 
   pinMode(5,OUTPUT);
   initServo();
   
@@ -266,12 +264,14 @@ void setup() {
   pinMode(dPinOnOff, OUTPUT);
 
   // Set up the motor
+  I2C_Init();
   initMotor();
   enableMotor(1);
   direction(1);    //move forward
   
   // Set up the compass/gyro/accelerometer sensors
   //CompassSetup();
+  Magn_Init();
   Wire.begin();  
   compass = HMC5883L();  
   setupHMC5883L(); 
