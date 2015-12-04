@@ -4,6 +4,7 @@
 #include "myservo.h"
 #include <Wire.h>
 #include <HMC5883L.h>
+#include <math.h>
 
 
 HMC5883L compass; //Copy the folder "HMC5883L" in the folder "C:\Program Files\Arduino\libraries" and restart the arduino IDE.
@@ -94,7 +95,7 @@ void SteeringControl(){
    float radius = 0.015;                          // radius of the servo
    float Theta_servo_wanted;
 
-   float P_gain = 1;                    // to convert angle error into distance error
+   float P_gain = 0.005;                  // to convert angle error into distance error
 
    const int rightOffset = -220;         // to begin turning direclty
    const int leftOffset = 250;
@@ -156,10 +157,10 @@ void SteeringControl(){
     if (Theta_error < 180){Theta_error +=360;}                    //if heading around +-180°, to have values from -
     if (Theta_error > 180){Theta_error -=360;}
   
-    Theta_error = 3,14 * Theta_error / 180;                       //conversion from degres to radion
+    Theta_error = 3.14 * Theta_error / 180;                       //conversion from degres to radians
     servo_distance = Theta_error * P_gain;                                     //multiply by the gain to get a distance of error
     
-    Theta_servo_wanted = asin(servo_distance/radius);                               //d distance of error, r radius of the servo
+    Theta_servo_wanted = asin(servo_distance/radius);                               //get an angle in radians with distance of error, radius of the servo
  
     if(servo_distance<0) servoPulseWidth = SERVO_MIDDLE_PW + leftOffset;   //set middle PWM, plus offset to begin turning (loose in the middle)
     if(servo_distance>0) servoPulseWidth = SERVO_MIDDLE_PW + rightOffset;
@@ -170,25 +171,40 @@ void SteeringControl(){
   
   
     /* Main code for the steering */
-    if(millis()>=5000) MAG_Heading_Ref = -45;
+    //stepresponse after 3 sec
+    //if(millis()>=5000) MAG_Heading_Ref = -45;
+
+    
+    
+    /* do a square of 3 on3 mters ish */
+    if(millis()>=5000) MAG_Heading_Ref = -90;
+    if(millis()>=8000) MAG_Heading_Ref = -180;
+    if(millis()>=11000) MAG_Heading_Ref = 90;
+    if(millis()>=14000) MAG_Heading_Ref = 0;
 
     
     /* test for the filtering */
-    if(millis()>=4000) setServo(20000);
+    /*if(millis()>=4000) setServo(20000);
     if(millis()>=6000) setServo(SERVO_MIDDLE_PW);
     if(millis()>=8000) setServo(0);
-    if(millis()>=10000) setServo(SERVO_MIDDLE_PW);
+    if(millis()>=10000) setServo(SERVO_MIDDLE_PW);*/
+
 
 
     /* Printing for the steering */    
     Serial.print(millis());
     Serial.print(',');
     Serial.print(MAG_Heading_New);
-    Serial.println(',');
-    //Serial.print(Theta_error);
-    //Serial.print(",    ");
-    //Serial.print(servoPulseWidth);
-    //Serial.println(",    ");
+    Serial.print(',');
+    Serial.print(Theta_error);
+    Serial.print(',');
+    Serial.print(servo_distance,4);
+    Serial.print(',');
+    Serial.print(Theta_servo_wanted);
+    Serial.print(',');
+    Serial.print(servoPulseWidth);
+    Serial.print(",");
+    Serial.println(" ");
     
       
     k_wait(sem2,0);     //wait for semaphore
@@ -197,7 +213,7 @@ void SteeringControl(){
 
 void SpeedControl(){
 
-  const float Wantedspeed = 1.5;
+  const float Wantedspeed = 2;
   const float SysGain = 0.49;
   float Speedtoduty;
   float Actualspeed;
@@ -227,7 +243,7 @@ void SpeedControl(){
       if(duty < 0) duty = 0;
     }
     //stop at the end
-    if(timestamp<13000)speed(100);
+    if(timestamp<18000)speed(duty);
   
     else speed(0);    
       
