@@ -1,0 +1,79 @@
+clear all;
+close all;
+clc;
+
+syms K
+
+Kp = 1.8;
+ThetaRef = 0;
+
+% Read the data from the test
+Data1 = csvread('stepresponse1.1-45.csv');
+Data2 = csvread('stepresponse1.2-45.csv');
+Data3 = csvread('stepresponse1.3-45.csv');
+Data4 = csvread('stepresponse1.4-45.csv');
+Data5 = csvread('stepresponse1.7-45.csv');
+Data6 = csvread('stepresponse1.8-45.csv');
+
+
+t1     = Data1(:,2);
+Theta1 = Data1(:,3)*(-1);
+t2     = Data2(:,2);
+Theta2 = Data2(:,3)*(-1);
+t3     = Data3(:,2);
+Theta3 = Data3(:,3)*(-1);
+t4     = Data4(:,2);
+Theta4 = Data4(:,3)*(-1);
+t5     = Data5(:,2);
+Theta5 = Data5(:,3)*(-1);
+t6     = Data6(:,2);
+Theta6 = Data6(:,3)*(-1);
+%ThetaError = Data1(:,4);
+
+% Plots
+hold on
+P1 = scatter(t1,Theta1);
+P1 = scatter(t2,Theta2);
+P1 = scatter(t3,Theta3);
+P1 = scatter(t4,Theta4);
+P1 = scatter(t5,Theta5);
+P1 = scatter(t6,Theta6);
+%P2 = scatter(t,ThetaError);
+% ThetaCalc = ThetaRef*Kp*K*exp(-Kp*K*t)
+
+% Make the plots beautiful
+% set( P1, 'color', '[0 0 1]', 'LineWidth', 2 );
+title('Step response of steering')
+xlabel('Time [ms]')
+ylabel('Angle [°]')
+% xlim([3 7]);
+legend('Theta at 1,1 m\cdot s^{-1}', 'Theta at 1,2 m\cdot s^{-1}', 'Theta at 1,3 m\cdot s^{-1}', 'Theta at 1,4 m\cdot s^{-1}', 'Theta at 1,7 m\cdot s^{-1}','Theta at 1,6 m\cdot s^{-1}')
+grid on
+%set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
+
+% %% Gain calculations
+% syms K
+% 
+% Kp = 2.1;
+% ThetaRef = 0;
+% 
+% % Read the data from the test
+% Data1 = csvread('stepresponse1.2-60.csv');
+% 
+% t     = Data1(:,1);
+% Theta = Data1(:,2);
+% ThetaError = Data1(:,3);
+% 
+% % Plots
+% %P1 = scatter(ThetaError,Theta);
+% % ThetaCalc = ThetaRef*Kp*K*exp(-Kp*K*t)
+% 
+% % Make the plots beautiful
+% % set( P1, 'color', '[0 0 1]', 'LineWidth', 2 );
+% title('Step response of steering')
+% xlabel('Error')
+% ylabel('Angle')
+% % xlim([3 7]);
+% legend('Theta error', 'Theta','Velocity of X m \cdot s^{-1}')
+% grid on
+% %set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
