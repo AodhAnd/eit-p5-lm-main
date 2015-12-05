@@ -4,6 +4,7 @@
 #include "myservo.h"
 #include <Wire.h>
 #include <HMC5883L.h>
+#include <math.h>
 
 
 HMC5883L compass; //Copy the folder "HMC5883L" in the folder "C:\Program Files\Arduino\libraries" and restart the arduino IDE.
@@ -90,27 +91,30 @@ void SteeringControl(){
    float Omega_error;                     // Error angular velocity
    float Theta_error;
    float Omega_wanted = 0;                // Wanted angular velocity
-   float P_out;                           // Output from P controller
+   float servo_distance;                               // distance of error after multiplied by the P_gain (Kp)
+   float radius = 0.015;                          // radius of the servo
+   float Theta_servo_wanted;
 
-   float P_gain = 1.5;                      // to convert angle or speed error into ms
+   float P_gain = 0.005;                  // to convert angle error into distance error
 
-   const int rightOffset = -220; 
+   const int rightOffset = -220;         // to begin turning direclty
    const int leftOffset = 250;
    
-   int turningWanted = 0;
+   //int turningWanted = 0;              //we don't use it anymore(used with the omega of steering)
    
    k_set_sem_timer(sem2,50); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
-  getHeading();
+  getHeading();                          //get the values from magnetometer
   values_from_magnetometer[0] = xv;
   values_from_magnetometer[1] = yv;
   values_from_magnetometer[2] = zv;
-  transformation(values_from_magnetometer);
-  MAG_Heading_Old = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
+  transformation(values_from_magnetometer);      //shift the values to fit the model, centered in the center of the coordinate system
+  MAG_Heading_Old = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);      //convert the values into an angle
   
-  MAG_Heading_Ref = 0; //MAG_Heading_Old;        //initialize reference of the angle(first one)
-  /*
+  MAG_Heading_Ref = 0; //MAG_Heading_Old;        //initialize reference of the angle to follow at beginning
+  
+  /*  //rolling average
   int i;
   for (i=0;i<8;i++){angles[i]= MAG_Heading_Old;} //start with current direction in every slot; 
   int sampleNumber = 0;*/
@@ -119,31 +123,25 @@ void SteeringControl(){
     
   while(1){
   
-  /* Get current heading */  
-    getHeading();
+    /* Get current heading */  
+    getHeading();                  //get the values from magnetometer
     values_from_magnetometer[0] = xv;
     values_from_magnetometer[1] = yv;
     values_from_magnetometer[2] = zv;
-    transformation(values_from_magnetometer);
+    transformation(values_from_magnetometer);          //shift the values to fit the model, centered in the center of the coordinate system
     
-    Serial.print(xv);
-    Serial.print(",   ");
-    Serial.print(yv);
-    Serial.print(",   ");
-    Serial.print(values_from_magnetometer[0]);
-    Serial.print(",   ");
-    Serial.print(values_from_magnetometer[1]);
-    Serial.print(",   |||    ");
+    MAG_Heading_New = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);      //convert the values into an angle
     
-    MAG_Heading_New = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
+    /* Filtering */
+    //rolling average
     /*angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
     for(i=0; i<8; i++){MAG_Heading_New += angles[i];}
     MAG_Heading_New = MAG_Heading_New /8; // Rolling average
-    sampleNumber++;*/
-  
-    //if (sampleNumber > 8){sampleNumber = 0;}
+    sampleNumber++;
+    if (sampleNumber > 8){sampleNumber = 0;}*/
     
-  /* Calculate current angular velocity  */
+    
+    /* Calculate current angular velocity  */
     /*Omega_current = (MAG_Heading_New - MAG_Heading_Old);    //not a speed yet, difference of angle headings
     if (Omega_current < 180){Omega_current +=360;}
     if (Omega_current > 180){Omega_current -=360;}
@@ -153,58 +151,69 @@ void SteeringControl(){
     Omega_error = Omega_wanted - Omega_current;*/
     
     
-    Theta_error = MAG_Heading_New - MAG_Heading_Ref;
-    if (Theta_error < 180){Theta_error +=360;}    //if heading around +-180°
+    
+    /* calculate new duty to send to the servo */
+    Theta_error = MAG_Heading_New - MAG_Heading_Ref;              //difference between what's happening and what we want
+    if (Theta_error < 180){Theta_error +=360;}                    //if heading around +-180°, to have values from -
     if (Theta_error > 180){Theta_error -=360;}
   
-    //P_out = Omega_error * P_gain;
-    P_out = Theta_error * P_gain;
-  
-    if(P_out<0) {servoPulseWidth = setServo(SERVO_MIDDLE_PW+leftOffset-P_out);}//send middle PWM, plus offset to begin tunring, minus the error of angle times gain
-    if(P_out>0) {servoPulseWidth = setServo(SERVO_MIDDLE_PW+rightOffset-P_out);}
-    if(P_out==0){setServo(SERVO_MIDDLE_PW);}
-
-    if(millis()>=4000) MAG_Heading_Ref = -45;
-
-  
-    /*if(millis()>=4000) MAG_Heading_Ref = -45;
-    if(millis()>=6000) MAG_Heading_Ref = 45;
-    if(millis()>=8000) MAG_Heading_Ref = -45;
-    if(millis()>=10000) MAG_Heading_Ref = +45;*/
-    //Serial.flush(); 
+    Theta_error = 3.14 * Theta_error / 180;                       //conversion from degres to radians
+    servo_distance = Theta_error * P_gain;                                     //multiply by the gain to get a distance of error
     
+    Theta_servo_wanted = asin(servo_distance/radius);                               //get an angle in radians with distance of error, radius of the servo
+ 
+    if(servo_distance<0) servoPulseWidth = SERVO_MIDDLE_PW + leftOffset;   //set middle PWM, plus offset to begin turning (loose in the middle)
+    if(servo_distance>0) servoPulseWidth = SERVO_MIDDLE_PW + rightOffset;
+    if(servo_distance==0)setServo(SERVO_MIDDLE_PW);
+    
+    servoPulseWidth -= (Theta_servo_wanted * 2000 / 3.14);       // add the error converted into time in ms
+    setServo(servoPulseWidth);                                   // send the PWM finally!!
+  
+  
+    /* Main code for the steering */
+    //stepresponse after 3 sec
+    //if(millis()>=5000) MAG_Heading_Ref = -45;
+
+    
+    
+    /* do a square of 3 on3 mters ish */
+    if(millis()>=5000) MAG_Heading_Ref = -90;
+    if(millis()>=8000) MAG_Heading_Ref = -180;
+    if(millis()>=11000) MAG_Heading_Ref = 90;
+    if(millis()>=14000) MAG_Heading_Ref = 0;
+
+    
+    /* test for the filtering */
+    /*if(millis()>=4000) setServo(20000);
+    if(millis()>=6000) setServo(SERVO_MIDDLE_PW);
+    if(millis()>=8000) setServo(0);
+    if(millis()>=10000) setServo(SERVO_MIDDLE_PW);*/
+
+
+
+    /* Printing for the steering */    
     Serial.print(millis());
-    Serial.print(",   |||    ");
+    Serial.print(',');
     Serial.print(MAG_Heading_New);
-    Serial.print(",    ");
+    Serial.print(',');
     Serial.print(Theta_error);
-    Serial.print(",    ");
+    Serial.print(',');
+    Serial.print(servo_distance,4);
+    Serial.print(',');
+    Serial.print(Theta_servo_wanted);
+    Serial.print(',');
     Serial.print(servoPulseWidth);
-    Serial.println(",    ");
+    Serial.print(",");
+    Serial.println(" ");
     
       
-      /*
-      if(timestamp>3000) Omega_wanted = -turningWanted;  //right
-      if(timestamp>5000) Omega_wanted = 0;  //straight
-      
-      
-      if(timestamp>6000) Omega_wanted = turningWanted;  //left
-      if(timestamp>8000) Omega_wanted = 0;  //straight
-      
-      
-      if(timestamp>9000) Omega_wanted = -turningWanted;  //right
-      if(timestamp>11000) Omega_wanted = 0;  //straight
-  
-      if(timestamp>12000) Omega_wanted = turningWanted;  //left
-      if(timestamp>14000) Omega_wanted = 0;  //straight*/
-    
-      k_wait(sem2,0);     //wait for semaphore
+    k_wait(sem2,0);     //wait for semaphore
   }
 }
 
 void SpeedControl(){
 
-  const float Wantedspeed = 2.4;
+  const float Wantedspeed = 2;
   const float SysGain = 0.49;
   float Speedtoduty;
   float Actualspeed;
@@ -234,7 +243,7 @@ void SpeedControl(){
       if(duty < 0) duty = 0;
     }
     //stop at the end
-    if(timestamp<15000)speed(duty);
+    if(timestamp<18000)speed(duty);
   
     else speed(0);    
       
@@ -253,11 +262,9 @@ void SpeedControl(){
     }
   }
 
-
-
 void setup() {
   k_init(3,2,0);
-
+ 
   pinMode(5,OUTPUT);
   initServo();
   
@@ -266,12 +273,14 @@ void setup() {
   pinMode(dPinOnOff, OUTPUT);
 
   // Set up the motor
+  I2C_Init();
   initMotor();
   enableMotor(1);
   direction(1);    //move forward
   
   // Set up the compass/gyro/accelerometer sensors
   //CompassSetup();
+  Magn_Init();
   Wire.begin();  
   compass = HMC5883L();  
   setupHMC5883L(); 
