@@ -92,7 +92,7 @@ void SteeringControl(){
    float Omega_wanted = 0;                // Wanted angular velocity
    float P_out;                           // Output from P controller
 
-   float P_gain = 1.5;                      // to convert angle or speed error into ms
+   float P_gain = 4;                      // to convert angle or speed error into ms
 
    const int rightOffset = -220; 
    const int leftOffset = 250;
@@ -126,11 +126,6 @@ void SteeringControl(){
     values_from_magnetometer[2] = zv;
     transformation(values_from_magnetometer);
     
-    Serial.print(xv);
-    Serial.print(',');
-    Serial.print(values_from_magnetometer[0]);
-    Serial.print(',');
-    
     MAG_Heading_New = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
     /*angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
     for(i=0; i<8; i++){MAG_Heading_New += angles[i];}
@@ -160,7 +155,7 @@ void SteeringControl(){
     if(P_out>0) {servoPulseWidth = setServo(SERVO_MIDDLE_PW+rightOffset-P_out);}
     if(P_out==0){setServo(SERVO_MIDDLE_PW);}
 
-    if(millis()>=4000) MAG_Heading_Ref = -45;
+    if(millis()>=4000) MAG_Heading_Ref = 45;
 
   
     /*if(millis()>=4000) MAG_Heading_Ref = -45;
