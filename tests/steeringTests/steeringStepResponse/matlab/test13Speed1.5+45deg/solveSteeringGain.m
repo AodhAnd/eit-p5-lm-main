@@ -2,32 +2,32 @@ clear all;
 close all;
 clc;
 
-syms K
-
-Kp = 1.8;
-ThetaRef = 0;
+% syms K
+% 
+% Kp = 1.8;
+% ThetaRef = 0;
 
 % Read the data from the test
-Data1 = csvread('stepresponse1.1-45.csv');
-Data2 = csvread('stepresponse1.2-45.csv');
-Data3 = csvread('stepresponse1.3-45.csv');
-Data4 = csvread('stepresponse1.4-45.csv');
-Data5 = csvread('stepresponse1.7-45.csv');
-Data6 = csvread('stepresponse1.8-45.csv');
+Data1 = csvread('gain1Test1.csv');
+Data2 = csvread('gain1Test2.csv');
+Data3 = csvread('gain1Test3.csv');
+Data4 = csvread('gain1.5Test1.csv');
+Data5 = csvread('gain1.5Test2.csv');
+Data6 = csvread('gain1.5Test3.csv');
 
 
-t1     = Data1(:,2);
-Theta1 = Data1(:,3)*(-1);
-t2     = Data2(:,2);
-Theta2 = Data2(:,3)*(-1);
-t3     = Data3(:,2);
-Theta3 = Data3(:,3)*(-1);
-t4     = Data4(:,2);
-Theta4 = Data4(:,3)*(-1);
-t5     = Data5(:,2);
-Theta5 = Data5(:,3)*(-1);
-t6     = Data6(:,2);
-Theta6 = Data6(:,3)*(-1);
+t1     = Data1(:,1);
+Theta1 = Data1(:,2)*(-1);
+t2     = Data2(:,1);
+Theta2 = Data2(:,2)*(-1);
+t3     = Data3(:,1);
+Theta3 = Data3(:,2)*(-1);
+t4     = Data4(:,1);
+Theta4 = Data4(:,2)*(-1);
+t5     = Data5(:,1);
+Theta5 = Data5(:,2)*(-1);
+t6     = Data6(:,1);
+Theta6 = Data6(:,2)*(-1);
 %ThetaError = Data1(:,4);
 
 % Plots

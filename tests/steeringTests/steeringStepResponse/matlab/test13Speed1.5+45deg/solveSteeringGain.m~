@@ -4,31 +4,31 @@ clc;
 
 syms K
 
-Kp = 1.8;
-ThetaRef = 0;
+%Kp = 1.8;
+%ThetaRef = 0;
 
 % Read the data from the test
-Data1 = csvread('stepresponse1.1-45.csv');
-Data2 = csvread('stepresponse1.2-45.csv');
-Data3 = csvread('stepresponse1.3-45.csv');
-Data4 = csvread('stepresponse1.4-45.csv');
-Data5 = csvread('stepresponse1.7-45.csv');
-Data6 = csvread('stepresponse1.8-45.csv');
+Data1 = csvread('gain1Test1.csv');
+Data2 = csvread('gain1Test2.csv');
+Data3 = csvread('gain1Test3.csv');
+Data4 = csvread('gain1.5Test1.csv');
+Data5 = csvread('gain1.5Test2.csv');
+Data6 = csvread('gain1.5Test3.csv');
 
 
-t1     = Data1(:,2);
-Theta1 = Data1(:,3)*(-1);
-t2     = Data2(:,2);
-Theta2 = Data2(:,3)*(-1);
-t3     = Data3(:,2);
-Theta3 = Data3(:,3)*(-1);
-t4     = Data4(:,2);
-Theta4 = Data4(:,3)*(-1);
-t5     = Data5(:,2);
-Theta5 = Data5(:,3)*(-1);
-t6     = Data6(:,2);
-Theta6 = Data6(:,3)*(-1);
-%ThetaError = Data1(:,4);
+%Set data in variables
+t1     = Data1(:,1);%time
+Theta1 = Data1(:,2);%angle
+t2     = Data2(:,1);
+Theta2 = Data2(:,2);
+t3     = Data3(:,1);
+Theta3 = Data3(:,2);
+t4     = Data4(:,1);
+Theta4 = Data4(:,2);
+t5     = Data5(:,1);
+Theta5 = Data5(:,2);
+t6     = Data6(:,1);
+Theta6 = Data6(:,2);
 
 % Plots
 hold on
@@ -38,7 +38,6 @@ P1 = scatter(t3,Theta3);
 P1 = scatter(t4,Theta4);
 P1 = scatter(t5,Theta5);
 P1 = scatter(t6,Theta6);
-%P2 = scatter(t,ThetaError);
 % ThetaCalc = ThetaRef*Kp*K*exp(-Kp*K*t)
 
 % Make the plots beautiful
@@ -47,7 +46,7 @@ title('Step response of steering')
 xlabel('Time [ms]')
 ylabel('Angle [°]')
 % xlim([3 7]);
-legend('Theta at 1,1 m\cdot s^{-1}', 'Theta at 1,2 m\cdot s^{-1}', 'Theta at 1,3 m\cdot s^{-1}', 'Theta at 1,4 m\cdot s^{-1}', 'Theta at 1,7 m\cdot s^{-1}','Theta at 1,8 m\cdot s^{-1}')
+legend('Gain at 1 m\cdot s^{-1}', 'Theta at 1,2 m\cdot s^{-1}', 'Theta at 1,3 m\cdot s^{-1}', 'Theta at 1,4 m\cdot s^{-1}', 'Theta at 1,7 m\cdot s^{-1}','Theta at 1,8 m\cdot s^{-1}')
 grid on
 %set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
 
@@ -64,16 +63,16 @@ dat = dlmread('gainCalc.tsv','\t');
 
 % Plots
 hold on
-P1 = scatter(dat(:,2),dat(:,5))
+P1 = scatter(dat(:,1),dat(:,5))
 % P1 = scatter(ThetaError,Theta);
 % ThetaCalc = ThetaRef*Kp*K*exp(-Kp*K*t)
 
-P = polyfit(dat(:,2),dat(:,5),1)
-x = [0:0.01:2.5];
-y = 0.4880 * x - 0.2173;
+P = polyfit(dat(:,1),dat(:,5),1)
+x = [0:0.01:2.5]
+y = 0.4880 * x-0.2173
+% le point avant le chapeau est très important !!
 
 plot(x,y);
-
 
 % Make the plots beautiful
 % set( P1, 'color', '[0 0 1]', 'LineWidth', 2 );
