@@ -1,3 +1,7 @@
 *.log
 tests/steeringTests/steeringStepResponse/matlab/test11StepResponsePcontroller/solveSteeringGain.m
 *.asv
+tests/steeringTests/steeringStepResponse/matlab/test12stepresponseGain1.5/~$graph_stuff.xlsx
+*.autosave
+simulation/SteeringSimulation/steering.slx.autosave
+tests/steeringTests/steeringStepResponse/matlab/test12stepresponseGain1.5/solveSteeringGain.m
