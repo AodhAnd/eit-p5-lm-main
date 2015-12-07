@@ -22,7 +22,7 @@ data4 = csvread('quarter4.4.csv');
 
 figure = plot3(data1(:,1),data1(:,2),data1(:,3),'.','markerSize',15);
 set(figure,'color','b');
-hold;
+hold on;
 figure2 = plot3(data2(:,1),data2(:,2),data2(:,3),'.','markerSize',15);
 set(figure2,'color','r');
 figure3 = plot3(data3(:,1),data3(:,2),data3(:,3),'.','markerSize',15);
@@ -38,8 +38,8 @@ axis equal
 
 
 grid on
-xlim ([-800 800]);
-ylim ([-800 800]);
+xlim ([-500 500]);
+ylim ([-500 500]);
 zlim ([-800 800]);
 
 %X = [truedata(:,2) truedata(:,4) truedata(:,6)] 
@@ -55,10 +55,10 @@ zlim ([-800 800]);
 %legend('Data', sprintf( 'y = %0.4fx + %0.4f', a, b ), 'Location', 'northwest' )
 
 %Title and axis labels added
-title('plot of magnitude')
-xlabel('X')
-ylabel('Y')
-zlabel('Z')
+title('Plot of magnitude with circle quarters')
+xlabel('X [µT]')
+ylabel('Y [µT]')
+zlabel('Z [µT]')
 
 grid on
 %set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)

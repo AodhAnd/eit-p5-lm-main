@@ -32,6 +32,8 @@ N = 187/4773
 Rbat = 0%.11;
 %M = 2932;
 
+N*rt
+
 %Bmass = ?;
 %Jmass = M * rt;
 
