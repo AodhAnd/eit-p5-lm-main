@@ -16,7 +16,7 @@ float calibrated_values[3];
 //transformation(float uncalibrated_values[3]) is the function of the magnetometer data correction 
 //uncalibrated_values[3] is the array of the non calibrated magnetometer data
 //uncalibrated_values[3]: [0]=Xnc, [1]=Ync, [2]=Znc
-void transformation(float uncalibrated_values[3]) //moves the data to the the center of the coordinatesystem
+void transformation(float uncalibrated_values[3])    
 {
   //calibration_matrix[3][3] is the transformation matrix
   //replace M11, M12,..,M33 with your transformation matrix data
@@ -55,9 +55,10 @@ void getHeading()
   xv = (float)raw.XAxis;
   yv = (float)raw.YAxis;
   zv = (float)raw.ZAxis;
+ 
 }
 
-// This is the value to change to change the steering angle
+// This is the value to change the steering angle
 // (servo pulse-width)
 //#define SERVO_PW 1650
 
@@ -69,7 +70,7 @@ char stack[300];  // Stack of Hall sensor
 char stack2[300]; // Stack of Speed Control
 char stack3[1000]; // Stack of Steering control
 float speed0;     // Speed of belt 1
-float speed1;     // Speed of belt 1
+float speed1;     // Speed of belt 2
 long int timestamp;
 char byte1;
 char byte2;
@@ -83,22 +84,22 @@ void SteeringControl(){
    
    int servoPulseWidth = SERVO_MIDDLE_PW; // X seconds pulse width makes the vehicle go straight(-ish)
    float MAG_Heading_Old;                 // Heading to compare with from last run
-   float MAG_Heading_New;                 // Current heading hold the angle
-   float MAG_Heading_Ref = 0;                 // Reference heading
+   float MAG_Heading_New;                 // Current heading
+   float MAG_Heading_Ref;                 // Reference heading
    float Omega_current;                   // Current angular velocity
    float Omega_error;                     // Error angular velocity
    float Theta_error;
    float Omega_wanted = 0;                // Wanted angular velocity
-   float P_out;    // Output from P controller
-   
-   float P_gain = 1.5;
+   float P_out;                           // Output from P controller
+
+   float P_gain = 4;                      // to convert angle or speed error into ms
 
    const int rightOffset = -220; 
    const int leftOffset = 250;
    
    int turningWanted = 0;
    
-   k_set_sem_timer(sem2,30); // krnl will signal sem every 50th tick
+   k_set_sem_timer(sem2,25); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
   getHeading();
@@ -107,79 +108,94 @@ void SteeringControl(){
   values_from_magnetometer[2] = zv;
   transformation(values_from_magnetometer);
   MAG_Heading_Old = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
-  //MAG_Heading_Ref = MAG_Heading_Old;        //initialize reference of the angle(first one)
-  /*int i;
+  
+  MAG_Heading_Ref = 0; //MAG_Heading_Old;        //initialize reference of the angle(first one)
+  /*
+  int i;
   for (i=0;i<8;i++){angles[i]= MAG_Heading_Old;} //start with current direction in every slot; 
-
   int sampleNumber = 0;*/
   
-  
-  
-  
+  setServo(servoPulseWidth); // Initialized to the start value (SERVO_MIDDLE_PW)
+    
   while(1){
-    
-/* Get current heading */  
-  getHeading();
-  values_from_magnetometer[0] = xv;
-  values_from_magnetometer[1] = yv;
-  values_from_magnetometer[2] = zv;
-  //transformation(values_from_magnetometer);
-  //angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
-  MAG_Heading_New = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
-  /*for(i=0; i<8; i++){MAG_Heading_New += angles[i];}
-  MAG_Heading_New = MAG_Heading_New /8; // Rolling average
-  sampleNumber++;
-
-  if (sampleNumber > 8){sampleNumber = 0;}*/
   
-/* Calculate current angular velocity  */
-  /*Omega_current = (MAG_Heading_New - MAG_Heading_Old);    //not a speed yet, difference of angle headings
-  if (Omega_current < 180){Omega_current +=360;}
-  if (Omega_current > 180){Omega_current -=360;}
-  Omega_current = Omega_current * 20;  // (Old heading - New heading)/50ms = degrees per second
-  MAG_Heading_Old = MAG_Heading_New;
-
-  Omega_error = Omega_wanted - Omega_current;*/
+  /* Get current heading */  
+    getHeading();
+    values_from_magnetometer[0] = xv;
+    values_from_magnetometer[1] = yv;
+    values_from_magnetometer[2] = zv;
+    transformation(values_from_magnetometer);
+    
+    MAG_Heading_New = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
+    /*angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
+    for(i=0; i<8; i++){MAG_Heading_New += angles[i];}
+    MAG_Heading_New = MAG_Heading_New /8; // Rolling average
+    sampleNumber++;*/
   
+    //if (sampleNumber > 8){sampleNumber = 0;}
+    
+  /* Calculate current angular velocity  */
+    /*Omega_current = (MAG_Heading_New - MAG_Heading_Old);    //not a speed yet, difference of angle headings
+    if (Omega_current < 180){Omega_current +=360;}
+    if (Omega_current > 180){Omega_current -=360;}
+    Omega_current = Omega_current * 20;  // (Old heading - New heading)/50ms = degrees per second
+    MAG_Heading_Old = MAG_Heading_New;
   
-  /*
-  Theta_error = MAG_Heading_New - MAG_Heading_Ref;
-  if (Theta_error < 180){Theta_error +=360;}    //if heading around +-180°
-  if (Theta_error > 180){Theta_error -=360;}
-
-  //P_out = Omega_error * P_gain;
-  P_out = Theta_error * P_gain*/
-
-  /*if(P_out>0){setServo(SERVO_MIDDLE_PW+leftOffset+P_out);}
-  if(P_out<0){setServo(SERVO_MIDDLE_PW+rightOffset+P_out);}
-  if(P_out==0){setServo(SERVO_MIDDLE_PW);}*/
+    Omega_error = Omega_wanted - Omega_current;*/
     
     
-    
-    if(millis()>4000)setServo(3000);
-    if(millis()>6000) setServo(SERVO_MIDDLE_PW);
-    if(millis()>8000) setServo(0);
-    
-    
-  //Serial.flush(); 
+    Theta_error = MAG_Heading_New - MAG_Heading_Ref;
+    if (Theta_error < 180){Theta_error +=360;}    //if heading around +-180°
+    if (Theta_error > 180){Theta_error -=360;}
   
+    //P_out = Omega_error * P_gain;
+    P_out = Theta_error * P_gain;
   
-  Serial.print(MAG_Heading_New);
-  Serial.print(',');
-  //Serial.print(Theta_error);
-  //Serial.print(',');
-  Serial.print(millis());
-  Serial.println(',');
+    if(P_out<0) {servoPulseWidth = setServo(SERVO_MIDDLE_PW+leftOffset-P_out);}//send middle PWM, plus offset to begin tunring, minus the error of angle times gain
+    if(P_out>0) {servoPulseWidth = setServo(SERVO_MIDDLE_PW+rightOffset-P_out);}
+    if(P_out==0){setServo(SERVO_MIDDLE_PW);}
 
-    digitalWrite(31, LOW);  
-    k_wait(sem2,0);     //wait for semaphore
-    digitalWrite(31, HIGH);
+    if(millis()>=4000) MAG_Heading_Ref = 45;
+
+  
+    /*if(millis()>=4000) MAG_Heading_Ref = -45;
+    if(millis()>=6000) MAG_Heading_Ref = 45;
+    if(millis()>=8000) MAG_Heading_Ref = -45;
+    if(millis()>=10000) MAG_Heading_Ref = +45;*/
+    //Serial.flush(); 
+    
+    Serial.print(millis());
+    Serial.print(',');
+    Serial.print(MAG_Heading_New);
+    Serial.print(',');
+    Serial.print(Theta_error);
+    Serial.print(',');
+    Serial.print(servoPulseWidth);
+    Serial.println(',');
+    
+      
+      /*
+      if(timestamp>3000) Omega_wanted = -turningWanted;  //right
+      if(timestamp>5000) Omega_wanted = 0;  //straight
+      
+      
+      if(timestamp>6000) Omega_wanted = turningWanted;  //left
+      if(timestamp>8000) Omega_wanted = 0;  //straight
+      
+      
+      if(timestamp>9000) Omega_wanted = -turningWanted;  //right
+      if(timestamp>11000) Omega_wanted = 0;  //straight
+  
+      if(timestamp>12000) Omega_wanted = turningWanted;  //left
+      if(timestamp>14000) Omega_wanted = 0;  //straight*/
+    
+      k_wait(sem2,0);     //wait for semaphore
   }
 }
 
 void SpeedControl(){
 
-  const float Wantedspeed = 1.2;
+  const float Wantedspeed = 1.5;
   const float SysGain = 0.49;
   float Speedtoduty;
   float Actualspeed;
@@ -209,17 +225,17 @@ void SpeedControl(){
       if(duty < 0) duty = 0;
     }
     //stop at the end
-    if(timestamp<10000)speed(100);
+    if(timestamp<15000)speed(duty);
   
     else speed(0);    
-      /*
-    Serial.print(Actualspeed),
-    Serial.print(',');
-    Serial.print(batReading);
+      
+    //Serial.print(Actualspeed),
+    //Serial.print(',');
+    /*Serial.print(batReading);
     Serial.print(',');
     Serial.print(millis());
-    Serial.print(',');
-*/
+    Serial.print(',');*/
+
   
     //Serial.println(' ');
 
@@ -234,7 +250,6 @@ void setup() {
   k_init(3,2,0);
 
   pinMode(5,OUTPUT);
-  pinMode(31,OUTPUT);
   initServo();
   
   pinMode(dPinMove1, OUTPUT); 
@@ -264,7 +279,7 @@ void setup() {
   delay(2000);
   task1=k_crt_task(tSpeed,10,stack,300);              //hall sensors
   task2=k_crt_task(SpeedControl,12,stack2,300);   // Velocity controller
-  task3=k_crt_task(SteeringControl,1,stack3,1000); // Steering controller
+  task3=k_crt_task(SteeringControl,11,stack3,1000); // Steering controller
 
   k_start(1); // krnl runs with 1 msec heartbeat
   /* NOTE: legal time values:
@@ -279,3 +294,4 @@ void setup() {
 void loop() {
   // Do not put code here when using JDN's krnl
 }
+
