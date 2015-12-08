@@ -80,7 +80,7 @@ void setup() {
   enableMotor(1);
   direction(1);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("REBOOT");
   pinMode(35,INPUT);
 
