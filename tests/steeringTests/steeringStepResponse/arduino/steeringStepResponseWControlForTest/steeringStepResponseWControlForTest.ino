@@ -99,7 +99,7 @@ void SteeringControl(){
    
    int turningWanted = 0;
    
-   k_set_sem_timer(sem2,25); // krnl will signal sem every 50th tick
+   k_set_sem_timer(sem2,30); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
   getHeading();
@@ -148,6 +148,9 @@ void SteeringControl(){
     if (Theta_error < 180){Theta_error +=360;}    //if heading around +-180°
     if (Theta_error > 180){Theta_error -=360;}
   
+  
+  
+    /* P-controller */
     //P_out = Omega_error * P_gain;
     P_out = Theta_error * P_gain;
   
@@ -155,39 +158,29 @@ void SteeringControl(){
     if(P_out>0) {servoPulseWidth = setServo(SERVO_MIDDLE_PW+rightOffset-P_out);}
     if(P_out==0){setServo(SERVO_MIDDLE_PW);}
 
-    if(millis()>=4000) MAG_Heading_Ref = 45;
 
-  
-    /*if(millis()>=4000) MAG_Heading_Ref = -45;
-    if(millis()>=6000) MAG_Heading_Ref = 45;
-    if(millis()>=8000) MAG_Heading_Ref = -45;
-    if(millis()>=10000) MAG_Heading_Ref = +45;*/
-    //Serial.flush(); 
-    
+    /* Actual code To Do*/
+    //if(millis()>=4000) MAG_Heading_Ref = 45;
+
+  /*
+    if(millis()>=4000) setServo(3000);
+    if(millis()>=6000) setServo(SERVO_MIDDLE_PW);
+    if(millis()>=8000) setServo(0);
+    if(millis()>=10000) setServo(SERVO_MIDDLE_PW);
+*/
+
+
+    /* Print things out */    
     Serial.print(millis());
     Serial.print(',');
     Serial.print(MAG_Heading_New);
     Serial.print(',');
-    Serial.print(Theta_error);
-    Serial.print(',');
-    Serial.print(servoPulseWidth);
-    Serial.println(',');
+    //Serial.print(Theta_error);
+    //Serial.print(',');
+    //Serial.print(servoPulseWidth);
+    //Serial.print(',');
+    Serial.println(' ');//Go back to the line
     
-      
-      /*
-      if(timestamp>3000) Omega_wanted = -turningWanted;  //right
-      if(timestamp>5000) Omega_wanted = 0;  //straight
-      
-      
-      if(timestamp>6000) Omega_wanted = turningWanted;  //left
-      if(timestamp>8000) Omega_wanted = 0;  //straight
-      
-      
-      if(timestamp>9000) Omega_wanted = -turningWanted;  //right
-      if(timestamp>11000) Omega_wanted = 0;  //straight
-  
-      if(timestamp>12000) Omega_wanted = turningWanted;  //left
-      if(timestamp>14000) Omega_wanted = 0;  //straight*/
     
       k_wait(sem2,0);     //wait for semaphore
   }
@@ -225,7 +218,7 @@ void SpeedControl(){
       if(duty < 0) duty = 0;
     }
     //stop at the end
-    if(timestamp<15000)speed(duty);
+    //if(timestamp<12000)speed(100);
   
     else speed(0);    
       
