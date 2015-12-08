@@ -19,11 +19,14 @@ void PI_controller(){
   const float Wantedspeed = 2;
   float Actualspeed;
   float Error;
-  float PreviousError;
-  float Intergral;
-  float Output;
-  const float Ki = ;  
-  const float Kp = ;
+  float Intergral = 0;
+  float ControllerOutput;
+  float DutyPrSpeed;
+  float Duty = 20;
+  const float Stiction = 0.38;
+  const float SysGain = 0.49;
+  const float Ki = 0.0094;  
+  const float Kp = 0.0024;
 
   while(1){
     
@@ -37,12 +40,16 @@ void PI_controller(){
     
     if(timestamp>4000){
       Error = Wantedspeed - Actualspeed;
-      Intergral = (Error - PreviousError)/30;
-      PreviousError = Error;
-      Output = (Kp * Error + Ki * Intergral);
-
+      Intergral = Intergral + (Error*0.030); //Delta t = 0.03 s = sample time i.e. 30 ms
+      ControllerOutput = (Kp * Error + Ki * Intergral + Stiction);
+      DutyPrSpeed = 100.0/(((float)batReading/102.4)*SysGain); // Duty cycle pr speed  (% pr m/s)
+      Duty = ControllerOutput * DutyPrSpeed;
+      if(Duty > 100) Duty = 100;
+      if(Duty < 0) Duty = 0;
     }
 
+    if(timestamp < 10000) speed(Duty);
+    else speed(0);
     delay(30);
     }
   }
