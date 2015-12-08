@@ -5,12 +5,12 @@ Protocol decript;
 
 void XposCal(uint8_t Data[10]) //X coordinate
 {
-  uint8_t Tempx =  Data[4] << 2; //Get the coordinate from the data array
+  uint8_t Tempx =  Data[3] << 2; //Get the coordinate from the data array
   uint16_t TempX2 = Tempx;
   TempX2 = TempX2 << 6;
-  TempX2 += Data[3];
+  TempX2 += Data[2];
   TempX2 = TempX2 << 1;
-  TempX2 += (Data[2] >> 7);
+  TempX2 += (Data[1] >> 7);
   if (TempX2 > 16384) //If the sign bit is equal to 1, subtract the sign bit and multiply the rest by minus one
   {
     decript.Xcor = (TempX2 - 16384) * -1;
@@ -23,12 +23,12 @@ void XposCal(uint8_t Data[10]) //X coordinate
 
 void YposCal(uint8_t Data[10]) //Y coordinate
 {
-  uint8_t Tempy =  Data[6] << 3; //Get the coordinate from the data array
+  uint8_t Tempy =  Data[5] << 3; //Get the coordinate from the data array
   uint16_t TempY2 = Tempy;
   TempY2 = TempY2 << 5;
-  TempY2 += Data[5];
+  TempY2 += Data[4];
   TempY2 = TempY2 << 2;
-  TempY2 += (Data[4] >> 6);
+  TempY2 += (Data[3] >> 6);
   if (TempY2 > 16384) //If the sign bit is equal to 1, subtract the sign bit and multiply the rest by minus one
   {
     decript.Ycor = (TempY2 - 16384) * -1;
@@ -41,12 +41,12 @@ void YposCal(uint8_t Data[10]) //Y coordinate
 
 void ZposCal(uint8_t Data[10]) //Z coordinate
 {
-  uint8_t Tempz =  Data[8] << 4; //Get the coordinate from the data array
+  uint8_t Tempz =  Data[7] << 4; //Get the coordinate from the data array
   uint16_t TempZ2 = Tempz;
   TempZ2 = TempZ2 << 4;
-  TempZ2 += Data[7];
+  TempZ2 += Data[6];
   TempZ2 = TempZ2 << 3;
-  TempZ2 += (Data[6] >> 5);
+  TempZ2 += (Data[5] >> 5);
   if (TempZ2 > 16384) //If the sign bit is equal to 1, subtract the sign bit and multiply the rest by minus one
   {
     decript.Zcor = (TempZ2 - 16384) * -1;
@@ -111,12 +111,11 @@ int GetProtocol(int out[5])
   //Start byte
   while(iTemp == -1) //Searching for the next byte
   {
-    if (Serial.available() > 0)
+    if (Serial3.available() > 0)
     {
-      iTemp = Serial.read();
+      iTemp = Serial3.read();
     }
   }
-  
   if(iTemp != 240) //If the start byte is not equal to 240, return error 1
   {
     return 1;
@@ -126,9 +125,9 @@ int GetProtocol(int out[5])
   //Destination
   while(iTemp == -1) //Searching for the next byte
   {
-    if (Serial.available() > 0)
+    if (Serial3.available() > 0)
     {
-      iTemp = Serial.read();
+      iTemp = Serial3.read();
     }
   }
   
@@ -138,16 +137,16 @@ int GetProtocol(int out[5])
   }
   decript.Destination = iTemp;
   iTemp = -1;
-
+  
   //Length
   while(iTemp == -1) //Searching for the next byte
   {
-    if (Serial.available() > 0)
+    if (Serial3.available() > 0)
     {
-      iTemp = Serial.read();
+      iTemp = Serial3.read();
     }
   }
-  
+
   decript.Length = iTemp; //Get the type
   decript.Length = decript.Length & 127; //As the length only is 7 bit long, the last bit is set to zero.
   int datapackage = (decript.Length - 16)/8;
@@ -157,7 +156,6 @@ int GetProtocol(int out[5])
     return 3;
   }
 
-
   //Get rest of the package
   uint8_t Data[datapackage]; //The size of the package, without the 16 bit, that contain the start and end byte
   Data[0] = decript.Destination; //As the start byte is only used to find the start, the first byte in the data array is the destination
@@ -166,9 +164,9 @@ int GetProtocol(int out[5])
   int BytesRead = 2;
   while(BytesRead < datapackage)
   {
-    if(Serial.available() < 0)
+    if(Serial3.available() > 0)
     {
-      iTemp = Serial.read();
+      iTemp = Serial3.read();
       Data[BytesRead] = iTemp;
       BytesRead++;
     }
@@ -178,9 +176,9 @@ int GetProtocol(int out[5])
   //End byte
   while(iTemp == -1) //Searching for the next byte
   {
-    if (Serial.available() > 0)
+    if (Serial3.available() > 0)
     {
-      iTemp = Serial.read();
+      iTemp = Serial3.read();
     }
   }
 
@@ -206,8 +204,7 @@ int GetProtocol(int out[5])
   XposCal(Data);
   YposCal(Data);
   ZposCal(Data);
-
-
+  
   //Output Data
   out[0] = decript.Destination;
   out[1] = decript.Length;
@@ -221,6 +218,7 @@ int GetProtocol(int out[5])
   decript.Xcor = 0;
   decript.Ycor = 0;
   decript.Zcor = 0;
-  
+
+  return 0;
 }
 

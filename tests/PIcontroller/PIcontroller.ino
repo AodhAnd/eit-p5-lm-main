@@ -16,7 +16,7 @@ int batReading;
 
 void PI_controller(){
 
-  const float Wantedspeed = 2.5;
+  const float Wantedspeed = 1.4;
   float Actualspeed;
   float Error;
   float Integral = 0;
