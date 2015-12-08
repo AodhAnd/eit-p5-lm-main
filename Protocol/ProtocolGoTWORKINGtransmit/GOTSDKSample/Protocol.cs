@@ -14,9 +14,9 @@ namespace GOTSDKSample
             int i = 0;
             int j = 0;
 
-            int LengthSource = 7;
+            int LengthDestination = 7;
             int LengthOfCoordinate = 15;
-            int FinalBitCount = 88;
+            int FinalBitCount = 96;
 
             X = NegToPos(X);
             Y = NegToPos(Y);
