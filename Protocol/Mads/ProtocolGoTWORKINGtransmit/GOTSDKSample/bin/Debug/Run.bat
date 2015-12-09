@@ -1,0 +1,1 @@
+start C:\Users\proces\Desktop\GOTSDK\GOTSDKSample\bin\Debug\GOTSDKSample.exe
