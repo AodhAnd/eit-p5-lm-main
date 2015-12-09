@@ -116,6 +116,7 @@ int GetProtocol(int out[5])
       iTemp = Serial3.read();
     }
   }
+  
   if(iTemp != 240) //If the start byte is not equal to 240, return error 1
   {
     return 1;
