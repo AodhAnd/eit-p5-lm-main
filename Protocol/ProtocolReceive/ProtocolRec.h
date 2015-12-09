@@ -1,8 +1,8 @@
 #include <arduino.h>
 
 typedef struct {
-  uint8_t Source;
-  uint8_t Type;
+  uint8_t Destination;
+  uint8_t Length;
   int16_t Xcor;
   int16_t Ycor;
   int16_t Zcor;

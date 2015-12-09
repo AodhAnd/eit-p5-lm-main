@@ -1,8 +1,8 @@
-#include "ProtocolReceive.h"
+#include "ProtocolRec.h"
 
 void setup() {
   Serial.begin(9600);
-
+  Serial3.begin(9600);
 }
 
 void loop() {

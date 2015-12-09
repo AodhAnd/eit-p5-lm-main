@@ -1,16 +1,16 @@
-#include "ProtocolReceive.h"
+#include "ProtocolRec.h"
 #include <arduino.h>
 
 Protocol decript;
 
-void T88XposCal(uint8_t Data[10]) //X coordinate for type 88
+void XposCal(uint8_t Data[10]) //X coordinate
 {
-  uint8_t Tempx =  Data[4] << 2; //Get the coordinate from the data array
+  uint8_t Tempx =  Data[3] << 2; //Get the coordinate from the data array
   uint16_t TempX2 = Tempx;
   TempX2 = TempX2 << 6;
-  TempX2 += Data[3];
+  TempX2 += Data[2];
   TempX2 = TempX2 << 1;
-  TempX2 += (Data[2] >> 7);
+  TempX2 += (Data[1] >> 7);
   if (TempX2 > 16384) //If the sign bit is equal to 1, subtract the sign bit and multiply the rest by minus one
   {
     decript.Xcor = (TempX2 - 16384) * -1;
@@ -21,14 +21,14 @@ void T88XposCal(uint8_t Data[10]) //X coordinate for type 88
   }
 }
 
-void T88YposCal(uint8_t Data[10]) //Y coordinate for type 88
+void YposCal(uint8_t Data[10]) //Y coordinate
 {
-  uint8_t Tempy =  Data[6] << 3; //Get the coordinate from the data array
+  uint8_t Tempy =  Data[5] << 3; //Get the coordinate from the data array
   uint16_t TempY2 = Tempy;
   TempY2 = TempY2 << 5;
-  TempY2 += Data[5];
+  TempY2 += Data[4];
   TempY2 = TempY2 << 2;
-  TempY2 += (Data[4] >> 6);
+  TempY2 += (Data[3] >> 6);
   if (TempY2 > 16384) //If the sign bit is equal to 1, subtract the sign bit and multiply the rest by minus one
   {
     decript.Ycor = (TempY2 - 16384) * -1;
@@ -39,14 +39,14 @@ void T88YposCal(uint8_t Data[10]) //Y coordinate for type 88
   }
 }
 
-void T88ZposCal(uint8_t Data[10]) //Z coordinate for type 88
+void ZposCal(uint8_t Data[10]) //Z coordinate
 {
-  uint8_t Tempz =  Data[8] << 4; //Get the coordinate from the data array
+  uint8_t Tempz =  Data[7] << 4; //Get the coordinate from the data array
   uint16_t TempZ2 = Tempz;
   TempZ2 = TempZ2 << 4;
-  TempZ2 += Data[7];
+  TempZ2 += Data[6];
   TempZ2 = TempZ2 << 3;
-  TempZ2 += (Data[6] >> 5);
+  TempZ2 += (Data[5] >> 5);
   if (TempZ2 > 16384) //If the sign bit is equal to 1, subtract the sign bit and multiply the rest by minus one
   {
     decript.Zcor = (TempZ2 - 16384) * -1;
@@ -57,7 +57,7 @@ void T88ZposCal(uint8_t Data[10]) //Z coordinate for type 88
   }
 }
 
-int T88ChecksumCheck(uint8_t Data[10]) //Checksum calculation for type 88
+int ChecksumCheck(uint8_t Data[10]) //Checksum calculation
 {
   uint8_t Tempcf = Data[2] << 4; //Put the first 20 bit into TempC1
   uint32_t TempC1 = Tempcf;
@@ -108,98 +108,88 @@ int GetProtocol(int out[5])
 {
   int iTemp = -1;
 
-  //Header
+  //Start byte
   while(iTemp == -1) //Searching for the next byte
   {
-    if (Serial.available() > 0)
+    if (Serial3.available() > 0)
     {
-      iTemp = Serial.read();
+      iTemp = Serial3.read();
     }
   }
-  
-  if(iTemp != 240) //If the Header is not equal to 129, return error 1
+  if(iTemp != 240) //If the start byte is not equal to 240, return error 1
   {
     return 1;
   }
   iTemp = -1;
 
-  //Source
+  //Destination
   while(iTemp == -1) //Searching for the next byte
   {
-    if (Serial.available() > 0)
+    if (Serial3.available() > 0)
     {
-      iTemp = Serial.read();
+      iTemp = Serial3.read();
     }
   }
   
-  if(iTemp != 128) //If the Source is not equal to 128, the data is not send from the compurter, return error 2
+  if(iTemp != 128) //If the Destination is not equal to 128, the data is not send from the compurter, return error 2
   {
     return 2;
   }
-  decript.Source = iTemp;
+  decript.Destination = iTemp;
   iTemp = -1;
-
-  //Type
+  
+  //Length
   while(iTemp == -1) //Searching for the next byte
   {
-    if (Serial.available() > 0)
+    if (Serial3.available() > 0)
     {
-      iTemp = Serial.read();
+      iTemp = Serial3.read();
     }
   }
-  
-  decript.Type = iTemp; //Get the type
-  decript.Type = decript.Type & 127; //As the type only is 7 bit long, the last bit is set to zero.
 
-  int lengthofarray = 0;
-  int trailer = 0;
+  decript.Length = iTemp; //Get the type
+  decript.Length = decript.Length & 127; //As the length only is 7 bit long, the last bit is set to zero.
+  int datapackage = (decript.Length - 16)/8;
 
-  if(decript.Type = 96) //If the type is 88, the length of the package and the trailer value is set.
-  {
-    lengthofarray = 10;
-    trailer = 15;
-  }
-  else //If the type is not the type 88, the package don't have the right type, return error 3
+  if(decript.Length != 96) //If the length is not 96, the package do not have the right length, return error 3.
   {
     return 3;
   }
 
   //Get rest of the package
-  uint8_t Data[lengthofarray]; //The array to keep the data in
-  Data[0] = decript.Source; //As the Header is only used to find the start, the first byte in the data array is the source
+  uint8_t Data[datapackage]; //The size of the package, without the 16 bit, that contain the start and end byte
+  Data[0] = decript.Destination; //As the start byte is only used to find the start, the first byte in the data array is the destination
   Data[1] = iTemp; //The type and the first bit from the x coordinate is the second byte
 
   int BytesRead = 2;
-  while(BytesRead < lengthofarray)
+  while(BytesRead < datapackage)
   {
-    if(Serial.available() < 0)
+    if(Serial3.available() > 0)
     {
-      iTemp = Serial.read();
+      iTemp = Serial3.read();
       Data[BytesRead] = iTemp;
       BytesRead++;
     }
   }
   iTemp = -1;
 
-  //Trailer
+  //End byte
   while(iTemp == -1) //Searching for the next byte
   {
-    if (Serial.available() > 0)
+    if (Serial3.available() > 0)
     {
-      iTemp = Serial.read();
+      iTemp = Serial3.read();
     }
   }
 
-  if(iTemp != trailer) //If the byte is not equal to the trailer value from the type settings, return error 5;
+  if(iTemp != 15) //If the end byte is not equal to 15, return error 5;
   {
     return 5;
   }
 
   //Checksum
-  if(decript.Type = 96) //Set the calculation for the checksum to the specific type
-  {
-    iTemp = T88ChecksumCheck(Data);
-  }
+  iTemp = ChecksumCheck(Data);
+
 
   if(iTemp != 0) //If the error return from the checksum calculation, return error from the calculation
   {
@@ -211,32 +201,24 @@ int GetProtocol(int out[5])
 
   
   //Get Data
-  if(decript.Type = 96) //Get the data, from the know setup of type 88
-  {
-    T88XposCal(Data);
-    T88YposCal(Data);
-    T88ZposCal(Data);
-  }
-
+  XposCal(Data);
+  YposCal(Data);
+  ZposCal(Data);
+  
   //Output Data
-  if(decript.Type = 96) //Set the data, from the know setup of type 88
-  {
-    out[0] = decript.Source;
-    out[1] = decript.Type;
-    out[2] = decript.Xcor;
-    out[3] = decript.Ycor;
-    out[4] = decript.Zcor;
-  }
+  out[0] = decript.Destination;
+  out[1] = decript.Length;
+  out[2] = decript.Xcor;
+  out[3] = decript.Ycor;
+  out[4] = decript.Zcor;
 
   //Cleanup
-  if(decript.Type = 96) //Reset the whole decript struct
-  {
-    decript.Source = 0;
-    decript.Type = 0;
-    decript.Xcor = 0;
-    decript.Ycor = 0;
-    decript.Zcor = 0;
-  } 
-  
+  decript.Destination = 0;
+  decript.Length = 0;
+  decript.Xcor = 0;
+  decript.Ycor = 0;
+  decript.Zcor = 0;
+
+  return 0;
 }
 
