@@ -22,25 +22,25 @@ wd = w/(2*fm);
 s = tf('s');
 z = tf('z');
 H = 8.500881141*10^7/(s^4+192.0418945*s^3*cos((1/8)*pi)+18440.04462*s^2+192.0418945*cos((3/8)*pi)*s^3+36880.08924*cos((3/8)*pi)*s^2*cos((1/8)*pi)+1.770630552*10^6*cos((3/8)*pi)*s+1.770630552*10^6*cos((1/8)*pi)*s+8.500881142*10^7)
-%bodeplot(H)
+bodeplot(H)
 %figure;
 %% LOWPASS FILTER
 
- Hs = (8.5009000*10^7*z^4+3.40036000*10^8*z^3+5.10054000*10^8*z^2+3.40036000*10^8*z+8.5009000*10^7)/(6.409741674*10^8*z^4+2.89405884*10^8*z^3+3.528825092*10^8*z^2+6.2981316*10^7*z+1.389052340*10^7)
- [num,den] = tfdata(Hs);
- num = num{1}/(6.41e08);
- den = den{1}/(6.41e08);
-H = tf(num, den, 0.025, 'variable', 'z^-1')
-den
-H_freq = freqz(num, den, wd);
-magdb = 20*log10(abs(H_freq));
-
-%bodeplot(Hs)
-
-semilogx(f, magdb)
-
-grid;
-figure;
+%  Hs = (8.5009000*10^7*z^4+3.40036000*10^8*z^3+5.10054000*10^8*z^2+3.40036000*10^8*z+8.5009000*10^7)/(6.409741674*10^8*z^4+2.89405884*10^8*z^3+3.528825092*10^8*z^2+6.2981316*10^7*z+1.389052340*10^7)
+%  [num,den] = tfdata(Hs);
+%  num = num{1}/(6.41e08);
+%  den = den{1}/(6.41e08);
+% H = tf(num, den, 0.025, 'variable', 'z^-1')
+% den
+% H_freq = freqz(num, den, wd);
+% magdb = 20*log10(abs(H_freq));
+% 
+% %bodeplot(Hs)
+% 
+% semilogx(f, magdb)
+% 
+% grid;
+% figure;
 
 %% Test filter algorithm
 % BUF0 = 0;
@@ -81,29 +81,31 @@ figure;
 %scatter(Data1(:,2),output)
 
 %% FFT without filter
-scatter(Data1(:,2),Data1(:,1));
-figure;
-
-input = Data1(:,2);
-
-%input_fft = mag2db(abs(fft(input)));
-input_fft = mag2db(2/length(input)*abs(fft(input)));
-freq = linspace(0,33.3,length(input_fft));
-%plot(freq,input_fft);
-figure;
-%spectrogram(input,hamming(20),19,100,40,'yaxis') %fft for hvert sekund (40)
-
-figure;
+% scatter(Data1(:,2),Data1(:,1));
+% figure;
+% 
+% input = Data1(:,2);
+% 
+% %input_fft = mag2db(abs(fft(input)));
+% input_fft = mag2db(2/length(input)*abs(fft(input)));
+% freq = linspace(0,33.3,length(input_fft));
+% %plot(freq,input_fft);
+% figure;
+% %spectrogram(input,hamming(20),19,100,40,'yaxis') %fft for hvert sekund (40)
+% 
+% figure;
 
 %% Make it B-E-Autiful
-plot(Data1(:,1),Data1(:,2))
+%plot(Data1(:,1),Data1(:,2)) //Original data
+bodemag(H)
+
 %xlim([-.2 16.666665])
 %legend('Measured data', 'Location', 'northwest' )
 
 %Title and axis labels added
-title('Stationary Measurements', 'fontsize', 15)
-xlabel('Time [s]', 'fontsize', 15)
-ylabel('Angle [\circ]','fontsize', 15)
+title('Frequency Response of Continuous-time Filter', 'fontsize', 13)
+xlabel('Frequency [Hz]', 'fontsize', 12)
+ylabel('Magnitude [dB]','fontsize', 12)
 
 grid on
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
