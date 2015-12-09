@@ -2,7 +2,7 @@ close all;
 clear all;
 clc;
 
-Data1 = csvread('newtestamaliestuff2.csv');
+Data1 = csvread('newtestamaliestuff5.csv');
 Data1(:,2) = Data1(:,2);
 
 Data1(:,1) = Data1(:,1)/1000;
@@ -67,8 +67,8 @@ b4 = 0.1882;
 
 
 input = Data1(:,2);
-output = zeros(843,1);
-for i=1:843
+output = zeros(572,1);
+for i=1:572
    BUF0 = input(i) - (a1*BUF1 + a2*BUF2 + a3*BUF3 + a4*BUF4);
    output(i) = BUF0*b0 + b1*BUF1 + b2*BUF2 + b3*BUF3 + b4*BUF4;
    BUF4 = BUF3;
