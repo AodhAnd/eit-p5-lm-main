@@ -2,7 +2,7 @@ close all;
 clear all;
 clc;
 
-Data1 = csvread('straight4.csv');
+Data1 = csvread('StillAngle.csv');
 Data1(:,2) = Data1(:,2)/1000;
 
 Data1(:,1) = Data1(:,1)-147.8;
