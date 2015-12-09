@@ -25,8 +25,8 @@ void PI_controller(){
   float Duty = 0;
   const float Stiction = 0.38;
   const float SysGain = 0.486;
-  const float Ki = 9.7517;  
-  const float Kp = 2.0576;
+  const float Ki = 4.8759;  
+  const float Kp = 1.0288;
 
   while(1){
     batReading = analogRead(8); //reading battery voltage
@@ -37,7 +37,8 @@ void PI_controller(){
 
     Actualspeed = (speed0 + speed1)/2; // average speed of the vehicle
     
-    if(timestamp>4000){
+    if(timestamp > 5000)
+    {
       Error = Wantedspeed - Actualspeed;
       Integral = Integral + (Error*0.030); //Delta t = 0.03 s = sample time i.e. 30 ms
       ControllerOutput = (Kp * Error + Ki * Integral + Stiction);
@@ -57,8 +58,11 @@ void PI_controller(){
     Serial.print(timestamp);
     Serial.print(',');
     Serial.println(Actualspeed);
-    if(timestamp < 10000) speed(Duty);
-    else speed(0);
+
+    if(timestamp > 2000 && timestamp < 5000) speed(20);
+    if(timestamp > 5000) speed(Duty);
+    if(timestamp > 10000) speed(0);
+    
     delay(30);
     }
   }
@@ -82,7 +86,7 @@ void setup() {
 
   initHallTimers();
 
-  delay(2000);
+  delay(1000);
   pTaskInfo=k_crt_task(tSpeed,10,stack,300);
   task2=k_crt_task(PI_controller,11,stack2,300);
 
