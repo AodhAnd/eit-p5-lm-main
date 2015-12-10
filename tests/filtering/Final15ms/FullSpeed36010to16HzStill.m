@@ -2,7 +2,7 @@ close all;
 clear all;
 clc;
 
-Data1 = csvread('newtestamaliestuff5.csv');
+Data1 = csvread('noMove15msContinuous.csv');
 Data1(:,2) = Data1(:,2);
 
 Data1(:,1) = Data1(:,1)/1000;
@@ -86,11 +86,11 @@ H = 1.5340*10^9/(s^4+517.15*s^3+1.337235496*10^5*s^2+2.025521405*10^7*s+1.534053
 % scatter(Data1(:,2),Data1(:,1));
 % figure;
 % 
- input = Data1(:,2);
+% input = Data1(:,2);
 %  
 %  %input_fft = mag2db(abs(fft(input)));
-  input_fft = mag2db(2/length(input)*abs(fft(input)));
-  freq = linspace(0,33.3,length(input_fft));
+%  input_fft = mag2db(2/length(input)*abs(fft(input)));
+%  freq = linspace(0,33.3,length(input_fft));
 % plot(freq,input_fft);
 %  figure;
 % spectrogram(input,hamming(20),19,100,40,'yaxis') %fft for hvert sekund (40)
@@ -98,21 +98,21 @@ H = 1.5340*10^9/(s^4+517.15*s^3+1.337235496*10^5*s^2+2.025521405*10^7*s+1.534053
 %  figure;
 
 %% Make it B-E-Autiful
-%plot(Data1(:,1),Data1(:,2)) %Original data
+plot(Data1(:,1),Data1(:,2)) %Original data
 %bodemag(H)
 %semilogx(f, magdb)
-plot(freq,input_fft)
+%plot(freq,input_fft)
 %xlim([-.2 16.66])
 %legend('Measured data', 'Location', 'northwest' )
 %semilogx(f, magdb)
 
-ylim([-50 1])
+%ylim([-50 3])
 
 %Title and axis labels added
 
-title('Frequency Response of Filter', 'fontsize', 13)
-xlabel('Frequency [Hz]', 'fontsize', 12)
-ylabel('Magnitude [dB]','fontsize', 12)
+title('Stationary Measurements', 'fontsize', 13)
+xlabel('Time [s]', 'fontsize', 12)
+ylabel('Angle [\circ]','fontsize', 12)
 
 grid on;
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
