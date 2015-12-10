@@ -3,7 +3,7 @@ clear all;
 clc;
 
 Data1 = csvread('newtestamaliestuff5.csv');
-Data1(:,2) = Data1(:,2)+36;
+Data1(:,2) = Data1(:,2);
 
 Data1(:,1) = Data1(:,1)/1000;
 
