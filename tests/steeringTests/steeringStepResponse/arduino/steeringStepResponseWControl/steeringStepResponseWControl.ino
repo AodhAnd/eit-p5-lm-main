@@ -102,7 +102,7 @@ void SteeringControl(){
    
    //int turningWanted = 0;              //we don't use it anymore(used with the omega of steering)
    
-   k_set_sem_timer(sem2,50); // krnl will signal sem every 50th tick
+   k_set_sem_timer(sem2,13); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
   getHeading();                          //get the values from magnetometer
@@ -177,10 +177,10 @@ void SteeringControl(){
     
     
     /* do a square of 3 on3 mters ish */
-    if(millis()>=5000) MAG_Heading_Ref = -90;
+   /* if(millis()>=5000) MAG_Heading_Ref = -90;
     if(millis()>=8000) MAG_Heading_Ref = -180;
     if(millis()>=11000) MAG_Heading_Ref = 90;
-    if(millis()>=14000) MAG_Heading_Ref = 0;
+    if(millis()>=14000) MAG_Heading_Ref = 0;*/
 
     
     /* test for the filtering */
@@ -196,14 +196,14 @@ void SteeringControl(){
     Serial.print(',');
     Serial.print(MAG_Heading_New);
     Serial.print(',');
-    Serial.print(Theta_error);
+    /*Serial.print(Theta_error);
     Serial.print(',');
     Serial.print(servo_distance,4);
     Serial.print(',');
     Serial.print(Theta_servo_wanted);
     Serial.print(',');
     Serial.print(servoPulseWidth);
-    Serial.print(",");
+    Serial.print(",");*/
     Serial.println(" ");
     
       

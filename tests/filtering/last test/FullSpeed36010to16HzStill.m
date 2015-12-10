@@ -3,13 +3,13 @@ clear all;
 clc;
 
 Data1 = csvread('newtestamaliestuff5.csv');
-Data1(:,2) = Data1(:,2);
+Data1(:,2) = Data1(:,2)+36;
 
 Data1(:,1) = Data1(:,1)/1000;
 
 plot(Data1(:,1),Data1(:,2))
 
-figure;
+%figure;
 
 format long
 
@@ -21,9 +21,9 @@ f = w/(2*pi);
 wd = w/(2*fm);
 s = tf('s');
 z = tf('z');
-H = 1.5340*10^9/(s^4+517.15*s^3+1.337235496*10^5*s^2+2.025521405*10^7*s+1.534053889*10^9)
-bodeplot(H)
-figure;
+H = 1.5340*10^9/(s^4+517.15*s^3+1.337235496*10^5*s^2+2.025521405*10^7*s+1.534053889*10^9);
+%bodeplot(H)
+%figure;
 %% LOWPASS FILTER
 
   %Hs = (8.5009000*10^7*z^4+3.40036000*10^8*z^3+5.10054000*10^8*z^2+3.40036000*10^8*z+8.5009000*10^7)/(6.409741674*10^8*z^4+2.89405884*10^8*z^3+3.528825092*10^8*z^2+6.2981316*10^7*z+1.389052340*10^7)
@@ -93,9 +93,9 @@ figure;
  freq = linspace(0,33.3,length(input_fft));
 plot(freq,input_fft);
  figure;
-% %spectrogram(input,hamming(20),19,100,40,'yaxis') %fft for hvert sekund (40)
+spectrogram(input,hamming(20),19,100,40,'yaxis') %fft for hvert sekund (40)
 % 
-% figure;
+ figure;
 
 %% Make it B-E-Autiful
 %plot(Data1(:,1),Data1(:,2)) %Original data

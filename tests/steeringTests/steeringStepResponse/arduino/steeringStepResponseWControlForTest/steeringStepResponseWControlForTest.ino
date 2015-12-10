@@ -270,10 +270,10 @@ void setup() {
   Serial.println("REBOOT");
 
   delay(2000);
-  task1=k_crt_task(tSpeed,10,stack,300);              //hall sensors
-  task2=k_crt_task(SpeedControl,12,stack2,300);   // Velocity controller
-  task3=k_crt_task(SteeringControl,11,stack3,1000); // Steering controller
-
+  task1=k_crt_task(tSpeed,10,stack,300);               //hall sensors
+  task2=k_crt_task(SpeedControl,12,stack2,300);        // Velocity controller
+  task3=k_crt_task(SteeringControl,11,stack3,1000);    // Steering controller
+ 
   k_start(1); // krnl runs with 1 msec heartbeat
   /* NOTE: legal time values:
      1-10 : 1-10 milliseconds
