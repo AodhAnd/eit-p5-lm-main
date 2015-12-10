@@ -106,6 +106,7 @@ void routeFollow() {
     LastError = currentError;
     currentError = 0 // get current error fron GoT system
     LeadOutput = (zA1 * currentError + zA2 * LastError - zB2 * LeadOutput) / zB1;
+    float ToAngle = LeadOutput * LeadGain; //Send to Angle controller
     
   }
 }

@@ -1,9 +1,9 @@
 #include "ProtocolRec.h"
+#include "Route.h"
 
 void setup() {
   Serial.begin(9600);
   Serial3.begin(9600);
-  //Serial.println(DistanceCal(0, 0, 5000, 5000, 3000, 1500));
 }
 
 void loop() {
