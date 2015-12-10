@@ -2,6 +2,8 @@
 #include "Route.h"
 #include <Math.h>
 
+float Dist = 0;
+
 void setup() {
   Serial.begin(9600);
   Serial3.begin(9600);
@@ -23,7 +25,7 @@ void loop() {
     int eY = 0;
     GetStart(&sX, &sY);
     GetEnd(&eX, &eY);
-    int Dist = DistanceCal(sX, sY, eX, eY, Output[2], Output[3]);
+    Dist = DistanceCal(sX, sY, eX, eY, Output[2], Output[3]);
   }  
 }
 
