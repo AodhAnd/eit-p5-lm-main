@@ -40,14 +40,14 @@ void PI_controller(){
     if(timestamp > 5000)
     {
       Error = Wantedspeed - Actualspeed;
-      Integral = Integral + (Error*0.030); //Delta t = 0.03 s = sample time i.e. 30 ms
-      ControllerOutput = (Kp * Error + Ki * Integral + Stiction);
-      DutyPrSpeed = 100.0/(((float)batReading/102.4)*SysGain); // Duty cycle pr speed  (% pr m/s)
-      Duty = ControllerOutput * DutyPrSpeed;
-      if(Duty > 100) Duty = 100;
-      if(Duty < 0) Duty = 0;
-    }
-//    Serial.print("Duty: ");
+      Integral = Integral + (Error*0.030); //Delta t = 0.03 s = sample time i.e. 30 ms                   //-------------IN THE CODE--------------------------------------------------------------
+      ControllerOutput = ((Kp * Error) + (Ki * Integral) + Stiction);// (divided by 102.4 = volts)       // dutyNeeded = controllOut * 100 /( batVolt * SysGain )
+      DutyPrSpeed = 100.0/((float)batReading/102.4); // Duty cycle pr speed (% pr m/s)                   // 
+      Duty = ControllerOutput * DutyPrSpeed; // ------------------------------------------------------------------LINK TO MODEL------------------------------------------------------------------
+      if(Duty > 100) Duty = 100;             // controllerOut = VoltNeeded --> plant --> m/s
+      if(Duty < 0) Duty = 0;                 // batVolt/100 = [volt/duty] => ( batVolt/100 ) *dutyNeeded = VoltNeeded <=> dutyNeeded =   VoltNeeded        / ( batVolt/100 )
+    }                                        //                                                                       <=> dutyNeeded =   controllOut       / ( batVolt/100 )
+//    Serial.print("Duty: ");                //                                                                       <=> dutyNeeded =   (controllOut*100) /  batVolt
 //    Serial.print(Duty);
 //    Serial.print(" Con: ");
 //    Serial.print(ControllerOutput);
