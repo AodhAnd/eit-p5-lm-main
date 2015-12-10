@@ -102,7 +102,7 @@ void SteeringControl(){
    
    //int turningWanted = 0;              //we don't use it anymore(used with the omega of steering)
    
-   k_set_sem_timer(sem2,13); // krnl will signal sem every 50th tick
+   k_set_sem_timer(sem2,15); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
   getHeading();                          //get the values from magnetometer
