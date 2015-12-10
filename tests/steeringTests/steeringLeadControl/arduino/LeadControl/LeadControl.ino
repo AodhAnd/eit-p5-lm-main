@@ -62,13 +62,22 @@ void getHeading()
 // (servo pulse-width)
 //#define SERVO_PW 1650
 
-struct k_t *task1, *task2, *task3;
+struct k_t *task1, *task2, *task3, *task4;
 
+struct k_t *sem3; //semaphore for speed controller
 struct k_t *sem2; //semaphore for Steering controller
+
+struct k_msg_t *pMsgGoTLead,*pMsgLeadAngle; // create two message queues
+
+char mar[10*4];
+char mar2[10*4];
 
 char stack[300];  // Stack of Hall sensor
 char stack2[300]; // Stack of Speed Control
 char stack3[1000]; // Stack of Steering control
+char stack4[300]; // Stack of Lead Compensator
+char stack5[300]; // Stack of GoT stuff
+
 float speed0;     // Speed of belt 1
 float speed1;     // Speed of belt 2
 long int timestamp;
@@ -78,12 +87,7 @@ int batReading;   // Battery voltage reading
 
 float values_from_magnetometer[3];
 
-float angles[8];
-
-
-void routeFollow() {
-
-
+void LeadCompensator() {
   /* --------------------------  Lead compensator -------------------------- */
 
   // Laplace domain parameters:
@@ -93,27 +97,27 @@ void routeFollow() {
 
   // Z domain parameters:
   const float T = 0.1;              //sample period
-  const float zA1 = 2 + a * T;                          z(2 + aT) + (1 - aT)
-  const float zA2 = 1 - a * T;        G_c, eq[z] = G * ------------------------
-  const float zB1 = 2 + b * T;                          z(2 + bT) + (1 - bT)
+  const float zA1 = 2 + a * T;      //                    z(2 + aT) + (1 - aT)
+  const float zA2 = 1 - a * T;      //  G_c, eq[z] = G * ------------------------
+  const float zB1 = 2 + b * T;      //                    z(2 + bT) + (1 - bT)
   const float zB2 = 1 - b * T;
 
   // Actual compensator:
   static float LastError;
   float currentError;
   static float LeadOutput;
+  float LeadTimesGain;
   while (1) {
     LastError = currentError;
-    currentError = 0 // get current error fron GoT system
+    //currentError +=10; // get current error fron GoT system
+    //if (currentError>=180) currentError = 0;
     LeadOutput = (zA1 * currentError + zA2 * LastError - zB2 * LeadOutput) / zB1;
-    
+    LeadTimesGain = LeadOutput*LeadGain;
+    k_send(pMsgLeadAngle,&LeadTimesGain);
+    delay(100);
   }
 }
 
-
-
-
-}
 
 void SteeringControl() {
 
@@ -134,7 +138,7 @@ void SteeringControl() {
 
   int turningWanted = 0;
 
-  k_set_sem_timer(sem2, 30); // krnl will signal sem every 50th tick
+  k_set_sem_timer(sem2, 30); // krnl will signal sem every 30th tick
 
   /* Get initial heading */
   getHeading();
@@ -145,14 +149,15 @@ void SteeringControl() {
   MAG_Heading_Old = atan2(-calibrated_values[1], calibrated_values[0]) * (180.0 / 3.14);
 
   MAG_Heading_Ref = 0; //MAG_Heading_Old;        //initialize reference of the angle(first one)
-  /*
-  int i;
-  for (i=0;i<8;i++){angles[i]= MAG_Heading_Old;} //start with current direction in every slot;
-  int sampleNumber = 0;*/
 
   setServo(servoPulseWidth); // Initialized to the start value (SERVO_MIDDLE_PW)
-
+  float angleBuf;
   while (1) {
+    /* Check mailbox, to see if we have a new target heading */
+    if (0 <= k_receive(pMsgLeadAngle,&angleBuf,10,NULL) ) {
+      MAG_Heading_Ref = angleBuf; //If we do, use it
+    }
+
 
     /* Get current heading */
     getHeading();
@@ -162,21 +167,7 @@ void SteeringControl() {
     transformation(values_from_magnetometer);
 
     MAG_Heading_New = atan2(-calibrated_values[1], calibrated_values[0]) * (180.0 / 3.14);
-    /*angles[sampleNumber] = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
-    for(i=0; i<8; i++){MAG_Heading_New += angles[i];}
-    MAG_Heading_New = MAG_Heading_New /8; // Rolling average
-    sampleNumber++;*/
-
-    //if (sampleNumber > 8){sampleNumber = 0;}
-
-    /* Calculate current angular velocity  */
-    /*Omega_current = (MAG_Heading_New - MAG_Heading_Old);    //not a speed yet, difference of angle headings
-    if (Omega_current < 180){Omega_current +=360;}
-    if (Omega_current > 180){Omega_current -=360;}
-    Omega_current = Omega_current * 20;  // (Old heading - New heading)/50ms = degrees per second
-    MAG_Heading_Old = MAG_Heading_New;
-
-    Omega_error = Omega_wanted - Omega_current;*/
+    
 
 
     Theta_error = MAG_Heading_New - MAG_Heading_Ref;
@@ -190,7 +181,7 @@ void SteeringControl() {
 
 
     /* P-controller */
-    //P_out = Omega_error * P_gain;
+    
     P_out = Theta_error * P_gain;
 
     if (P_out < 0) {
@@ -204,21 +195,12 @@ void SteeringControl() {
     }
 
 
-    /* Actual code To Do*/
-    //if(millis()>=4000) MAG_Heading_Ref = 45;
-
-    /*
-      if(millis()>=4000) setServo(3000);
-      if(millis()>=6000) setServo(SERVO_MIDDLE_PW);
-      if(millis()>=8000) setServo(0);
-      if(millis()>=10000) setServo(SERVO_MIDDLE_PW);
-    */
-
-
     /* Print things out */
     Serial.print(millis());
     Serial.print(',');
     Serial.print(MAG_Heading_New);
+    Serial.print(',');
+    Serial.print(MAG_Heading_Ref);
     Serial.print(',');
     //Serial.print(Theta_error);
     //Serial.print(',');
@@ -242,7 +224,7 @@ void SpeedControl() {
   float Error;
   const float PGain = 1.0;
   float feedFwd = Wantedspeed;
-
+  k_set_sem_timer(sem3, 50); // krnl will signal sem every 50th tick
   while (1) {
     batReading = analogRead(8); //reading battery voltage
     speed0 = getSpeed(0);       //reading speed of first belt
@@ -262,22 +244,9 @@ void SpeedControl() {
       if (duty > 100) duty = 100;
       if (duty < 0) duty = 0;
     }
-    //stop at the end
-    //if(timestamp<12000)speed(100);
-
     else speed(0);
 
-    //Serial.print(Actualspeed),
-    //Serial.print(',');
-    /*Serial.print(batReading);
-    Serial.print(',');
-    Serial.print(millis());
-    Serial.print(',');*/
-
-
-    //Serial.println(' ');
-
-    delay(50);
+     k_wait(sem3, 0);    //wait for semaphore;
 
   }
 }
@@ -285,7 +254,7 @@ void SpeedControl() {
 
 
 void setup() {
-  k_init(3, 2, 0);
+  k_init(4, 3, 2);
 
   pinMode(5, OUTPUT);
   initServo();
@@ -307,7 +276,7 @@ void setup() {
   // Init Hall sensors
   pinMode(35, INPUT);
   initHallTimers();
-
+  sem3 = k_crt_sem(1, 2);
   sem2 = k_crt_sem(1, 2);
 
 
@@ -318,6 +287,11 @@ void setup() {
   task1 = k_crt_task(tSpeed, 10, stack, 300);         //hall sensors
   task2 = k_crt_task(SpeedControl, 12, stack2, 300); // Velocity controller
   task3 = k_crt_task(SteeringControl, 11, stack3, 1000); // Steering controller
+  task4 = k_crt_task(LeadCompensator, 13, stack4, 300); // Lead compensator
+
+  pMsgGoTLead = k_crt_send_Q(10,4,mar);     //mail box, GoT sends distance, Lead Compensator recieves it.
+  pMsgLeadAngle = k_crt_send_Q(10,4,mar2);  //mail box, Lead Compensator sends angle, Angle controller recieves it.
+
 
   k_start(1); // krnl runs with 1 msec heartbeat
   /* NOTE: legal time values:

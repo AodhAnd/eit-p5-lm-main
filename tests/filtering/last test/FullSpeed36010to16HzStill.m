@@ -2,12 +2,12 @@ close all;
 clear all;
 clc;
 
-Data1 = csvread('newtest15ms.csv');
+Data1 = csvread('newtestamaliestuff5.csv');
 Data1(:,2) = Data1(:,2);
 
 Data1(:,1) = Data1(:,1)/1000;
 
-%plot(Data1(:,1),Data1(:,2))
+plot(Data1(:,1),Data1(:,2))
 
 figure;
 
@@ -67,8 +67,8 @@ b4 = 0.1882;
 
 
 input = Data1(:,2);
-output = zeros(513,1);
-for i=1:513
+output = zeros(572,1);
+for i=1:572
    BUF0 = input(i) - (a1*BUF1 + a2*BUF2 + a3*BUF3 + a4*BUF4);
    output(i) = BUF0*b0 + b1*BUF1 + b2*BUF2 + b3*BUF3 + b4*BUF4;
    BUF4 = BUF3;
@@ -86,13 +86,13 @@ figure;
 % scatter(Data1(:,2),Data1(:,1));
 % figure;
 % 
- %input = Data1(:,2);
+ input = Data1(:,2);
  
  %input_fft = mag2db(abs(fft(input)));
- %input_fft = mag2db(2/length(input)*abs(fft(input)));
- %freq = linspace(0,33.3,length(input_fft));
-%plot(freq,input_fft);
-% figure;
+ input_fft = mag2db(2/length(input)*abs(fft(input)));
+ freq = linspace(0,33.3,length(input_fft));
+plot(freq,input_fft);
+ figure;
 % %spectrogram(input,hamming(20),19,100,40,'yaxis') %fft for hvert sekund (40)
 % 
 % figure;
@@ -118,13 +118,13 @@ grid on;
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
 
 %% FFT with filter
-% inputfilter = output;
+ inputfilter = output;
 % 
 % %input_fft = mag2db(abs(fft(input)));
-% input_fft = mag2db(2/length(inputfilter)*abs(fft(inputfilter)));
-% freq = linspace(0,40,length(input_fft));
-% plot(freq,input_fft);
-% figure;
+ input_fft = mag2db(2/length(inputfilter)*abs(fft(inputfilter)));
+ freq = linspace(0,40,length(input_fft));
+ plot(freq,input_fft);
+ figure;
 % spectrogram(output,hamming(20),19,100,40,'yaxis') %fft for hvert sekund (40)
 % 
 % %figure;
