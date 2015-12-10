@@ -40,9 +40,9 @@ void loop() {
     GetEnd(&eX, &eY);
     Dist = DistanceCal(sX, sY, eX, eY, Output[2], Output[3]);
     Serial.print(" X ");
-    Serial.print(eX);
+    Serial.print(Output[2]);
     Serial.print(" Y ");
-    Serial.print(eY);
+    Serial.print(Output[3]);
     Serial.print(" To goal ");
     Serial.println(ToEndPoint(Output[2], Output[3], eX, eY));
     if (ToEndPoint(Output[2], Output[3], eX, eY) < 250)
