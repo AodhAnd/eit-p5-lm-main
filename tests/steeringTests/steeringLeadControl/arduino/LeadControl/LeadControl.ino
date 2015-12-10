@@ -168,7 +168,6 @@ void SteeringControl() {
 
     MAG_Heading_New = atan2(-calibrated_values[1], calibrated_values[0]) * (180.0 / 3.14);
     
-    Omega_error = Omega_wanted - Omega_current;*/
 
 
     Theta_error = MAG_Heading_New - MAG_Heading_Ref;

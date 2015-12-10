@@ -99,7 +99,7 @@ void SteeringControl(){
    
    int turningWanted = 0;
    
-   k_set_sem_timer(sem2,30); // krnl will signal sem every 50th tick
+   k_set_sem_timer(sem2,15); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
   getHeading();
@@ -139,36 +139,36 @@ void SteeringControl(){
     //if(millis()>=4000) MAG_Heading_Ref = 45;
 
   /* Filter */
-  float a1 = 0.4515;
-  float a2 = 0.5505;
-  float a3 = 0.09825;
-  float a4 = 0.02167;
-
-  float b0 = 0.1326;
-  float b1 = 0.5305;
-  float b2 = 0.7957;
-  float b3 = 0.5305;
-  float b4 = 0.1326;
-
-  static float BUF0, BUF1, BUF2, BUF3, BUF4 = 0;
-  static float MAG_OUTPUT = 0;
-  
-    BUF0 = MAG_Heading_New - (a1*BUF1 + a2*BUF2 + a3*BUF3 + a4*BUF4);
-    MAG_Heading_New = BUF0*b0 + b1*BUF1 + b2*BUF2 + b3*BUF3 + b4*BUF4;
-
-    BUF4 = BUF3;
-    BUF3 = BUF2;
-    BUF2 = BUF1;
-    BUF1 = BUF0;
+//  float a1 = 0.4515;
+//  float a2 = 0.5505;
+//  float a3 = 0.09825;
+//  float a4 = 0.02167;
+//
+//  float b0 = 0.1326;
+//  float b1 = 0.5305;
+//  float b2 = 0.7957;
+//  float b3 = 0.5305;
+//  float b4 = 0.1326;
+//
+//  static float BUF0, BUF1, BUF2, BUF3, BUF4 = 0;
+//  static float MAG_OUTPUT = 0;
+//  
+//    BUF0 = MAG_Heading_New - (a1*BUF1 + a2*BUF2 + a3*BUF3 + a4*BUF4);
+//    MAG_Heading_New = BUF0*b0 + b1*BUF1 + b2*BUF2 + b3*BUF3 + b4*BUF4;
+//
+//    BUF4 = BUF3;
+//    BUF3 = BUF2;
+//    BUF2 = BUF1;
+//    BUF1 = BUF0;
 
     /* Print things out */    
-    //Serial.print(millis());
-    //Serial.print(',');
-    //Serial.print(MAG_Heading_New);
-    //Serial.print(',');
-    digitalWrite(31, LOW);
+    Serial.print(millis());
+    Serial.print(',');
+    Serial.print(MAG_Heading_New);
+    Serial.print(',');
+    //digitalWrite(31, LOW);
     k_wait(sem2,0);     //wait for semaphore
-    digitalWrite(31, HIGH);
+    //digitalWrite(31, HIGH);
   }
 }
 

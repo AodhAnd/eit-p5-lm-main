@@ -1,9 +1,13 @@
 #include "ProtocolRec.h"
+#include "Route.h"
+#include <Math.h>
+
+float Dist = 0;
 
 void setup() {
   Serial.begin(9600);
   Serial3.begin(9600);
-  //Serial.println(DistanceCal(0, 0, 5000, 5000, 3000, 1500));
+  SetBothPoint(0,0,1000,0);
 }
 
 void loop() {
@@ -15,7 +19,13 @@ void loop() {
   
   if (Done == 0)
   {
-    Serial.println(DistanceCal(-5000, 0, 5000, 0, Output[2], Output[3]));
+    int sX = 0;
+    int sY = 0;
+    int eX = 0;
+    int eY = 0;
+    GetStart(&sX, &sY);
+    GetEnd(&eX, &eY);
+    Dist = DistanceCal(sX, sY, eX, eY, Output[2], Output[3]);
   }  
 }
 

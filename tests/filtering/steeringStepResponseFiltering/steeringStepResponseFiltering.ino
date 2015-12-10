@@ -98,7 +98,7 @@ void SteeringControl(){
    
    int turningWanted = 0;
    
-   k_set_sem_timer(sem2,30); // krnl will signal sem every 50th tick
+   k_set_sem_timer(sem2,15); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
   getHeading();
