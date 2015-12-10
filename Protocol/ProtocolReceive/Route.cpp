@@ -53,5 +53,9 @@ float DistanceCal(int Point1x, int Point1y, int Point2x, int Point2y, int Actx, 
   return temp1/temp2;
 }
 
+float ToEndPoint(int Actx, int Acty, int EndX, int EndY){
+ return (float)sqrt(pow((EndX - Actx),2) + pow((EndY - Acty),2));
+}
+
 
 
