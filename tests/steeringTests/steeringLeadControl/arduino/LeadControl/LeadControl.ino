@@ -108,7 +108,28 @@ void GoT()
     int eY = 0;
     GetStart(&sX, &sY);
     GetEnd(&eX, &eY);
+    if (ToEndPoint(Output[2], Output[3], eX, eY) < 250)
+    {
+      if (eX == 2000)
+      {
+        SetNextPoint(0,2000);
+      }
+      else if (eY == 2000)
+      {
+        SetNextPoint(0,0);
+      }
+      else
+      {
+        SetNextPoint(2000,0);
+      }      
+    }
     Dist = DistanceCal(sX, sY, eX, eY, Output[2], Output[3]);
+    Serial.print(Output[2]);
+    Serial.print(',');
+    Serial.print(Output[3]);
+    Serial.print(',');
+    Serial.print(Dist);
+    Serial.print(',');
     k_send(pMsgGoTLead,&Dist); 
    } 
   
@@ -122,9 +143,9 @@ void LeadCompensator() {
   /* --------------------------  Lead compensator -------------------------- */
 
   // Laplace domain parameters:
-  const float a = 3;              // Zero position            (a*s + 1)
-  const float b = 1;              // Pole position        G * ---------
-  const float LeadGain = 78.8;      // G                        (b*s + 1)
+  const float a = 1;              // Zero position            (a*s + 1)
+  const float b = 0.3;              // Pole position        G * ---------
+  const float LeadGain = 95;      // G                        (b*s + 1)
 
   // Z domain parameters:
   const float T = 0.1;              //sample period
@@ -145,9 +166,10 @@ void LeadCompensator() {
     lastoutput = LeadOutput;
     LeadOutput = ((zA1 * currentError) + (zA2 * LastError) - (zB2 * lastoutput)) / zB1;
     LeadTimesGain = LeadOutput*LeadGain;
-    if (LeadTimesGain > 90) LeadTimesGain = 100;
-    if (LeadTimesGain < -90) LeadTimesGain = -100;
-    LeadTimesGain += (GetAngle()-22);
+    if (LeadTimesGain > 90) LeadTimesGain = 90;
+    if (LeadTimesGain < -90) LeadTimesGain = -90;
+    LeadTimesGain += (GetAngle());
+    Serial.println(LeadTimesGain);
     k_send(pMsgLeadAngle,&LeadTimesGain);
     }
   }
@@ -230,17 +252,17 @@ void SteeringControl() {
 
 
     /* Print things out */
-    Serial.print(millis());
-    Serial.print(',');
-    Serial.print(MAG_Heading_New);
-    Serial.print(',');
-    Serial.print(MAG_Heading_Ref);
-    Serial.print(',');
+    //Serial.print(millis());
+    //Serial.print(',');
+    //Serial.print(MAG_Heading_New);
+    //Serial.print(',');
+    //Serial.print(MAG_Heading_Ref);
+    //Serial.print(',');
     //Serial.print(Theta_error);
     //Serial.print(',');
     //Serial.print(servoPulseWidth);
     //Serial.print(',');
-    Serial.println(' ');//Go back to the line
+    //Serial.println(' ');//Go back to the line
 
 
     k_wait(sem2, 0);    //wait for semaphore
@@ -309,7 +331,7 @@ void setup() {
   direction(1);    //move forward
 
   // Set up course
-   SetBothPoint(-1400,20,1820,0);
+   SetBothPoint(0,0,2000,0);
   
   // Set up the compass/gyro/accelerometer sensors
   //CompassSetup();
