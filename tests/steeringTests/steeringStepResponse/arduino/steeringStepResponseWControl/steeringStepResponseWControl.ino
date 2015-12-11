@@ -253,7 +253,6 @@ void SpeedControl(){
     Serial.print(',');
     Serial.print(millis());
     Serial.print(',');*/
-
   
     //Serial.println(' ');
 
