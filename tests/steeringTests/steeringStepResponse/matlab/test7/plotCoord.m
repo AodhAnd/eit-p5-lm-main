@@ -5,11 +5,11 @@ clear home;
 truedata = csvread('doubleraw7.csv');
 
 figure = plot3(truedata(:,2),truedata(:,4),truedata(:,6),'bd');
-set(figure,'color','b');
+set(figure,'color','b','marker','o','markerSize',5);
 hold;
 figure2 = plot3(truedata(:,3),truedata(:,5),truedata(:,7),'rd');
-set(figure2,'color','r');
-figure3 = plot3(0,0,0,'o','markeredgecolor','k','marker','*','markerSize',10);
+set(figure2,'color','r','marker','o','markerSize',5);
+figure3 = plot3(0,0,0,'markeredgecolor','k','marker','+','markerSize',6);
 set(figure3,'color','k');
 
 
@@ -32,16 +32,16 @@ Y = [truedata(:,3) truedata(:,5) truedata(:,7)]
 
 
 %Creating legend containing equation for lsline (%0.4f = 4 decimals)
-%legend('Data', sprintf( 'y = %0.4fx + %0.4f', a, b ), 'Location', 'northwest' )
+legend('Non-calibrated magnitude sphere', 'Calibrated magnitude sphere', 'Origin of the coordinate system', 'Location', 'southeast' )
 
 %Title and axis labels added
-title('plot of magnitude')
-xlabel('X')
-ylabel('Y')
-zlabel('Z')
+title('Magnitude spheres')
+xlabel('X [µT]')
+ylabel('Y [µT]')
+zlabel('Z [µT]')
 
 grid on
-%set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
+set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
 
 
 %differnet coordinates of 0

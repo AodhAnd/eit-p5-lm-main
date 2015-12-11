@@ -91,16 +91,14 @@ void SteeringControl(){
    float Omega_wanted = 0;                // Wanted angular velocity
    float P_out;    // Output from P controller
    
-   int turnedYet = 0;
-
-   float P_gain = 2;
+   float P_gain = 1.5;
 
    const int rightOffset = -220; 
    const int leftOffset = 250;
    
    int turningWanted = 0;
    
-   k_set_sem_timer(sem2,25); // krnl will signal sem every 50th tick
+   k_set_sem_timer(sem2,15); // krnl will signal sem every 50th tick
    
 /* Get initial heading */   
   getHeading();
@@ -110,14 +108,16 @@ void SteeringControl(){
   transformation(values_from_magnetometer);
   MAG_Heading_Old = atan2(-calibrated_values[1], calibrated_values[0])*(180.0/3.14);
   //MAG_Heading_Ref = MAG_Heading_Old;        //initialize reference of the angle(first one)
-  int i;
+  /*int i;
   for (i=0;i<8;i++){angles[i]= MAG_Heading_Old;} //start with current direction in every slot; 
 
-  int sampleNumber = 0;
+  int sampleNumber = 0;*/
+  
+  
+  
+  
   while(1){
-
-  Serial.println(xv);
-
+    
 /* Get current heading */  
   getHeading();
   values_from_magnetometer[0] = xv;
@@ -142,53 +142,34 @@ void SteeringControl(){
   Omega_error = Omega_wanted - Omega_current;*/
   
   
-  
+  /*
   Theta_error = MAG_Heading_New - MAG_Heading_Ref;
   if (Theta_error < 180){Theta_error +=360;}    //if heading around +-180°
   if (Theta_error > 180){Theta_error -=360;}
 
   //P_out = Omega_error * P_gain;
-  P_out = Theta_error * P_gain;
+  P_out = Theta_error * P_gain*/
 
   /*if(P_out>0){setServo(SERVO_MIDDLE_PW+leftOffset+P_out);}
   if(P_out<0){setServo(SERVO_MIDDLE_PW+rightOffset+P_out);}
   if(P_out==0){setServo(SERVO_MIDDLE_PW);}*/
     
+    
+    
+    if(millis()>4000)setServo(3000);
+    if(millis()>6000) setServo(SERVO_MIDDLE_PW);
+    if(millis()>8000) setServo(0);
+    
+    
   //Serial.flush(); 
   
   
-  //Serial.print(MAG_Heading_New);
-  //Serial.print(',');
+  Serial.print(MAG_Heading_New);
+  Serial.print(',');
   //Serial.print(Theta_error);
   //Serial.print(',');
-  //Serial.print(millis());
-  //Serial.println(',');
-    
-    if(timestamp>4000 && timestamp<4157)
-    {
-      setServo(200000);
-      MAG_Heading_Ref = 180;
-      /*if((MAG_Heading_New >= ) || (MAG_Heading_New <= -10)) turnedYet = 1;
-      if(turnedYet == 0) setServo(200000);
-      if(turnedYet == 1) setServo(SERVO_MIDDLE_PW);*/
-      
-    }
-    else setServo(SERVO_MIDDLE_PW);
-       
-    /*
-    if(timestamp>3000) Omega_wanted = -turningWanted;  //right
-    if(timestamp>5000) Omega_wanted = 0;  //straight
-    
-    
-    if(timestamp>6000) Omega_wanted = turningWanted;  //left
-    if(timestamp>8000) Omega_wanted = 0;  //straight
-    
-    
-    if(timestamp>9000) Omega_wanted = -turningWanted;  //right
-    if(timestamp>11000) Omega_wanted = 0;  //straight
-
-    if(timestamp>12000) Omega_wanted = turningWanted;  //left
-    if(timestamp>14000) Omega_wanted = 0;  //straight*/
+  Serial.print(millis());
+  Serial.println(',');
 
     digitalWrite(31, LOW);  
     k_wait(sem2,0);     //wait for semaphore
@@ -228,7 +209,7 @@ void SpeedControl(){
       if(duty < 0) duty = 0;
     }
     //stop at the end
-    if(timestamp<4157)speed(100);
+    if(timestamp<10000)speed(100);
   
     else speed(0);    
       /*

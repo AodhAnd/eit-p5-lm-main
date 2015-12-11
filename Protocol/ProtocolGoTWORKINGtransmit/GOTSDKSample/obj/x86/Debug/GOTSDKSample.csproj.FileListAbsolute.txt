@@ -60,3 +60,6 @@ C:\Users\proces\Desktop\15gr510\GOTSDK\GOTSDKSample\obj\x86\Debug\MainWindow.bam
 C:\Users\proces\Desktop\15gr510\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.g.resources
 C:\Users\proces\Desktop\15gr510\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.Properties.Resources.resources
 C:\Users\proces\Desktop\15gr510\GOTSDK\GOTSDKSample\obj\x86\Debug\GOTSDKSample.csproj.GenerateResource.Cache
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\Protocol\ProtocolGoTWORKINGtransmit\GOTSDKSample\bin\Debug\GOTSDKSample.exe.config
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\Protocol\ProtocolGoTWORKINGtransmit\GOTSDKSample\obj\x86\Debug\GOTSDKSample.exe
+C:\Users\Mads\Documents\GitHub\eit-p5-lm-main\Protocol\ProtocolGoTWORKINGtransmit\GOTSDKSample\obj\x86\Debug\GOTSDKSample.pdb

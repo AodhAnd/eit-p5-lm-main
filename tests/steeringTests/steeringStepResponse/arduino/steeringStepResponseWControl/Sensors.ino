@@ -30,7 +30,7 @@ void Magn_Init()
 {
   Wire.beginTransmission(MAGN_ADDRESS);
   WIRE_SEND(0x02); 
-  WIRE_SEND(0x00);  // Set continuous mode (default 10Hz)
+  WIRE_SEND(0x00);  // Set singleOx00 or continuous0x01 measurement mode                  (default 10Hz)
   Wire.endTransmission();
   delay(5);
 
