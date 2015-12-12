@@ -196,12 +196,6 @@ int GetProtocol(int out[5])
   {
     return iTemp;
   }
-  int i = 0;
-  for (i = 0; i < 12; i++)
-  {
-    Serial.print(Data[i]);
-    Serial.print(",");
-  }
   //All error handeling have been done and the coordinates can now be read
 
   

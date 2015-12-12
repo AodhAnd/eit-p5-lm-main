@@ -19,6 +19,10 @@ void loop() {
   int Output[5];
   int Done = GetProtocol(Output);
    
-  Serial.println(Done);   
+  Serial.print(Output[2]);
+  Serial.print(",");
+  Serial.print(Output[3]);
+  Serial.print(",");
+  Serial.println(Output[4]);   
 }
 
