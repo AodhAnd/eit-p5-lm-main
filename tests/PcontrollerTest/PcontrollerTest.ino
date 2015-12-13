@@ -18,13 +18,14 @@ void P_controller(){
 
   const float Wantedspeed = 2;
   float Speedtoduty;
-
+  float ControllerOutput;
   float Actualspeed;
   float Error;
   const float PGain = 1.0;
-  const float SysGain = 0.49;
+  const float SysGain = 0.486;
   int duty = 20;
   float test;
+  const float stiction = 1.1;
   float feedFwd = Wantedspeed;
   while(1){
     
@@ -33,24 +34,45 @@ void P_controller(){
     speed1 = getSpeed(1);       //reading speed of the other belt
     timestamp = millis();       //getting time at which data was recorded
 
-
+    /* P controller */
     Actualspeed = (speed0 + speed1)/2; // average speed of the vehicle
     if(timestamp>4000){
     Error = Wantedspeed - Actualspeed;
     //duty = Wantedspeed*Speedtoduty*100;
-    Speedtoduty = 1.0/(((float)batReading/102.4)*SysGain);// Battery reading: 1024 = 10V, so 1V = 102.4. multiply that with the system gain to calculate the duty cycle.
-    test = (((Error)*PGain+feedFwd+0.38)*Speedtoduty)*100.0; 
+    Speedtoduty = 1.0/(((float)batReading/102.4));// Battery reading: 1024 = 10V, so 1V = 102.4. multiply that with the system gain to calculate the duty cycle.
+    test = (((Error)*PGain+feedFwd+stiction*Speedtoduty)*100.0); 
     duty = test;
     if(duty > 100) duty = 100;
     if(duty < 0) duty = 0;
     }
     //number between 0 and a 100%
 
-    if(timestamp < 10000) speed(duty);
-    else speed(0);
+    ControllerOutput = ((PGain * Error) + stiction);
+
+    /* To do */
+    //if(timestamp < 10000) speed(duty);
+    //else speed(0);
     
-    //printing out the data whith commas for easy export as .scv-file:
+    if(timestamp > 2000 && timestamp <= 5000) speed(20);
+    if(timestamp > 5000 && timestamp <= 15000) speed(duty);
+    if(timestamp > 15000) speed(0);
+    
+    
+    /*printing out the data whith commas for easy export as .scv-file:*/
+    
+    
+    
+     Serial.print(timestamp);
+    Serial.print(',');
+    Serial.print(Actualspeed);
+    Serial.print(',');
     Serial.print((float)batReading/102.4);
+    Serial.print(',');
+    Serial.print(ControllerOutput);
+    Serial.print(',');
+    Serial.println(Error);
+    
+    /*Serial.print((float)batReading/102.4);
     Serial.print(",");
     Serial.print(duty);
     Serial.print(",");
@@ -62,7 +84,8 @@ void P_controller(){
     Serial.print(",");
     Serial.print(timestamp);
     Serial.print("\n");
-    Serial.print("\r");       //carrige return to return the curser for each new line
+    Serial.print("\r");   */    //carrige return to return the curser for each new line
+    
     delay(30);
     }
   }
