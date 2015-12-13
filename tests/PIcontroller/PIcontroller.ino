@@ -25,8 +25,8 @@ void PI_controller(){
   float Duty = 0;
   const float Stiction = 1.1; // 0.38/0.486   [V]  .. that is:  stiction [m*s^-1] / SysGain [s*m^-1 *V]
   const float SysGain = 0.486;
-  const float Kp = .8;            // Tuned parameters: Kp = .8 and Ki = 6
-  const float Ki = 6;      // For time constant equal to that of the plant Kp = 2.0576 and Ki = 9.7517
+  const float Kp = 2.0576; //.8;     // Tuned parameters: Kp = .8 and Ki = 6
+  const float Ki = 9.7517; //6;      // For time constant equal to that of the plant Kp = 2.0576 and Ki = 9.7517
                            // however, the rise is too fast for the battery, which drops voltage fast at big currnets,
                            // so Kp and Ki are recalculated for half the time-constant of the plant
                            // to allow for a longer rise-time and thus less drop in the battery voltage

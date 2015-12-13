@@ -1,3 +1,5 @@
+p = get(gcf, 'Position')           % These two lines makes the figuresappear the same
+set(0, 'DefaultFigurePosition', p) % place on the screen as where you left them last
 clear all
 close all;
 clc;
@@ -55,7 +57,7 @@ ylabel('Linear Velocity [ m \cdot s^{-1} ]')
 xlim([ 0 3 ]);
 
 grid on
-set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
+set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6, 'ytick', [0 .25 .5 .75 1 1.25 1.5 1.75 2 2.25 2.5])
 
 %xlim([ 0 3 ]);
 
