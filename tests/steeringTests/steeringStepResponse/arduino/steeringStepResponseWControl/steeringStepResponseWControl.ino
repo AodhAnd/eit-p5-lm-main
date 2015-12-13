@@ -153,7 +153,7 @@ void SteeringControl(){
     
     
     /* calculate new duty to send to the servo */
-    Theta_error = MAG_Heading_New - MAG_Heading_Ref;              //difference between what's happening and what we want
+    /*Theta_error = MAG_Heading_New - MAG_Heading_Ref;              //difference between what's happening and what we want
     if (Theta_error < 180){Theta_error +=360;}                    //if heading around +-180°, to have values from -
     if (Theta_error > 180){Theta_error -=360;}
   
@@ -167,12 +167,12 @@ void SteeringControl(){
     if(servo_distance==0)setServo(SERVO_MIDDLE_PW);
     
     servoPulseWidth -= (Theta_servo_wanted * 2000 / 3.14);       // add the error converted into time in ms
-    setServo(servoPulseWidth);                                   // send the PWM finally!!
+    setServo(servoPulseWidth);           */                        // send the PWM finally!!
   
   
     /* Main code for the steering */
     //stepresponse after 3 sec
-    //if(millis()>=5000) MAG_Heading_Ref = -45;
+    if(millis()>=5000) setServo(1670);
 
     
     
@@ -243,7 +243,7 @@ void SpeedControl(){
       if(duty < 0) duty = 0;
     }
     //stop at the end
-    if(timestamp<18000)speed(duty);
+    if(timestamp<10000)speed(duty);
   
     else speed(0);    
       

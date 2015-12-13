@@ -75,7 +75,7 @@ for i=1:596
    BUF1 = BUF0;
 end
 
-% plot(Data1(:,1),Data1(:,2), 'b',Data1(:,1),output, 'r')
+%plot(Data1(:,1),Data1(:,2), 'b',Data1(:,1),output, 'r')
 % 
 %  figure;
 %scatter(Data1(:,2),output)
@@ -96,22 +96,27 @@ end
 %  figure;
 
 %% Make it B-E-Autiful
-%plot(Data1(:,1),Data1(:,2), 'b',Data1(:,1),output, 'r')
+plot(Data1(:,1),Data1(:,2), 'b',Data1(:,1),output, 'r')
 %plot(Data1(:,1),Data1(:,2)) %Original data
 %bodemag(H)
 %semilogx(f, magdb)
-plot(freq,input_fft)
-xlim([-0.2 33.3])
-%legend('Measured data', 'Location', 'northwest' )
+%plot(freq,input_fft)
+xlim([6.9 7])
+legend('Measured Data', 'Filter Data', 'Location', 'southeast' )
 %semilogx(f, magdb)
 
-%ylim([-51.5 -49])
+ylim([-51.5 -49])
 
 %Title and axis labels added
 
-title('FFT of Stationary Measurements', 'fontsize', 13)
-xlabel('Frequency [Hz]', 'fontsize', 12)
-ylabel('Magnitude [dB]','fontsize', 12)
+title('Measured Data Compared to Filtered Data Delay', 'fontsize', 13)
+xlabel('Time [s]', 'fontsize', 12)
+ylabel('Angle [\circ]','fontsize', 12)
+
+vline = line([6.914 6.914], [-51.5 -49]);
+set(vline, 'Color', [.3 .3 .3], 'LineWidth', 1, 'LineStyle', '--');
+vline = line([6.944 6.944], [-51.5 -49]);
+set(vline, 'Color', [.3 .3 .3], 'LineWidth', 1, 'LineStyle', '--');
 
 grid on;
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)

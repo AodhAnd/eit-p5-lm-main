@@ -3,7 +3,7 @@ close all;
 clc;
 
 % Read the data from the test
-coord = csvread('test6with4columns.csv');
+coord = csvread('test6.csv');
 
 
 %put the data according to their position
@@ -49,6 +49,6 @@ xlabel('X position')
 ylabel('Y position')
 %xlim([-100 2500]);
 %ylim([-100 2500]);
-legend('1st route to follow','2nd route to follow','3rd route to follow','4th route to follow')
+legend('1st route to follow','2nd route to follow','3rd route to follow','Destination')
 grid on
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
