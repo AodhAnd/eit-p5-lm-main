@@ -1,0 +1,37 @@
+%close all;
+%clear all;
+%clc;
+
+
+
+v= 1.4
+Ks = 0.5149 * v - 0.1925
+offset = 1360 + 270
+
+csvwrite =('sim1','ScopeData')
+datasim = csvread('sim1.csv')
+
+Data1 = csvread('stepResponse1670.csv');
+Data2 = csvread('stepResponse1670.2.csv');
+
+
+time   = Data1(:,1);
+angle  = Data1(:,2);
+time2  = Data2(:,1);
+angle2 = Data2(:,2);
+
+hold;
+P1 = scatter(time,angle);
+P2 = scatter(time2,angle2);
+
+
+
+%xlim([0 10000]);
+
+title('Step response at a PWM of 1670 m \cdot s{-1}')
+xlabel('Time [s]')
+ylabel('Angle [°]')
+
+%legend('Voltage step', 'P control','P control with Feed forward','Location', 'southeast' )
+grid on
+set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)

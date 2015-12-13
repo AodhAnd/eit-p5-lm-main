@@ -24,6 +24,6 @@ xlabel('Time [s]')
 ylabel('Number of paquets sended')
 %xlim([-100 2500]);
 %ylim([-100 2500]);
-legend('paquets sended')
+legend('Paquets sended')
 grid on
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)

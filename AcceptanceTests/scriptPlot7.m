@@ -19,7 +19,7 @@ P1 = scatter(distance,angle);
 % set( P1, 'color', '[0 0 1]', 'LineWidth', 2 );
 title('Angle vs distance')
 xlabel('Distance [cm]')
-ylabel('Angle [Â°]')
+ylabel('Angle [°]')
 %xlim([-100 2500]);
 %ylim([-100 2500]);
 %legend('')
