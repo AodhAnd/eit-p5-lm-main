@@ -349,11 +349,11 @@ void setup() {
   Serial.println("REBOOT");
 
   delay(2000);
-  task1 = k_crt_task(tSpeed, 10, stack, 300);         //hall sensors
-  task2 = k_crt_task(SpeedControl, 12, stack2, 300); // Velocity controller
-  task3 = k_crt_task(SteeringControl, 11, stack3, 1000); // Steering controller
-  task4 = k_crt_task(LeadCompensator, 13, stack4, 300); // Lead compensator
-  task5 = k_crt_task(GoT,14,stack5,1000);          // GoT and protocol handling
+  task1 = k_crt_task(tSpeed, 10, stack, 300);         		// Hall Sensors
+  task2 = k_crt_task(SpeedControl, 12, stack2, 300); 		// Velocity controller
+  task3 = k_crt_task(SteeringControl, 11, stack3, 1000); 	// Angular controller(Inner loop of the steering model)
+  task4 = k_crt_task(LeadCompensator, 13, stack4, 300); 	// Distance Control(Outer loop of the steering model)
+  task5 = k_crt_task(GoT,14,stack5,1000);        	        // GoT and protocol handling
 
   pMsgGoTLead = k_crt_send_Q(10,4,mar);     //mail box, GoT sends distance, Lead Compensator recieves it.
   pMsgLeadAngle = k_crt_send_Q(10,4,mar2);  //mail box, Lead Compensator sends angle, Angle controller recieves it.
