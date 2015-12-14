@@ -49,6 +49,6 @@ xlabel('X position')
 ylabel('Y position')
 %xlim([-100 2500]);
 %ylim([-100 2500]);
-legend('1st route to follow','2nd route to follow','3rd route to follow','Destination')
+legend('1st part','2nd part','3rd part','4th part')
 grid on
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
