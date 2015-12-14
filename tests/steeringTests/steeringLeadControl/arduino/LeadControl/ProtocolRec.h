@@ -1,4 +1,4 @@
-#include <arduino.h>
+#include <Arduino.h>
 
 typedef struct {
   uint8_t Destination;

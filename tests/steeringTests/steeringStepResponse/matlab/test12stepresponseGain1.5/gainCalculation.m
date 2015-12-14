@@ -17,11 +17,11 @@ P1 = scatter(dat(:,2),dat(:,5))
 
 P = polyfit(dat(:,2),dat(:,5),1)
 x = [0:0.01:2.5];
-y = 0.5149 * x - 0.1925;
+y = 0.3 * x - 0.034;
 
-plot(x,y);
+plot(x,y,'linewidth',2);
 
-legend('Data','y = 05149x - 0.1925','Location', 'southeast', 'fontsize', 15)
+legend('Data','y = 0.3x - 0.034','Location', 'southeast', 'fontsize', 15)
 
 % Make the plots beautiful
 % set( P1, 'color', '[0 0 1]', 'LineWidth', 2 );

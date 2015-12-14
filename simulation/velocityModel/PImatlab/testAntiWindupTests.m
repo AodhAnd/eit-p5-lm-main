@@ -1,3 +1,5 @@
+p = get(gcf, 'Position')           % These two lines makes the figuresappear the same
+set(0, 'DefaultFigurePosition', p) % place on the screen as where you left them last
 clear all
 close all;
 clc;
@@ -30,7 +32,7 @@ set(AX,'NextPlot','add')
 
 set(AX(1),'xlim',[0 9.2], 'ylim', [0 3], 'ycolor', [0 0 1]);
 set(vel, 'Color', [0 0 1], 'LineWidth', 2);
-set(AX(2),'xlim',[0 9.2], 'ylim', [6 7.5], 'ycolor', [0 0 0]);
+set(AX(2),'xlim',[0 9.2], 'ylim', [6.3 7.5], 'ycolor', [0 0 0]);
 set(bat, 'Color', [0 0 0], 'LineWidth', 2);
 %hline = line([1.144 1.144], [0 3]);
 %set(hline, 'Color', [.3 .3 .3], 'LineWidth', 1, 'LineStyle', '--');
@@ -54,7 +56,7 @@ legend('Simulation data', 'Refference at 1.4 m\cdot s^{-1}', 'Battery voltage', 
 %scatter( data3(:,1), data3(:,2), 100, [0 .3 0], '.' );
 
 %Title and axis labels added
-title('PI-Controller Simulation and Implementation Compared')
+title('Tuned PI-Controller and Battery Voltage')
 xlabel('Time [s]')
 ylabel(AX(1), 'Linear Velocity [ m \cdot s^{-1} ]')
 ylabel(AX(2), 'Battery Voltage [ V ]')

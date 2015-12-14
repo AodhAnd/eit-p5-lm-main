@@ -34,7 +34,7 @@ xlim([0 58]);
 % Make the plots beautiful
 % set( P1, 'color', '[0 0 1]', 'LineWidth', 2 );
 title('Time vs Speed')
-xlabel('Time [s]')
+xlabel('Number of period')
 ylabel('Speed [m \cdot s^{-1}]')
 
 %ylim([0 10]);

@@ -16,7 +16,7 @@ int batReading;
 
 void PI_controller(){
 
-  const float Wantedspeed = 1.4;
+  const float Wantedspeed = 2;
   float Actualspeed;
   float Error;
   float Integral = 0;
@@ -25,11 +25,11 @@ void PI_controller(){
   float Duty = 0;
   const float Stiction = 1.1; // 0.38/0.486   [V]  .. that is:  stiction [m*s^-1] / SysGain [s*m^-1 *V]
   const float SysGain = 0.486;
-  const float Kp = .8;            // Tuned parameters: Kp = .8 and Ki = 6
-  const float Ki = 6;      // For time constant equal to that of the plant Kp = 2.0576 and Ki = 9.7517
-                           // however, the rise is too fast for the battery, which drops voltage fast at big currnets,
-                           // so Kp and Ki are recalculated for half the time-constant of the plant
-                           // to allow for a longer rise-time and thus less drop in the battery voltage
+  const float Kp = 2.0576; //.8;     // Tuned parameters: Kp = .8 and Ki = 6
+  const float Ki = 9.7517; //6;      // For time constant equal to that of the plant Kp = 2.0576 and Ki = 9.7517
+                                     // however, the rise is too fast for the battery, which drops voltage fast at big currnets,
+                                     // so Kp and Ki are recalculated for half the time-constant of the plant
+                                     // to allow for a longer rise-time and thus less drop in the battery voltage
                    
   while(1)
   {
@@ -56,14 +56,7 @@ void PI_controller(){
       if(Duty > 100) Duty = 100;             // controllerOut = VoltNeeded --> plant --> m/s
       if(Duty < 0) Duty = 0;                 // batVolt/100 = [volt/duty] => ( batVolt/100 ) *dutyNeeded = VoltNeeded <=> dutyNeeded =   VoltNeeded        / ( batVolt/100 )
     }                                        //                                                                       <=> dutyNeeded =   controllOut       / ( batVolt/100 )
-//    Serial.print("Duty: ");                //                                                                       <=> dutyNeeded =   (controllOut*100) /  batVolt
-//    Serial.print(Duty);
-//    Serial.print(" Con: ");
-//    Serial.print(ControllerOutput);
-//    Serial.print(" error: ");
-//    Serial.print(Error);
-//    Serial.print(" integral: ");
-//    Serial.print(Integral);
+                                             //                                                                       <=> dutyNeeded =   (controllOut*100) /  batVolt
     Serial.print(timestamp);
     Serial.print(',');
     Serial.print(Actualspeed);
