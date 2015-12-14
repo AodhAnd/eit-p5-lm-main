@@ -100,6 +100,8 @@ void GoT()
   
   while(1){
   Done = GetProtocol(Output); // wait for coordinate
+  
+   //digitalWrite(31, HIGH);
   if (Done == 0)
   {
     int sX = 0;
@@ -124,23 +126,26 @@ void GoT()
       }      
     }
     Dist = DistanceCal(sX, sY, eX, eY, Output[2], Output[3]);
-    Serial.print(Output[2]);
+    /*Serial.print(Output[2]);
     Serial.print(',');
     Serial.print(Output[3]);
     Serial.print(',');
     Serial.print(Dist);
-    Serial.print(',');
+    Serial.println(',');*/
+    //digitalWrite(31, LOW);
     k_send(pMsgGoTLead,&Dist); 
-   } 
+   }    
+   
   
   }
+
 }
 
 
 
 
 void LeadCompensator() {
-  /* --------------------------  Lead compensator -------------------------- */
+    /* --------------------------  Lead compensator -------------------------- */
 
   // Laplace domain parameters:
   const float a = 1;              // Zero position            (a*s + 1)
@@ -160,19 +165,26 @@ void LeadCompensator() {
   static float LeadOutput;
   float LeadTimesGain;
   float lastoutput;
-  while (1) {
+  while (1) 
+  {
     LastError = currentError;
-    if (0 <= k_receive(pMsgGoTLead,&currentError,0,NULL) ) { // Wait for distance from GoT system (waits forever)
-    lastoutput = LeadOutput;
-    LeadOutput = ((zA1 * currentError) + (zA2 * LastError) - (zB2 * lastoutput)) / zB1;
-    LeadTimesGain = LeadOutput*LeadGain;
-    if (LeadTimesGain > 90) LeadTimesGain = 90;
-    if (LeadTimesGain < -90) LeadTimesGain = -90;
-    LeadTimesGain += (GetAngle());
-    Serial.println(LeadTimesGain);
-    k_send(pMsgLeadAngle,&LeadTimesGain);
+    if (0 <= k_receive(pMsgGoTLead,&currentError,0,NULL) ) 
+    { // Wait for distance from GoT system (waits forever)
+        digitalWrite(31, HIGH);
+
+      lastoutput = LeadOutput;
+      LeadOutput = ((zA1 * currentError) + (zA2 * LastError) - (zB2 * lastoutput)) / zB1;
+      LeadTimesGain = LeadOutput*LeadGain;
+      if (LeadTimesGain > 90) LeadTimesGain = 90;
+      if (LeadTimesGain < -90) LeadTimesGain = -90;
+      LeadTimesGain += (GetAngle());
+      //Serial.println(LeadTimesGain);
+          digitalWrite(31, LOW);
+
+      k_send(pMsgLeadAngle,&LeadTimesGain);
     }
   }
+   
 }
 
 void SteeringControl() {
@@ -209,6 +221,7 @@ void SteeringControl() {
   setServo(servoPulseWidth); // Initialized to the start value (SERVO_MIDDLE_PW)
   float angleBuf;
   while (1) {
+     
     /* Check mailbox, to see if we have a new target heading */
     if (0 <= k_receive(pMsgLeadAngle,&angleBuf,-1,NULL) ) {
       MAG_Heading_Ref = angleBuf; //If we do, use it, if not, we carry on with the latest heading.
@@ -267,6 +280,7 @@ void SteeringControl() {
 
     k_wait(sem2, 0);    //wait for semaphore
   }
+   
 }
 
 void SpeedControl() {
@@ -283,6 +297,7 @@ void SpeedControl() {
   int batOK;
   k_set_sem_timer(sem3, 50); // krnl will signal sem every 50th tick
   while (1) {
+    
     batReading = analogRead(8); //reading battery voltage
     if (batReading <= 584) enableMotor(0); // stop vehicle if battery voltage gets below 5,7V*102,4 = 584.
     
@@ -306,6 +321,8 @@ void SpeedControl() {
     else speed(0);
     if (timestamp<8000) speed(duty);
     else speed(0);
+    
+    
      k_wait(sem3, 0);    //wait for semaphore;
 
   }
@@ -317,6 +334,7 @@ void setup() {
   k_init(5, 3, 2);
 
   pinMode(5, OUTPUT);
+  pinMode(31, OUTPUT); 
   initServo();
 
   pinMode(dPinMove1, OUTPUT);
@@ -349,11 +367,11 @@ void setup() {
   Serial.println("REBOOT");
 
   delay(2000);
-  task1 = k_crt_task(tSpeed, 10, stack, 300);         		// Hall Sensors
-  task2 = k_crt_task(SpeedControl, 12, stack2, 300); 		// Velocity controller
-  task3 = k_crt_task(SteeringControl, 11, stack3, 1000); 	// Angular controller(Inner loop of the steering model)
-  task4 = k_crt_task(LeadCompensator, 13, stack4, 300); 	// Distance Control(Outer loop of the steering model)
-  task5 = k_crt_task(GoT,14,stack5,1000);        	        // GoT and protocol handling
+  task1 = k_crt_task(tSpeed, 10, stack, 300);         	   // Hall Sensors
+  task2 = k_crt_task(SpeedControl, 12, stack2, 300); 	   // Velocity controller
+  task3 = k_crt_task(GoT,14,stack5,1000);        		   // GoT and protocol handling
+  task4 = k_crt_task(LeadCompensator, 13, stack4, 300);    // Distance Control
+  task5 = k_crt_task(SteeringControl, 11, stack3, 1000);   // Angular controller
 
   pMsgGoTLead = k_crt_send_Q(10,4,mar);     //mail box, GoT sends distance, Lead Compensator recieves it.
   pMsgLeadAngle = k_crt_send_Q(10,4,mar2);  //mail box, Lead Compensator sends angle, Angle controller recieves it.

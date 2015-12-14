@@ -1,6 +1,6 @@
 #include "Route.h"
-#include <arduino.h>
-#include <Math.h>
+//#include <arduino.h>
+#include <math.h>
 
 CurrentRoute CR;
 
