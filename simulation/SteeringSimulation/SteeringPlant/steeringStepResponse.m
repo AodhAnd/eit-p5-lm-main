@@ -8,7 +8,7 @@ v= 1.4
 Ks = 0.5149 * v - 0.1925
 offset = 1360 + 270
 
-csvwrite('sim1.csv',ScopeData);
+%csvwrite('sim1.csv',ScopeData);
 datasim = csvread('sim1.csv');
 
 Data1 = csvread('stepResponse1670.csv');
@@ -36,7 +36,7 @@ ylim([-50 150]);
 
 title('Step response at a PWM of 1670 m \cdot s{-1}')
 xlabel('Time [ms]')
-ylabel('Angle [Â°]')
+ylabel('Angle [°]')
 
 legend('First test', 'Second test','Simulation','Location', 'northwest' )
 grid on

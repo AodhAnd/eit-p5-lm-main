@@ -1,6 +1,6 @@
-%clear all;
-%close all;
-%clc;
+clear all;
+close all;
+clc;
 %csvwrite('steering_step.csv',ScopeData)
 % syms K
 % 
@@ -80,7 +80,7 @@ ThetaRef = 0;
 title('Steering step response')
 
 % xlim([3 7]);
-legend('Data 1', 'Data 2','Data 3','location','southeast')
+legend('Test 1', 'Test 2','Test 3','location','southeast')
 grid on
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
 xlim([3 10]);

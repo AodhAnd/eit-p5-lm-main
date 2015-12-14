@@ -1,5 +1,5 @@
 #include "ProtocolRec.h"
-#include <arduino.h>
+//#include <arduino.h>
 
 Protocol decript;
 
