@@ -1,6 +1,6 @@
-%clear all;
-%close all;
-%clc;
+clear all;
+close all;
+clc;
 %csvwrite('steering_step.csv',ScopeData)
 % syms K
 % 

@@ -37,6 +37,7 @@ for(i = 0;i<5;i++){
   
   while (1)
   {
+    
     if (TIFR5 & (1 << ICF5))
     {
       uiNewTimerVal5 = ICR5;                                            //<--reading value of timer 5
@@ -66,7 +67,6 @@ for(i = 0;i<5;i++){
 
       TIFR4 = TIFR4 | (1<<ICF4);
     }
-
     k_wait(sem1,0); 
   }
 }
