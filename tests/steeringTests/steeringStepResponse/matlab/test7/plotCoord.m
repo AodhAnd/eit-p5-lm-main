@@ -36,9 +36,9 @@ legend('Non-calibrated magnitude sphere', 'Calibrated magnitude sphere', 'Origin
 
 %Title and axis labels added
 title('Magnitude spheres')
-xlabel('X [µT]')
-ylabel('Y [µT]')
-zlabel('Z [µT]')
+xlabel('X [G]')
+ylabel('Y [G]')
+zlabel('Z [G]')
 
 grid on
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)

@@ -59,9 +59,9 @@ zlim ([-800 800]);
 
 %Title and axis labels added
 title('Plot of magnitude with circle quarters')
-xlabel('X [µT]')
-ylabel('Y [µT]')
-zlabel('Z [µT]')
+xlabel('X [G]')
+ylabel('Y [G]')
+zlabel('Z [G]')
 
 grid on
 %set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)

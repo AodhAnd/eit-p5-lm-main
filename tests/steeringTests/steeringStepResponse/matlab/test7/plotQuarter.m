@@ -1,6 +1,7 @@
 clear all;
 clc;
 clear home;
+close all;
 
 origin = [0,0,0];
 
@@ -20,19 +21,31 @@ data4 = csvread('quarter4.4.csv');
 %figure3 = plot3(0,0,0,'o','markeredgecolor','k','marker','*','markerSize',10);
 %set(figure3,'color','k');
 
-figure = plot3(data1(:,1),data1(:,2),data1(:,3),'.','markerSize',15);
+% figure = plot3(data1(:,1),data1(:,2),data1(:,3),'.','markerSize',15);
+% set(figure,'color','b');
+% hold on;
+% figure2 = plot3(data2(:,1),data2(:,2),data2(:,3),'.','markerSize',15);
+% set(figure2,'color','r');
+% figure3 = plot3(data3(:,1),data3(:,2),data3(:,3),'.','markerSize',15);
+% set(figure3,'color','k');
+% figure4 = plot3(data4(:,1),data4(:,2),data4(:,3),'.','markerSize',15);
+% set(figure4,'color','g');
+% %hold;
+% figure0 = plot3(0,0,0,'o','markeredgecolor','k','marker','*','markerSize',10);
+% set(figure0,'color','k');
+
+figure = plot(data1(:,1),data1(:,2),'.','markerSize',15);
 set(figure,'color','b');
 hold on;
-figure2 = plot3(data2(:,1),data2(:,2),data2(:,3),'.','markerSize',15);
+figure2 = plot(data2(:,1),data2(:,2),'.','markerSize',15);
 set(figure2,'color','r');
-figure3 = plot3(data3(:,1),data3(:,2),data3(:,3),'.','markerSize',15);
+figure3 = plot(data3(:,1),data3(:,2),'.','markerSize',15);
 set(figure3,'color','k');
-figure4 = plot3(data4(:,1),data4(:,2),data4(:,3),'.','markerSize',15);
+figure4 = plot(data4(:,1),data4(:,2),'.','markerSize',15);
 set(figure4,'color','g');
 %hold;
-figure0 = plot3(0,0,0,'o','markeredgecolor','k','marker','*','markerSize',10);
+figure0 = plot(0,0,'o','markeredgecolor','k','marker','*','markerSize',10);
 set(figure0,'color','k');
-
 
 axis equal
 
@@ -48,17 +61,14 @@ zlim ([-800 800]);
 %[c1,r1] = sphereFit(X)
 %[c2,r2] = sphereFit(Y)
 
-
-
-
 %Creating legend containing equation for lsline (%0.4f = 4 decimals)
 %legend('Data', sprintf( 'y = %0.4fx + %0.4f', a, b ), 'Location', 'northwest' )
 
 %Title and axis labels added
 title('Plot of magnitude with circle quarters')
-xlabel('X [µT]')
-ylabel('Y [µT]')
-zlabel('Z [µT]')
+xlabel('X [G]')
+ylabel('Y [G]')
+zlabel('Z [G]')
 
 grid on
 %set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)

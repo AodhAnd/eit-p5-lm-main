@@ -32,18 +32,20 @@ Ks = 0.5149 * v - 0.1925
 % P1 = scatter(time,angle,'b');
 % P2 = scatter(time2,angle2,'g');
 % Psim = plot(timesim,anglesim,'LineWidth',2,'color','r');
-% 
-    plot(time,Data1);
-    hold
-    plot(time,Data2);
+%
+    
+    plot(time,Data2, 'linewidth', 3,'color', 'r');
+    hold;
+    plot(time,Data1,'linewidth', 3, 'color', 'b', 'Linestyle', ':');
+
 % 
 % xlim([2000 10000]);
 % ylim([-50 150]);
 % 
-% title('Step response at a PWM of 1670 m \cdot s{-1}')
-% xlabel('Time [ms]')
-% ylabel('Angle [°]')
+ title('Simulated Step Response of the Directional Control Loop')
+ xlabel('Time [s]', 'fontsize', 12)
+ ylabel('PWM [\mus]', 'fontsize', 12)
 % 
-% legend('First test', 'Second test','Simulation','Location', 'northwest' )
+ legend('Without Filter', 'With Filter','Simulation','Location', 'southeast' )
 % grid on
 % set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
