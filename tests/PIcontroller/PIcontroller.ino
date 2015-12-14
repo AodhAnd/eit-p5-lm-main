@@ -45,10 +45,10 @@ void PI_controller(){
     {
       Error = Wantedspeed - Actualspeed;
       
-      if( ControllerOutput < ((float)batReading/102.4) ) //Only increase integral error if the battery is not in saturation
-      {
+      //if( ControllerOutput < ((float)batReading/102.4) ) //Only increase integral error if the battery is not in saturation
+      //{
         Integral = Integral + (Error*0.030); //Delta t = 0.03 s = sample time i.e. 30 ms
-      }
+      //}
                                                                                                                    //-------------IN THE CODE--------------------------------------------------------------
       ControllerOutput = ((Kp * Error) + (Ki * Integral) + Stiction);                                              // dutyNeeded = controllOut * 100 /( batVolt * SysGain )
       DutyPrSpeed = 100.0/((float)batReading/102.4); // Duty cycle pr volt (% pr V) (divided by 102.4 = volts)     // 
@@ -65,7 +65,11 @@ void PI_controller(){
     Serial.print(',');
     Serial.print(ControllerOutput);
     Serial.print(',');
-    Serial.println(Error);
+    Serial.print(Ki * Integral);
+    Serial.print(',');
+    Serial.println(Kp * Error);
+    //Serial.print(',');
+    //Serial.println(Error);
 
     //DutyPrSpeed = 100.0/((float)batReading/102.4);  //<
     //Duty =  Stiction * DutyPrSpeed;                 //<< For testing stiction
