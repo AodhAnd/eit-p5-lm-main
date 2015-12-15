@@ -39,12 +39,12 @@ Ks = 0.5149 * v - 0.1925
     plot(time,Data1,'linewidth', 3, 'color', 'b', 'Linestyle', ':');
 
 % 
-% xlim([2000 10000]);
-% ylim([-50 150]);
+ xlim([0.5 1]);
+ ylim([800 1000]);
 % 
- title('Simulated Step Response of the Directional Control Loop')
+ title('Simulated Step Response of the Directional Control Loop Zoomed')
  xlabel('Time [s]', 'fontsize', 12)
- ylabel('PWM [\mus]', 'fontsize', 12)
+ ylabel('Angle [\circ]', 'fontsize', 12)
 % 
  legend('Without Filter', 'With Filter','Simulation','Location', 'southeast' )
 % grid on
