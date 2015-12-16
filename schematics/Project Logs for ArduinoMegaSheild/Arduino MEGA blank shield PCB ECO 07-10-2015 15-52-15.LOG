@@ -1,9 +1,0 @@
-Removed Pin From Net: NetName=5V Pin=P1-1
-Change Component Footprint: Designator=R7 Old Footprint=AXIAL-0.4 New Footprint=AXIAL-0.3
-Added Component: Designator=VR1(TO-220AB)
-Added Pin To Net: NetName=VBAT Pin=VR1-1
-Added Pin To Net: NetName=GND Pin=VR1-2
-Added Pin To Net: NetName=NetP1_1 Pin=P1-1
-Added Pin To Net: NetName=NetP1_1 Pin=VR1-3
-Added Net: Name=NetP1_1
-Added Member To Class: ClassName=AdruinoMegaSheild Member=Component VR1 7805

@@ -1,9 +1,0 @@
-Removed Pin From Net: NetName=IO50 Pin=DIGITAL-31
-Removed Pin From Net: NetName=IO51 Pin=DIGITAL-32
-Removed Pin From Net: NetName=IO52 Pin=DIGITAL-33
-Removed Pin From Net: NetName=IO53 Pin=DIGITAL-34
-Added Pin To Net: NetName=IO51 Pin=DIGITAL-31
-Added Pin To Net: NetName=IO50 Pin=DIGITAL-32
-Added Pin To Net: NetName=IO53 Pin=DIGITAL-33
-Added Pin To Net: NetName=IO52 Pin=DIGITAL-34
-Added Member To Class: ClassName=AdruinoMegaSheild Member=Component C1 Cap
