@@ -39,10 +39,15 @@ v= 1.4
     plot(time-4.5,Data2,'linewidth', 3, 'color', 'b', 'Linestyle', ':');
 
 % 
+<<<<<<< HEAD
  xlim([0 5]);
  ylim([-5 50]);
+=======
+ xlim([0.5 1]);
+ ylim([800 1000]);
+>>>>>>> origin/master
 % 
- title('Simulated Step Response of the Directional Control Loop')
+ title('Simulated Step Response of the Directional Control Loop Zoomed')
  xlabel('Time [s]', 'fontsize', 12)
  ylabel('Angle [\circ]', 'fontsize', 12)
 % 
