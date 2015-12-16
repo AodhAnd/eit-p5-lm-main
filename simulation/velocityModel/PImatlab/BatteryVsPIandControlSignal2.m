@@ -8,7 +8,7 @@ clc;
 %simData = csvread('simulationPIcalculated.csv', 0, 0);
 %simData(:,1) = simData(:,1)-2
 
-data = csvread('PIconstantDisturbance1.csv'); % step 294 for calculated PI controller
+data = csvread('PIconstantDisturbance2.csv'); % step 294 for calculated PI controller
                                               % step 288 for tuned PI controller
                                 % step 299 for P controller with feed forward
                                 % step 316 (NO) and 322 (width) anti-windup
@@ -39,15 +39,15 @@ data(:,1) = (data(:,1)-4000)/1000;
 %data(:,3) = data(:,3);%-5.5;
 
 %[AX, vel, bat] = plotyy( simData(:,1), simData(:,2), data(:,1), data(:,3));
-[AX, vel, bat] = plotyy( data(:,1), data(:,2), data(:,1), data(:,3));
-set(AX,'NextPlot','add')
+plot( data(:,1), data(:,2));
+%set(AX,'NextPlot','add')
 %scatter(AX(2), data(:,1), data(:,2), 'g', '.');
 %scatter(AX(2), data(:,1), data(:,2), 'r', '.');
 %scatter(AX(2), data(:,1), data(:,2)), 'b', '.';
 
-plot(AX(2), data(:,1), data(:,4), 'Color', [1 0 0], 'LineWidth', 2, 'LineStyle', ':');
-plot(AX(2), data(:,1), data(:,6), 'Color', [0 .5 0], 'LineWidth', 2, 'LineStyle', ':');
-plot(AX(2), data(:,1), data(:,5), 'Color', [.8 0 .8], 'LineWidth', 2, 'LineStyle', ':');
+%plot(AX(2), data(:,1), data(:,4), 'Color', [1 0 0], 'LineWidth', 2, 'LineStyle', ':');
+%plot(AX(2), data(:,1), data(:,6), 'Color', [0 .5 0], 'LineWidth', 2, 'LineStyle', ':');
+%plot(AX(2), data(:,1), data(:,5), 'Color', [.8 0 .8], 'LineWidth', 2, 'LineStyle', ':');
 %pAdd = plot(AX(2), data(:,1), data(:,4) );
 %set(pAdd, 'Color', [1 0 0], 'LineWidth', 2 );
 
@@ -55,19 +55,23 @@ plot(AX(2), data(:,1), data(:,5), 'Color', [.8 0 .8], 'LineWidth', 2, 'LineStyle
 %pAdd = plot(AX(1), data(:,1), data(:,5) );
 %set(pAdd, 'Color', [0 .5 0], 'LineWidth', 2 );
 
-set(AX(1),'xlim',[0 9], 'ylim', [0 3], 'ycolor', [0 0 1]);
-set(vel, 'Color', [0 0 1], 'LineWidth', 2);
-set(AX(2),'xlim',[0 9], 'ylim', [0 8], 'ycolor', [.7 0 0]);
-set(bat, 'Color', [.3 0 0], 'LineWidth', 2);
+xlim([0 10])
+%set(vel, 'Color', [0 0 1], 'LineWidth', 2);
+%set(AX(2),'xlim',[0 9], 'ylim', [0 8], 'ycolor', [.7 0 0]);
+%set(bat, 'Color', [.3 0 0], 'LineWidth', 2);
 
 hline = line([1 10], [1.4 1.4]);
 %hline = line([1 10], [2 2]);
 set(hline, 'Color', [.3 .3 .3], 'LineWidth', 1, 'LineStyle', '--');
 
-legend('Measured step response', 'Input step to 2 m\cdot s^{-1}', 'Battery voltage      [ V ]', 'Controller Output   [ V ]', 'Preportional Error  [ V ]', 'Integral Error          [ V ]', 'Location', 'southeast')
+hline = line([0 1], [0.21 0.21]);
+%hline = line([1 10], [2 2]);
+set(hline, 'Color', [.3 .3 .3], 'LineWidth', 1, 'LineStyle', '--');
+
+legend('Measured step response', 'Input step','Location','southeast')
 %legend('Measured step response', 'Input step to 2 m\cdot s^{-1}', 'Battery voltage', 'Controller output', 'Location', 'southeast')
 
-hline = line([1 1], [0 1.4]);
+hline = line([1 1], [0.21 1.4]);
 %hline = line([1 1], [0 2]);
 set(hline, 'Color', [.3 .3 .3], 'LineWidth', 1, 'LineStyle', '--');
 
@@ -93,9 +97,9 @@ set(hline, 'Color', [.3 .3 .3], 'LineWidth', 1, 'LineStyle', '--');
 %Title and axis labels added
 title('PI-Controller at 1.4 m \cdot s^{-1} Uphill')
 xlabel('Time [s]')
-ylabel(AX(1), 'Linear velocity [ m \cdot s^{-1} ]')
-ylabel(AX(2), 'Voltage [ V ]')
+ylabel('Linear velocity [ m \cdot s^{-1} ]')
+%ylabel(AX(2), 'Voltage [ V ]')
 %xlim([ 0 3 ]);
 
-set(AX(1), 'Xgrid', 'on', 'Ygrid', 'on', 'ytick', [0 .5 1 1.5 2], 'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
-set(AX(2), 'Xgrid', 'on', 'Ygrid', 'on', 'ytick', [3 3.5 4 4.5 5 5.5 6 6.5 7 7.5 8], 'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
+%set(AX(1), 'Xgrid', 'on', 'Ygrid', 'on', 'ytick', [0 .5 1 1.5 2], 'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
+%set(AX(2), 'Xgrid', 'on', 'Ygrid', 'on', 'ytick', [3 3.5 4 4.5 5 5.5 6 6.5 7 7.5 8], 'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)

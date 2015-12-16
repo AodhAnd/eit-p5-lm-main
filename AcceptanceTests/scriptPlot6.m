@@ -45,8 +45,8 @@ axis equal;
 % Make the plots beautiful
 % set( P1, 'color', '[0 0 1]', 'LineWidth', 2 );
 title('Route planning')
-xlabel('X position')
-ylabel('Y position')
+xlabel('X position [mm]')
+ylabel('Y position [mm]')
 %xlim([-100 2500]);
 %ylim([-100 2500]);
 legend('1st part','2nd part','3rd part','4th part')
