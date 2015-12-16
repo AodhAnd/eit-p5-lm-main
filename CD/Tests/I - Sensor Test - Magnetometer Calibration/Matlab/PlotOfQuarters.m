@@ -26,18 +26,18 @@ axis equal
 
 
 grid on
-xlim ([-500 500]);
-ylim ([-500 500]);
+xlim ([-400 400]);
+ylim ([-400 400]);
 zlim ([-800 800]);
 
 %Creating legend containing equation for lsline (%0.4f = 4 decimals)
-legend('Data', sprintf( 'y = %0.4fx + %0.4f', a, b ), 'Location', 'northwest' )
+%legend('Data', sprintf( 'y = %0.4fx + %0.4f', a, b ), 'Location', 'northwest' )
 
 %Title and axis labels added
-title('Plot of magnitude with circle quarters')
-xlabel('X [G]')
-ylabel('Y [G]')
-zlabel('Z [G]')
+title('Plot of magnitude with circle quarters','fontsize',12)
+xlabel('X [G]','fontsize',12)
+ylabel('Y [G]','fontsize',12)
+zlabel('Z [G]','fontsize',12)
 
 grid on
 %set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
