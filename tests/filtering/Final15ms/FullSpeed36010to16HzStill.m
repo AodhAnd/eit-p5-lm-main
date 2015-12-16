@@ -83,12 +83,12 @@ end
 %% FFT without filter
 % scatter(Data1(:,2),Data1(:,1));
 % figure;
-% 
- input = Data1(:,2);
-%  
-%  %input_fft = mag2db(abs(fft(input)));
-  input_fft = mag2db(2/length(input)*abs(fft(input)));
-  freq = linspace(0,66.6,length(input_fft));
+% % 
+%  input = Data1(:,2);
+% %  
+% %  %input_fft = mag2db(abs(fft(input)));
+%   input_fft = mag2db(2/length(input)*abs(fft(input)));
+%   freq = linspace(0,66.6,length(input_fft));
 % plot(freq,input_fft);
 %  figure;
 % spectrogram(input,hamming(20),19,100,40,'yaxis') %fft for hvert sekund (40)
@@ -96,16 +96,18 @@ end
 %  figure;
 
 %% Make it B-E-Autiful
-plot(Data1(:,1),Data1(:,2), 'b',Data1(:,1),output, 'r')
+%plot(Data1(:,1),Data1(:,2), 'b',Data1(:,1),output, 'r')
 %plot(Data1(:,1),Data1(:,2)) %Original data
 %bodemag(H)
 %semilogx(f, magdb)
 %plot(freq,input_fft)
-xlim([6.9 7])
-legend('Measured Data', 'Filter Data', 'Location', 'southeast' )
+%xlim([6.9 7])
+%legend('Measured Data', 'Filter Data', 'Location', 'southeast' )
 %semilogx(f, magdb)
 
-ylim([-51.5 -49])
+%ylim([-51.5 -49])
+
+bodeplot(Hs)
 
 %Title and axis labels added
 
@@ -113,10 +115,10 @@ title('Measured Data Compared to Filtered Data Delay', 'fontsize', 13)
 xlabel('Time [s]', 'fontsize', 12)
 ylabel('Angle [\circ]','fontsize', 12)
 
-vline = line([6.914 6.914], [-51.5 -49]);
-set(vline, 'Color', [.3 .3 .3], 'LineWidth', 1, 'LineStyle', '--');
-vline = line([6.944 6.944], [-51.5 -49]);
-set(vline, 'Color', [.3 .3 .3], 'LineWidth', 1, 'LineStyle', '--');
+%vline = line([6.914 6.914], [-51.5 -49]);
+%set(vline, 'Color', [.3 .3 .3], 'LineWidth', 1, 'LineStyle', '--');
+%vline = line([6.944 6.944], [-51.5 -49]);
+%set(vline, 'Color', [.3 .3 .3], 'LineWidth', 1, 'LineStyle', '--');
 
 grid on;
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
