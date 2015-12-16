@@ -3,9 +3,9 @@ clear all;
 clear home;
 clc;
 
-Step2 = csvread('step2.csv');
+Step = csvread('step.csv');
 hold
-P1=plot(Step2(:,6)/1000,(Step2(:,5)+Step2(:,4))/2, 'b')
+P1=plot(Step(:,6)/1000,(Step(:,5)+Step(:,4))/2, 'b')
 
 TconstLine = [4 6 ; 1.42 1.42];
 tauLine = plot(TconstLine(1,:), TconstLine(2,:));
@@ -19,4 +19,3 @@ grid on
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6)
 set( P1, 'color', '[1 0 0]', 'LineWidth', 2 );
 set ( tauLine, 'color', '[0 0 1]', 'LineWidth', 2 );
-

@@ -128,6 +128,8 @@ void SteeringControl(){
     Serial.print(calibrated_values[1]);
     Serial.print(',');
     Serial.print(calibrated_values[2]);
+    Serial.print(',');
+    Serial.print(calibrated_values[3]);
     Serial.println(',');    
       
     k_wait(sem2,0);     //wait for semaphore
