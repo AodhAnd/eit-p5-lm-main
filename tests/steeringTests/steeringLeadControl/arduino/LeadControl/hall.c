@@ -33,7 +33,7 @@ for(i = 0;i<5;i++){
     uiTimer5Buffer[i] = 0xFFFF;
 }
 
-  k_set_sem_timer(sem1,1); // krnl will signal sem every tick
+  k_set_sem_timer(sem1,4); // krnl will signal sem every tic
   
   while (1)
   {

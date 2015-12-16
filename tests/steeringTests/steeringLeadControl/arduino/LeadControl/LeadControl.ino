@@ -285,46 +285,71 @@ void SteeringControl() {
 
 void SpeedControl() {
 
-  const float Wantedspeed = 1;
-  const float SysGain = 0.49;
-  float Speedtoduty;
+  const float Wantedspeed = 1.4;
   float Actualspeed;
-  int duty;
-  float tmp;
   float Error;
-  const float PGain = 1.0;
-  float feedFwd = Wantedspeed;
-  int batOK;
-  k_set_sem_timer(sem3, 50); // krnl will signal sem every 50th tick
-  while (1) {
-    
+  float Integral = 0;
+  float ControllerOutput;
+  float DutyPrSpeed;
+  float Duty = 0;
+  const float Stiction = 1.1; // 0.38/0.486   [V]  .. that is:  stiction [m*s^-1] / SysGain [s*m^-1 *V]
+  const float SysGain = 0.486;
+  const float Kp = 2.0576; //.8;      // Tuned parameters: Kp = .8 and Ki = 6
+  const float Ki = 9.7517; //6;       // For time constant equal to that of the plant Kp = 2.0576 and Ki = 9.7517
+                                      // however, the rise is too fast for the battery, which drops voltage fast at big currnets,
+                                      // so Kp and Ki are recalculated for half the time-constant of the plant
+                                      // to allow for a longer rise-time and thus less drop in the battery voltage
+                                     
+  k_set_sem_timer(sem3, 10); // krnl will signal sem every 10th tick (1 tick set to 1 ms) = 10 ms
+  while (1)
+  {
     batReading = analogRead(8); //reading battery voltage
-    if (batReading <= 584) enableMotor(0); // stop vehicle if battery voltage gets below 5,7V*102,4 = 584.
-    
     speed0 = getSpeed(0);       //reading speed of first belt
     speed1 = getSpeed(1);       //reading speed of the other belt
     timestamp = millis();       //getting time at which data was recorded
 
-    Actualspeed = (speed0 + speed1) / 2; // average speed of the vehicle
 
-    // Vehicle starts after 2 seconds
-    if (timestamp > 2000) //P-Controler with feed forward
+    Actualspeed = (speed0 + speed1)/2; // average speed of the vehicle
+    
+    if(timestamp > 5000)
     {
       Error = Wantedspeed - Actualspeed;
-      Speedtoduty = 1.0 / (((float)batReading / 102.4) * SysGain); // Battery reading: 1024 = 10V, so 1V = 102.4. multiply that with the system gain to calculate the duty cycle.
-      //duty = Speedtoduty*100.0;
-      tmp = (  ((Error) * PGain + feedFwd + 0.38) * Speedtoduty) * 100.0; //actual P-Controller
-      duty = tmp;
-      if (duty > 100) duty = 100;
-      if (duty < 0) duty = 0;
-    }
-    else speed(0);
-    if (timestamp<8000) speed(duty);
-    else speed(0);
-    
-    
-     k_wait(sem3, 0);    //wait for semaphore;
+      
+      //if( ControllerOutput < ((float)batReading/102.4) ) //Only increase integral error if the battery is not in saturation
+      //{
+        Integral = Integral + (Error*0.010); //Delta t = 0.010 s = sample time i.e. 10 ms
+      //}
+                                                                                                                   //-------------IN THE CODE--------------------------------------------------------------
+      ControllerOutput = ((Kp * Error) + (Ki * Integral) + Stiction);                                              // dutyNeeded = controllOut * 100 /( batVolt * SysGain )
+      DutyPrSpeed = 100.0/((float)batReading/102.4); // Duty cycle pr volt (% pr V) (divided by 102.4 = volts)     // 
+      Duty = ControllerOutput * DutyPrSpeed; // ------------------------------------------------------------------LINK TO MODEL------------------------------------------------------------------
+      if(Duty > 100) Duty = 100;             // controllerOut = VoltNeeded --> plant --> m/s
+      if(Duty < 0) Duty = 0;                 // batVolt/100 = [volt/duty] => ( batVolt/100 ) *dutyNeeded = VoltNeeded <=> dutyNeeded =   VoltNeeded        / ( batVolt/100 )
+    }                                        //                                                                       <=> dutyNeeded =   controllOut       / ( batVolt/100 )
+                                             //                                                                       <=> dutyNeeded =   (controllOut*100) /  batVolt
+    Serial.print(timestamp);
+    Serial.print(',');
+    Serial.print(Actualspeed);
+    Serial.print(',');
+    Serial.print((float)batReading/102.4);
+    Serial.print(',');
+    Serial.print(ControllerOutput);
+    Serial.print(',');
+    Serial.print(Ki * Integral);
+    Serial.print(',');
+    Serial.println(Kp * Error);
+    //Serial.print(',');
+    //Serial.println(Error);
 
+    //DutyPrSpeed = 100.0/((float)batReading/102.4);  //<
+    //Duty =  Stiction * DutyPrSpeed;                 //<< For testing stiction
+    //speed(Duty);                                    //<
+    
+    if(timestamp > 2000 && timestamp <= 5000) speed(20);
+    if(timestamp > 5000 && timestamp <= 15000) speed(Duty);
+    if(timestamp > 15000) speed(0);
+    
+    k_wait(sem3, 0);    //wait for semaphore;
   }
 }
 
@@ -363,15 +388,15 @@ void setup() {
   sem2 = k_crt_sem(1, 2);
 
   Serial3.begin(9600);
-  Serial.begin(115200);
+  Serial.begin(230400);
   Serial.println("REBOOT");
 
   delay(2000);
-  task1 = k_crt_task(tSpeed, 10, stack, 300);         	   // Hall Sensors
+  task1 = k_crt_task(tSpeed, 11, stack, 300);         	   // Hall Sensors
   task2 = k_crt_task(SpeedControl, 12, stack2, 300); 	   // Velocity controller
-  task3 = k_crt_task(GoT,14,stack5,1000);        		   // GoT and protocol handling
-  task4 = k_crt_task(LeadCompensator, 13, stack4, 300);    // Distance Control
-  task5 = k_crt_task(SteeringControl, 11, stack3, 1000);   // Angular controller
+  //task3 = k_crt_task(GoT,14,stack5,1000);        		   // GoT and protocol handling
+  //task4 = k_crt_task(LeadCompensator, 13, stack4, 300);    // Distance Control
+  //task5 = k_crt_task(SteeringControl, 10, stack3, 1000);   // Angular controller
 
   pMsgGoTLead = k_crt_send_Q(10,4,mar);     //mail box, GoT sends distance, Lead Compensator recieves it.
   pMsgLeadAngle = k_crt_send_Q(10,4,mar2);  //mail box, Lead Compensator sends angle, Angle controller recieves it.

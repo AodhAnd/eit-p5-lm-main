@@ -4,19 +4,19 @@ clear all
 close all;
 clc;
 
-%csvwrite('simulationPImultiStep.csv', ScopeData14);
-simData = csvread('simulationPImultiStep.csv', 0, 0);
+%csvwrite('simulationPImultiStepNew.csv', ScopeData14);
+simData = csvread('simulationPImultiStepNew.csv', 0, 0);
 simData(:,1) = simData(:,1)-2
 
 %data = csvread('LOG00238.csv');
 
-data = csvread('LOG00217.csv');%, 0, 0); 18 to 22    use step 16
+data = csvread('1point0mPRsec.csv');%, 0, 0); 18 to 22    use step 16
 data(:,1) = (data(:,1)-4035)/1000;
-data1 = csvread('LOG00224.csv');%, 0, 0);
+data1 = csvread('1point5mPRsec.csv');%, 0, 0);
 data1(:,1) = (data1(:,1)-4035)/1000;
-data2 = csvread('LOG00225.csv');%, 0, 0);
+data2 = csvread('2point0mPRsec.csv');%, 0, 0);
 data2(:,1) = (data2(:,1)-4035)/1000;
-data3 = csvread('LOG00227.csv');%, 0, 0);
+data3 = csvread('2point5mPRsec.csv');%, 0, 0);
 data3(:,1) = (data3(:,1)-4035)/1000;
 
 %data(:,3) = data(:,3);%-5.5;
@@ -30,20 +30,20 @@ hold on;
 %hline = line([1.144 1.144], [0 3]);
 %set(hline, 'Color', [.3 .3 .3], 'LineWidth', 1, 'LineStyle', '--');
 
-plot( simData(:,1), simData(:,4), 'r', 'LineWidth', 2);
+plot( simData(:,1), simData(:,2), 'r', 'LineWidth', 2);
 plot( data(:,1), data(:,2), 'b', 'LineWidth', 2);
 scatter( data(:,1), data(:,2), 20, [0 .3 0], 'o' );
 
-plot( simData(:,1), simData(:,2), 'r', 'LineWidth', 2);
+plot( simData(:,1), simData(:,3), 'r', 'LineWidth', 2);
 legend('Simulation data','Test data', 'Test data resolution', 'Location', 'southeast')
 plot( data1(:,1), data1(:,2), 'b', 'LineWidth', 2);
 scatter( data1(:,1), data1(:,2), 20, [0 .3 0], 'o' );
 
-plot( simData(:,1), simData(:,6), 'r', 'LineWidth', 2);
+plot( simData(:,1), simData(:,4), 'r', 'LineWidth', 2);
 plot( data2(:,1), data2(:,2), 'b', 'LineWidth', 2);
 scatter( data2(:,1), data2(:,2), 20, [0 .3 0], 'o' );
 
-plot( simData(:,1), simData(:,8), 'r', 'LineWidth', 2);
+plot( simData(:,1), simData(:,5), 'r', 'LineWidth', 2);
 plot( data3(:,1), data3(:,2), 'b', 'LineWidth', 2);
 scatter( data3(:,1), data3(:,2), 20, [0 .3 0], 'o' );
 
@@ -54,7 +54,7 @@ xlabel('Time [s]')
 ylabel('Linear Velocity [ m \cdot s^{-1} ]')
 %ylabel(AX(2), 'Battery Voltage [ V ]')
 
-xlim([ 0 3 ]);
+xlim([ 0.5 3 ]);
 
 grid on
 set(gca,'GridLineStyle',':', 'GridColor', 'k', 'GridAlpha', .6, 'ytick', [0 .25 .5 .75 1 1.25 1.5 1.75 2 2.25 2.5])
