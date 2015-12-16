@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=AD15 Pin=AD_H-8
+Added Pin To Net: NetName=AD15 Pin=AD_H-1
+Change Net Name : Old Net Name=AD15 New Net Name=AD8
+Added Room: Name=AdruinoMegaSheild
