@@ -13,9 +13,6 @@ In this repository stands:
 ## Drivers
 Please don't do "driverxx_old" naming, git is here for version control and history.
 A few versions will be saved whenever concrete improvements have been made to the code.
-[Since a lot of different and obscure folders are present in the drive currently, I will contact every one of you who knows shit about it to chose which should be kept and put into this git repository and which shouldn't. 
-Don't worry special rules for drivers will come after that. ;p
-Until then, please try to clean up a bit stuff you know aren't useful anymore in the shared drive folder to facilitate the work of everyone.]
 
 ## Rules when running a test :
 1 Create a folder under test/ with an explicit name. 
