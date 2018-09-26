@@ -1,5 +1,6 @@
 # AAU-EIT5: Lawn mower project core
 AAU Electronics and IT students' 5th semester project (2015)
+Associated report is there: https://github.com/AodhAnd/eit-p5-lm-report
 
 ## Repository hierarchy
 In this repository stands:
